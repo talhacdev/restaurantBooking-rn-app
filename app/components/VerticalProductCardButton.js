@@ -7,7 +7,7 @@ import {
 
 import colors from '../config/colors';
 
-function Button({title, stylesTitleText, onPress}) {
+function VerticalProductCardButton({title, stylesTitleText, onPress}) {
   return (
     <TouchableOpacity
       style={styles.buttonContainer}
@@ -20,7 +20,7 @@ function Button({title, stylesTitleText, onPress}) {
             : {
                 fontWeight: 'bold',
                 color: colors.tertiary,
-                fontSize: wp(5),
+                fontSize: wp(4),
                 textTransform: 'uppercase',
               }
         }>
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.primary,
-    width: wp('85%'),
+    padding: wp(2),
+    width: '100%',
     height: hp('5%'),
     elevation: wp(1),
     borderRadius: wp(1),
@@ -43,4 +44,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Button;
+export default VerticalProductCardButton;

@@ -7,11 +7,11 @@ import {
 
 import colors from '../config/colors';
 
-function Button({title, stylesTitleText, onPress}) {
+function CategoryCard({title, stylesTitleText, onPress}) {
   return (
     <TouchableOpacity
-      style={styles.buttonContainer}
-      onPress={onPress ? onPress : () => console.log('Button pressed.')}>
+      style={styles.cardContainer}
+      onPress={onPress ? onPress : () => console.log('Card pressed.')}>
       <Text
         numberOfLines={1}
         style={
@@ -20,7 +20,7 @@ function Button({title, stylesTitleText, onPress}) {
             : {
                 fontWeight: 'bold',
                 color: colors.tertiary,
-                fontSize: wp(5),
+                fontSize: wp(4),
                 textTransform: 'uppercase',
               }
         }>
@@ -31,16 +31,15 @@ function Button({title, stylesTitleText, onPress}) {
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
+  cardContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primary,
-    width: wp('85%'),
-    height: hp('5%'),
+    backgroundColor: colors.secondary,
+    width: wp('50%'),
+    height: hp('12.5%'),
     elevation: wp(1),
-    borderRadius: wp(1),
-    margin: wp(1),
+    padding: wp(4),
   },
 });
 
-export default Button;
+export default CategoryCard;

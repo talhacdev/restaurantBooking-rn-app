@@ -30,7 +30,7 @@ function Header({
             : () => console.log('Left icon pressed.')
         }>
         <Icon
-          name={leftIcon ? leftIcon : 'arrow-back-outline'}
+          name={leftIcon}
           size={leftIconSize ? leftIconSize : 30}
           color={leftIconColor ? leftIconColor : colors.tertiary}
         />
@@ -44,7 +44,7 @@ function Header({
               : {
                   fontWeight: 'bold',
                   color: colors.tertiary,
-                  fontSize: wp(5),
+                  fontSize: wp(6),
                   textTransform: 'uppercase',
                 }
           }>
@@ -59,7 +59,7 @@ function Header({
             : () => console.log('Right icon pressed.')
         }>
         <Icon
-          name={rightIcon ? rightIcon : 'menu'}
+          name={rightIcon}
           size={rightIconSize ? rightIconSize : 30}
           color={rightIconColor ? rightIconColor : colors.tertiary}
         />
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.primary,
     width: wp('100%'),
-    height: hp('10%'),
+    height: hp('8.5%'),
     elevation: wp(1),
   },
   leftIconView: {

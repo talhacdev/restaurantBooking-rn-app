@@ -21,8 +21,8 @@ function WelcomeScreen(props) {
           source={require('../assets/snapchatLogoBlack.jpg')}
         />
       </View>
-      <View style={styles.LowerViewContainer}>
-        <AppButton title="sign up with facebook" />
+      <View style={styles.lowerViewContainer}>
+        <AppButton title="sign up with facebook"   onPress={() => navigation.navigate(routes.HOME)} />
         <AppButton title="sign up with google" />
         <AppButton
           title="register"
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  LowerViewContainer: {
+  lowerViewContainer: {
     flex: 0.4,
     justifyContent: 'center',
     alignItems: 'center',

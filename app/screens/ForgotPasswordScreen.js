@@ -27,7 +27,7 @@ function ForgotPasswordScreen(props) {
           source={require('../assets/snapchatLogoBlack.jpg')}
         />
       </View>
-      <View style={styles.LowerViewContainer}>
+      <View style={styles.lowerViewContainer}>
         <AppInput title={'email'} />
         <AppButton title="send email" />
       </View>
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  LowerViewContainer: {
+  lowerViewContainer: {
     flex: 0.4,
     justifyContent: 'center',
     alignItems: 'center',
