@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -7,12 +7,12 @@ import {
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
-import CategoryCard from '../components/CategoryCard';
-import VerticalProductCard from '../components/VerticalProductCard';
+import ProductCard from '../components/ProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
+import AppInput from '../components/Input';
 
-function HomeScreen(props) {
+function SearchScreen(props) {
   const data = [
     {
       id: '1',
@@ -56,7 +56,7 @@ function HomeScreen(props) {
     },
     {
       id: '5',
-      title: 'five',
+      title: 'four',
       productName: 'productName',
       companyName: 'companyName',
       price: 'price',
@@ -66,7 +66,7 @@ function HomeScreen(props) {
     },
     {
       id: '6',
-      title: 'six',
+      title: 'four',
       productName: 'productName',
       companyName: 'companyName',
       price: 'price',
@@ -76,7 +76,7 @@ function HomeScreen(props) {
     },
     {
       id: '7',
-      title: 'seven',
+      title: 'four',
       productName: 'productName',
       companyName: 'companyName',
       price: 'price',
@@ -86,27 +86,7 @@ function HomeScreen(props) {
     },
     {
       id: '8',
-      title: 'eigth',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '9',
-      title: 'nine',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '10',
-      title: 'ten',
+      title: 'four',
       productName: 'productName',
       companyName: 'companyName',
       price: 'price',
@@ -119,11 +99,17 @@ function HomeScreen(props) {
   return (
     <View style={styles.container}>
       <View style={styles.headerViewContainer}>
-        <AppHeader title="commerce" />
+        <AppHeader title={'search'} />
       </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.contentViewContainer}>
+      <View style={styles.contentViewContainer}>
+        <View style={styles.searchViewContainer}>
+          <AppInput
+            placeholder="product name"
+            title="search"
+            returnKeyType="search"
+            style={styles.textInput}
+          />
+        </View>
         <View style={styles.upperViewContainer}>
           <FlatList
             numColumns={2}
@@ -132,26 +118,7 @@ function HomeScreen(props) {
             keyExtractor={data => data.id.toString()}
             renderItem={({item}) => (
               <View style={styles.wrapper}>
-                <CategoryCard
-                  title={item.title}
-                  onPress={() => navigation.navigate(routes.PRODUCT, item)}
-                />
-              </View>
-            )}
-          />
-        </View>
-        <View style={styles.dividerView}>
-          <Text style={styles.dividerText}>Suggested</Text>
-        </View>
-        <View style={styles.lowerViewContainer}>
-          <FlatList
-            horizontal
-            showsVerticalScrollIndicator={false}
-            data={data}
-            keyExtractor={data => data.id.toString()}
-            renderItem={({item}) => (
-              <View style={styles.wrapper}>
-                <VerticalProductCard
+                <ProductCard
                   title={item.title}
                   productName={item.productName}
                   companyName={item.companyName}
@@ -164,31 +131,7 @@ function HomeScreen(props) {
             )}
           />
         </View>
-        <View style={styles.dividerView}>
-          <Text style={styles.dividerText}>Trending</Text>
-        </View>
-        <View style={styles.lowerViewContainer}>
-          <FlatList
-            horizontal
-            showsVerticalScrollIndicator={false}
-            data={data}
-            keyExtractor={data => data.id.toString()}
-            renderItem={({item}) => (
-              <View style={styles.wrapper}>
-                <VerticalProductCard
-                  title={item.title}
-                  productName={item.productName}
-                  companyName={item.companyName}
-                  price={item.price}
-                  onPress={() =>
-                    navigation.navigate(routes.PRODUCT_DETAIL, item)
-                  }
-                />
-              </View>
-            )}
-          />
-        </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }
@@ -206,7 +149,6 @@ const styles = StyleSheet.create({
   contentViewContainer: {
     flex: 0.8,
     top: hp(8.5),
-    marginBottom: hp(8.5),
   },
   upperViewContainer: {},
   dividerView: {
@@ -229,6 +171,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  searchViewContainer: {
+    margin: wp(5),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
-export default HomeScreen;
+export default SearchScreen;

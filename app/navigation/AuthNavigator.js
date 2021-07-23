@@ -33,21 +33,6 @@ const AuthNavigator = () => (
       component={ForgotPasswordScreen}
       options={{headerShown: false}}
     />
-    <Stack.Screen
-      name="Home"
-      component={HomeScreen}
-      options={{headerShown: false}}
-    />
-    <Stack.Screen
-      name="ProductDetail"
-      component={ProductDetailScreen}
-      options={{headerShown: false}}
-    />
-    <Stack.Screen
-      name="Product"
-      component={ProductScreen}
-      options={{headerShown: false}}
-    />
   </Stack.Navigator>
 );
 

@@ -131,7 +131,7 @@ function ProductScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.primary,
   },
   headerViewContainer: {
     flex: 0.1,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     top: hp(0),
   },
   contentViewContainer: {
-    flex: 0.8,
+    flex: 0.91,
     top: hp(8.5),
   },
   upperViewContainer: {},

@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
     height: hp('35%'),
     elevation: wp(1),
     padding: wp(4),
+    borderColor: colors.primary,
+    borderWidth: wp(0.05),
   },
   detailContainer: {
     margin: wp(1),

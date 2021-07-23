@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
     height: hp('12.5%'),
     elevation: wp(1),
     padding: wp(4),
+    borderColor: colors.primary,
+    borderWidth: wp(0.05),
   },
 });
 

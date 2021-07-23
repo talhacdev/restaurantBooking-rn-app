@@ -5,10 +5,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import VerticalProductCardButton from '../components/VerticalProductCardButton';
 import colors from '../config/colors';
 
-function VerticalProductCard({productName, companyName, price, onPress}) {
+function OrderProductCard({productName, companyName, price, status, onPress}) {
   return (
     <TouchableOpacity
       style={styles.cardContainer}
@@ -35,9 +34,11 @@ function VerticalProductCard({productName, companyName, price, onPress}) {
             ${price}
           </Text>
         </View>
-      </View>
-      <View>
-        <VerticalProductCardButton title={'add to cart'} />
+        <View style={styles.priceContainer}>
+          <Text numberOfLines={1} style={styles.priceText}>
+            {'4'}
+          </Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -48,8 +49,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.secondary,
-    width: wp('40%'),
-    height: hp('35%'),
+    width: wp('50%'),
+    height: hp('32%'),
     elevation: wp(1),
     padding: wp(4),
     borderColor: colors.primary,
@@ -78,6 +79,23 @@ const styles = StyleSheet.create({
     color: colors.tertiary,
     fontSize: wp(3.8),
   },
+  statusContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.primary,
+    padding: wp(2),
+    width: '100%',
+    height: hp('5%'),
+    elevation: wp(1),
+    borderRadius: wp(1),
+    margin: wp(1),
+  },
+  statusText: {
+    fontWeight: 'bold',
+    color: colors.tertiary,
+    fontSize: wp(4),
+    textTransform: 'uppercase',
+  },
 });
 
-export default VerticalProductCard;
+export default OrderProductCard;

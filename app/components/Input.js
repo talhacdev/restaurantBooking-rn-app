@@ -24,6 +24,7 @@ function Input({
   onChangeText,
   stylesTitleText,
   stylesInputText,
+  onSubmitEditing,
 }) {
   return (
     <View style={styles.inputContainer}>
@@ -58,6 +59,7 @@ function Input({
           keyboardAppearance={keyboardAppearance}
           textContentType={textContentType}
           keyboardType={keyboardType}
+          onSubmitEditing={onSubmitEditing}
           style={
             stylesInputText
               ? stylesInputText
