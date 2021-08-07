@@ -12,8 +12,10 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import BottomTextCard from '../components/BottomTextCard';
 import Button from '../components/Button';
+import AppInput from '../components/Input';
+import DefaultTextCard from '../components/DefaultTextCard';
 
-function CartScreen(props) {
+function PromoCodeScreen(props) {
   const data = [
     {
       id: '1',
@@ -135,63 +137,20 @@ function CartScreen(props) {
   return (
     <View style={styles.container}>
       <View style={styles.headerViewContainer}>
-        <AppHeader title={'cart'} />
+        <AppHeader title={'promo code'} />
       </View>
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            numColumns={2}
-            data={data}
-            keyExtractor={data => data.id.toString()}
-            renderItem={({item}) => (
-              <CartProductCard
-                productName={item.productName}
-                unit={item.unit}
-                orderTime={item.orderTime}
-                address={item.address}
-                status={item.status}
-                total={item.total}
-                onPress={() =>
-                  navigation.navigate(routes.CART_PRODUCT_DETAIL, item)
-                }
-              />
-            )}
-          />
+          <View style={styles.appInputContainer}>
+            <AppInput title={'promo'} placeholder={'promocode'} />
+          </View>
         </View>
       </View>
-      <View style={styles.bottomViewContainer}>
-        <BottomTextCard
-          leftTitle={totalQuantity + ' goods'}
-          rightTitle={'Total $' + totalPrice}
-          stylesLeftTitleText={{
-            fontWeight: 'bold',
-            color: colors.tertiary,
-            fontSize: wp(4),
-          }}
-          stylesRightTitleText={{
-            fontWeight: 'bold',
-            color: colors.tertiary,
-            fontSize: wp(4),
-          }}
-          stylesContainer={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            backgroundColor: colors.primary,
-            width: wp('100%'),
-            height: hp('7.5%'),
-            elevation: wp(1),
-            borderWidth: wp(0.05),
-            borderColor: colors.primary,
-          }}
+      <View style={styles.buttonContainer}>
+        <Button
+          title={'apply promo code'}
+          onPress={() => navigation.navigate(routes.CHECKOUT)}
         />
-        <View style={styles.buttonContainer}>
-          <Button
-            title={'CHECK OUT'}
-            onPress={() => navigation.navigate(routes.CHECKOUT)}
-          />
-        </View>
       </View>
     </View>
   );
@@ -211,16 +170,22 @@ const styles = StyleSheet.create({
     flex: 0.1,
     position: 'absolute',
     bottom: hp(0),
+    backgroundColor: 'pink',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   contentViewContainer: {
-    flex: 0.76,
+    flex: 1,
     top: hp(8.5),
   },
   buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primary,
+  },
+  appInputContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
-export default CartScreen;
+export default PromoCodeScreen;

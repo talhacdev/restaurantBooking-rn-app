@@ -30,7 +30,6 @@ function AccountScreen(props) {
             leftIcon={'list'}
             onPress={() => navigation.navigate(routes.ORDERS)}
           />
-
           <TextCard
             title="Promo Alerts"
             leftIcon={'notifications'}

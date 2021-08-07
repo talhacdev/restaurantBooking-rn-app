@@ -16,4 +16,9 @@ export default Object.freeze({
   PROMO_ALERT: 'PromoAlert',
   CONTACT_US: 'ContactUs',
   ABOUT_US: 'AboutUs',
+  CART_PRODUCT_DETAIL: 'CartProductDetail',
+  CHECKOUT: 'Checkout',
+  PROMO_CODE: 'PromoCode',
+  PAYMENT_METHOD: 'PaymentMethod',
+  ORDER_SUCCESS: 'OrderSuccess',
 });
