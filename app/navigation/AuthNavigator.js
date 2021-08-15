@@ -5,9 +5,7 @@ import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
-import HomeScreen from '../screens/HomeScreen';
-import ProductDetailScreen from '../screens/ProductDetailScreen';
-import ProductScreen from '../screens/ProductScreen';
+import PhoneNumberScreen from '../screens/PhoneNumberScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +14,11 @@ const AuthNavigator = () => (
     <Stack.Screen
       name="Welcome"
       component={WelcomeScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="PhoneNumber"
+      component={PhoneNumberScreen}
       options={{headerShown: false}}
     />
     <Stack.Screen

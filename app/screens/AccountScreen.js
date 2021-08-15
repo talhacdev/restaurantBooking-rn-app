@@ -4,6 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import auth from '@react-native-firebase/auth';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -13,6 +14,12 @@ import navigation from '../navigation/rootNavigation';
 import TextCard from '../components/TextCard';
 
 function AccountScreen(props) {
+  onPressLogOutButton = () => {
+    auth()
+      .signOut()
+      .then(() => console.log('User signed out!'));
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerViewContainer}>
@@ -46,7 +53,11 @@ function AccountScreen(props) {
             leftIcon={'information'}
             onPress={() => navigation.navigate(routes.ABOUT_US)}
           />
-          <TextCard title="Log Out" leftIcon={'log-out'} />
+          <TextCard
+            title="Log Out"
+            leftIcon={'log-out'}
+            onPress={() => onPressLogOutButton()}
+          />
         </View>
       </View>
     </View>

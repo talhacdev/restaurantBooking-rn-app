@@ -21,4 +21,5 @@ export default Object.freeze({
   PROMO_CODE: 'PromoCode',
   PAYMENT_METHOD: 'PaymentMethod',
   ORDER_SUCCESS: 'OrderSuccess',
+  PHONE_NUMBER: 'PhoneNumber',
 });
