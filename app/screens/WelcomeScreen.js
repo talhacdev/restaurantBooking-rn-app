@@ -1,6 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
 
 // secondary implementation
@@ -13,14 +16,14 @@ import auth from '@react-native-firebase/auth';
 
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {NativeModules} from 'react-native';
+const {RNTwitterSignIn} = NativeModules;
 
 import AppButton from '../components/Button';
 import AppURLText from '../components/URLText';
 import colors from '../config/colors';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
-import {NativeModules} from 'react-native';
-const {RNTwitterSignIn} = NativeModules;
 
 function WelcomeScreen(props) {
   const [userInfo, setUserInfo] = useState();
@@ -116,19 +119,19 @@ function WelcomeScreen(props) {
     return auth().signInWithCredential(googleCredential);
   }
 
-  async function onTwitterButtonPress() {
-    // Perform the login request
-    const {authToken, authTokenSecret} = await RNTwitterSignIn.logIn();
+  // async function onTwitterButtonPress() {
+  //   // Perform the login request
+  //   const {authToken, authTokenSecret} = await RNTwitterSignIn.logIn();
 
-    // Create a Twitter credential with the tokens
-    const twitterCredential = auth.TwitterAuthProvider.credential(
-      authToken,
-      authTokenSecret,
-    );
+  //   // Create a Twitter credential with the tokens
+  //   const twitterCredential = auth.TwitterAuthProvider.credential(
+  //     authToken,
+  //     authTokenSecret,
+  //   );
 
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(twitterCredential);
-  }
+  //   // Sign-in the user with the credential
+  //   return auth().signInWithCredential(twitterCredential);
+  // }
 
   onPressDemoButton = () => {
     auth()
@@ -149,11 +152,7 @@ function WelcomeScreen(props) {
     <View style={styles.container}>
       <View style={styles.upperViewContainer}>
         <Image
-          style={{
-            width: wp(50),
-            height: wp(50),
-            margin: wp(5),
-          }}
+          style={styles.image}
           source={require('../assets/snapchatLogoBlack.jpg')}
         />
       </View>
@@ -176,7 +175,8 @@ function WelcomeScreen(props) {
               })
           }
         />
-        <AppButton
+
+        {/* <AppButton
           title="sign up with twitter"
           onPress={() =>
             onTwitterButtonPress()
@@ -185,11 +185,13 @@ function WelcomeScreen(props) {
                 console.log(error);
               })
           }
-        />
-        <AppButton
+        /> */}
+
+        {/* <AppButton
           title="sign up with phone"
           onPress={() => navigation.navigate(routes.PHONE_NUMBER)}
-        />
+        /> */}
+
         <AppButton
           title="register"
           onPress={() => navigation.navigate(routes.REGISTER)}
@@ -214,23 +216,27 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.background,
   },
-  topViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: 0,
+  image: {
+    width: wp(50),
+    height: wp(50),
+    marginVertical: hp(5),
+    paddingVertical: hp(5),
   },
   upperViewContainer: {
-    flex: 0.4,
+    paddingVertical: hp(1),
+    marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },
   lowerViewContainer: {
-    flex: 0.4,
+    paddingVertical: hp(1),
+    marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },
   bottomViewContainer: {
-    flex: 0.1,
+    paddingVertical: hp(1),
+    marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -245,4 +251,4 @@ export default WelcomeScreen;
 // keytool -exportcert -alias Production.jks -keystore C:\Users\GNG\Downloads\Github\commerce\android\app\Production.jks | C:\openssl-0.9.8k_X64\bin\openssl.exe sha1 -binary | C:\openssl-0.9.8k_X64\bin\openssl.exe base64
 
 // google sha-1 key
-// keytool -list -v -keystore C:\Users\GNG\Downloads\Github\commerce\android\app\debug.keystore -alias androiddebugkey -storepass android -keypass android
+// keytool -list -v -keystore C:\Users\Dell XPS\Downloads\Github\commerce\android\app\debug.keystore -alias androiddebugkey -storepass android -keypass android

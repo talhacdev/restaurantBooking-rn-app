@@ -142,37 +142,18 @@ function CheckoutScreen(props) {
           <BottomTextCard
             leftTitle={totalQuantity + ' goods'}
             rightTitle={'Total $' + totalPrice}
-            stylesLeftTitleText={{
-              fontWeight: 'bold',
-              color: colors.tertiary,
-              fontSize: wp(4),
-            }}
-            stylesRightTitleText={{
-              fontWeight: 'bold',
-              color: colors.tertiary,
-              fontSize: wp(4),
-            }}
-            stylesContainer={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              backgroundColor: colors.primary,
-              width: wp('100%'),
-              height: hp('7.5%'),
-              elevation: wp(1),
-              borderWidth: wp(0.05),
-              borderColor: colors.primary,
-            }}
           />
         </View>
       </View>
       <View style={styles.buttonContainer}>
         <Button
           title={'add promo code'}
+          widthContainer={wp(100)}
           onPress={() => navigation.navigate(routes.PROMO_CODE)}
         />
         <Button
           title={'payment method'}
+          widthContainer={wp(100)}
           onPress={() => navigation.navigate(routes.PAYMENT_METHOD)}
         />
       </View>
@@ -183,26 +164,21 @@ function CheckoutScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.background,
   },
   headerViewContainer: {
     flex: 0.1,
     position: 'absolute',
     top: hp(0),
   },
-  bottomViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    bottom: hp(0),
-  },
   contentViewContainer: {
     flex: 1,
     top: hp(8.5),
   },
   buttonContainer: {
+    paddingTop: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primary,
   },
 });
 

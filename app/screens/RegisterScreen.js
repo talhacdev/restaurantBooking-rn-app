@@ -35,16 +35,9 @@ function RegisterScreen(props) {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.topViewContainer}>
-        <AppHeader title="commerce" />
-      </View> */}
       <View style={styles.upperViewContainer}>
         <Image
-          style={{
-            width: wp(50),
-            height: wp(50),
-            margin: wp(5),
-          }}
+          style={styles.image}
           source={require('../assets/snapchatLogoBlack.jpg')}
         />
       </View>
@@ -67,23 +60,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.background,
   },
-  topViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: 0,
+  image: {
+    width: wp(50),
+    height: wp(50),
+    marginVertical: hp(5),
+    paddingVertical: hp(5),
   },
   upperViewContainer: {
-    flex: 0.4,
+    paddingVertical: hp(1),
+    marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },
   lowerViewContainer: {
-    flex: 0.4,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  bottomViewContainer: {
-    flex: 0.1,
+    paddingVertical: hp(1),
+    marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },

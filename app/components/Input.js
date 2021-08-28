@@ -64,6 +64,7 @@ function Input({
             stylesInputText
               ? stylesInputText
               : {
+                  width: wp(50),
                   color: colors.tertiary,
                   fontSize: wp(3.2),
                 }
@@ -79,24 +80,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: colors.input,
-    width: wp('85%'),
-    height: hp('5%'),
+    backgroundColor: colors.secondary,
+    width: wp(85),
+    height: hp(5),
     elevation: wp(1),
     borderRadius: wp(1),
     margin: wp(1),
   },
   titleContainer: {
-    width: wp('30%'),
-    height: hp('5%'),
+    width: wp(30),
+    height: hp(5),
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingHorizontal: wp(5),
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.primary,
   },
   textInputContainer: {
-    width: wp('55%'),
-    height: hp('5%'),
+    width: wp(55),
+    height: hp(5),
     alignItems: 'flex-end',
     justifyContent: 'center',
     paddingHorizontal: wp(1.5),

@@ -18,7 +18,7 @@ function URLText({title, stylesUrlText, onPress}) {
             ? stylesUrlText
             : {
                 fontWeight: 'bold',
-                color: colors.primary,
+                color: colors.tertiary,
                 fontSize: wp(5),
                 fontStyle: 'italic',
               }
@@ -31,12 +31,8 @@ function URLText({title, stylesUrlText, onPress}) {
 
 const styles = StyleSheet.create({
   urlContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: wp('80%'),
-    height: hp('5%'),
-    elevation: wp(1),
-    margin: wp(1),
+    padding: wp(1),
+    elevation: hp(1),
   },
 });
 

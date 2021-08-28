@@ -164,30 +164,10 @@ function CartScreen(props) {
         <BottomTextCard
           leftTitle={totalQuantity + ' goods'}
           rightTitle={'Total $' + totalPrice}
-          stylesLeftTitleText={{
-            fontWeight: 'bold',
-            color: colors.tertiary,
-            fontSize: wp(4),
-          }}
-          stylesRightTitleText={{
-            fontWeight: 'bold',
-            color: colors.tertiary,
-            fontSize: wp(4),
-          }}
-          stylesContainer={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            backgroundColor: colors.primary,
-            width: wp('100%'),
-            height: hp('7.5%'),
-            elevation: wp(1),
-            borderWidth: wp(0.05),
-            borderColor: colors.primary,
-          }}
         />
         <View style={styles.buttonContainer}>
           <Button
+            widthContainer={wp(100)}
             title={'CHECK OUT'}
             onPress={() => navigation.navigate(routes.CHECKOUT)}
           />
@@ -208,18 +188,17 @@ const styles = StyleSheet.create({
     top: hp(0),
   },
   bottomViewContainer: {
-    flex: 0.1,
     position: 'absolute',
     bottom: hp(0),
   },
   contentViewContainer: {
-    flex: 0.76,
+    flex: 0.72,
     top: hp(8.5),
   },
   buttonContainer: {
+    paddingVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primary,
   },
 });
 

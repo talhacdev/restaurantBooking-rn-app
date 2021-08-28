@@ -32,7 +32,7 @@ function TextCard({
         }>
         <Icon
           name={leftIcon}
-          size={leftIconSize ? leftIconSize : 30}
+          size={leftIconSize ? leftIconSize : 25}
           color={leftIconColor ? leftIconColor : colors.tertiary}
         />
       </View>
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.card,
     width: wp('100%'),
     height: hp('8.5%'),
     elevation: wp(1),
@@ -81,11 +81,9 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
   },
   leftIconView: {
-    flex: 0.15,
-    justifyContent: 'flex-start',
+    marginLeft: wp(5),
+    justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: wp(5),
-    paddingHorizontal: wp(1),
   },
   titleView: {
     flex: 0.7,

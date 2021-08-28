@@ -34,9 +34,8 @@ function BottomTextCard({
               justifyContent: 'space-between',
               alignItems: 'center',
               backgroundColor: colors.primary,
-              width: wp('100%'),
-              height: hp('8.5%'),
-              elevation: wp(1),
+              width: wp(100),
+              height: hp(9),
               borderWidth: wp(0.05),
               borderColor: colors.primary,
             }

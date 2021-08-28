@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
 
 import AppButton from '../components/Button';
@@ -37,11 +40,7 @@ function LoginScreen(props) {
     <View style={styles.container}>
       <View style={styles.upperViewContainer}>
         <Image
-          style={{
-            width: wp(50),
-            height: wp(50),
-            margin: wp(5),
-          }}
+          style={styles.image}
           source={require('../assets/snapchatLogoBlack.jpg')}
         />
       </View>
@@ -71,23 +70,33 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.background,
   },
+  image: {
+    width: wp(50),
+    height: wp(50),
+    marginVertical: hp(5),
+    paddingVertical: hp(5),
+  },
   topViewContainer: {
     flex: 0.1,
+    backgroundColor: 'purple',
     position: 'absolute',
     top: 0,
   },
   upperViewContainer: {
-    flex: 0.4,
+    paddingVertical: hp(1),
+    marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },
   lowerViewContainer: {
-    flex: 0.4,
+    paddingVertical: hp(1),
+    marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },
   bottomViewContainer: {
-    flex: 0.1,
+    paddingVertical: hp(1),
+    marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },

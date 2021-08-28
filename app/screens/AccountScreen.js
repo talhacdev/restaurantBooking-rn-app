@@ -67,7 +67,7 @@ function AccountScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.background,
   },
   headerViewContainer: {
     flex: 0.1,
@@ -77,32 +77,6 @@ const styles = StyleSheet.create({
   contentViewContainer: {
     flex: 0.8,
     top: hp(8.5),
-  },
-  upperViewContainer: {},
-  dividerView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.primary,
-    width: wp('100%'),
-    height: hp('5%'),
-    elevation: wp(1),
-  },
-  dividerText: {
-    fontWeight: 'bold',
-    color: colors.tertiary,
-    fontSize: wp(4.5),
-    textTransform: 'uppercase',
-  },
-  lowerViewContainer: {},
-  bottomViewContainer: {
-    flex: 0.1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  searchViewContainer: {
-    margin: wp(5),
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

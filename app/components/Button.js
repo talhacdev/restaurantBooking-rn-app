@@ -7,7 +7,14 @@ import {
 
 import colors from '../config/colors';
 
-function Button({title, stylesButtonContainer, stylesTitleText, onPress}) {
+function Button({
+  title,
+  elevation,
+  widthContainer,
+  stylesButtonContainer,
+  stylesTitleText,
+  onPress,
+}) {
   return (
     <TouchableOpacity
       style={
@@ -17,11 +24,10 @@ function Button({title, stylesButtonContainer, stylesTitleText, onPress}) {
               justifyContent: 'center',
               alignItems: 'center',
               backgroundColor: colors.primary,
-              width: wp('85%'),
-              height: hp('5%'),
-              elevation: wp(1),
+              width: widthContainer ? widthContainer : wp(85),
+              height: hp(5),
               borderRadius: wp(1),
-              margin: wp(1),
+              paddingVertical: hp(1),
             }
       }
       onPress={onPress ? onPress : () => console.log('Button pressed.')}>
