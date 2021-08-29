@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, Keyboard, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -15,22 +15,22 @@ function RegisterScreen(props) {
   const [password, setPassword] = useState();
 
   onPressRegisterButton = (email, password) => {
-    auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User account created & signed in!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
-      });
+    Keyboard.dismiss();
+    console.log(email, password);
+    if (email == undefined || password == undefined) {
+      alert('Credentials are mandatory.');
+    } else {
+      auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('User account created & signed in!');
+          alert('User account created & signed in!');
+        })
+        .catch(error => {
+          console.error(error);
+          alert(error);
+        });
+    }
   };
 
   return (

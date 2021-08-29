@@ -32,7 +32,6 @@ function URLText({title, stylesUrlText, onPress}) {
 const styles = StyleSheet.create({
   urlContainer: {
     padding: wp(1),
-    elevation: hp(1),
   },
 });
 

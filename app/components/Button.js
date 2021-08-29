@@ -28,6 +28,7 @@ function Button({
               height: hp(5),
               borderRadius: wp(1),
               paddingVertical: hp(1),
+              elevation: hp(1),
             }
       }
       onPress={onPress ? onPress : () => console.log('Button pressed.')}>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, Keyboard, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -14,22 +14,22 @@ function ForgotPasswordScreen(props) {
   const [email, setEmail] = useState();
 
   onPressSendEmailButton = email => {
-    auth()
-      .sendPasswordResetEmail(email)
-      .then(() => {
-        console.log('Password reset email sent!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
-      });
+    console.log(email);
+    Keyboard.dismiss();
+    if (email == undefined) {
+      alert('Email is mandatory.');
+    } else {
+      auth()
+        .sendPasswordResetEmail(email)
+        .then(() => {
+          console.log('Password reset email sent!');
+          alert('Password reset email sent!');
+        })
+        .catch(error => {
+          console.error(error);
+          alert(error);
+        });
+    }
   };
 
   return (

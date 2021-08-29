@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Image, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -6,18 +6,8 @@ import {
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
 
-// secondary implementation
-// import {
-//   LoginManager,
-//   AccessToken,
-//   GraphRequest,
-//   GraphRequestManager,
-// } from 'react-native-fbsdk';
-
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import {NativeModules} from 'react-native';
-const {RNTwitterSignIn} = NativeModules;
 
 import AppButton from '../components/Button';
 import AppURLText from '../components/URLText';
@@ -26,58 +16,10 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 
 function WelcomeScreen(props) {
-  const [userInfo, setUserInfo] = useState();
-
   GoogleSignin.configure({
     webClientId:
       '816484953382-pr6gfesipg0slt2nh2r93e99rkscvhg7.apps.googleusercontent.com',
   });
-
-  RNTwitterSignIn.init('TWITTER_CONSUMER_KEY', 'TWITTER_CONSUMER_SECRET').then(
-    () => console.log('Twitter SDK initialized'),
-  );
-
-  // secondary implementation
-
-  // getInfoFromToken = token => {
-  //   const PROFILE_REQUEST_PARAMS = {
-  //     fields: {
-  //       string: 'id,name,first_name,last_name',
-  //     },
-  //   };
-  //   const profileRequest = new GraphRequest(
-  //     '/me',
-  //     {token, parameters: PROFILE_REQUEST_PARAMS},
-  //     (error, user) => {
-  //       if (error) {
-  //         console.log('login info has error: ' + error);
-  //       } else {
-  //         setUserInfo(user);
-  //         console.log('result:', user);
-  //       }
-  //     },
-  //   );
-  //   new GraphRequestManager().addRequest(profileRequest).start();
-  // };
-
-  // loginWithFacebook = () => {
-  //   // Attempt a login using the Facebook login dialog asking for default permissions.
-  //   LoginManager.logInWithPermissions(['public_profile']).then(
-  //     login => {
-  //       if (login.isCancelled) {
-  //         console.log('Login cancelled');
-  //       } else {
-  //         AccessToken.getCurrentAccessToken().then(data => {
-  //           const accessToken = data.accessToken.toString();
-  //           this.getInfoFromToken(accessToken);
-  //         });
-  //       }
-  //     },
-  //     error => {
-  //       console.log('Login fail with error: ' + error);
-  //     },
-  //   );
-  // };
 
   async function onFacebookButtonPress() {
     // Attempt login with permissions
@@ -119,32 +61,16 @@ function WelcomeScreen(props) {
     return auth().signInWithCredential(googleCredential);
   }
 
-  // async function onTwitterButtonPress() {
-  //   // Perform the login request
-  //   const {authToken, authTokenSecret} = await RNTwitterSignIn.logIn();
-
-  //   // Create a Twitter credential with the tokens
-  //   const twitterCredential = auth.TwitterAuthProvider.credential(
-  //     authToken,
-  //     authTokenSecret,
-  //   );
-
-  //   // Sign-in the user with the credential
-  //   return auth().signInWithCredential(twitterCredential);
-  // }
-
   onPressDemoButton = () => {
     auth()
       .signInAnonymously()
       .then(() => {
         console.log('User signed in anonymously');
+        alert('User signed in anonymously');
       })
       .catch(error => {
-        if (error.code === 'auth/operation-not-allowed') {
-          console.log('Enable anonymous in your firebase console.');
-        }
-
         console.error(error);
+        alert(error);
       });
   };
 
@@ -162,7 +88,7 @@ function WelcomeScreen(props) {
             title="sign up with facebook"
             onPress={() =>
               onFacebookButtonPress().then(() =>
-                console.log('Signed in with Facebook!'),
+                alert('Signed in with Facebook!'),
               )
             }
           />
@@ -173,9 +99,9 @@ function WelcomeScreen(props) {
             title="sign up with google"
             onPress={() =>
               onGoogleButtonPress()
-                .then(() => console.log('Signed in with Google!'))
+                .then(() => alert('Signed in with Google!'))
                 .catch(error => {
-                  console.log(error);
+                  alert(error);
                 })
             }
           />

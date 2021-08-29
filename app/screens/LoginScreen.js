@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image, StyleSheet} from 'react-native';
+import {View, Image, Keyboard, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,23 +17,23 @@ function LoginScreen(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  onPressLoginButton = (email, password) => {
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User signed in!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
-      });
+  onPressLoginButton = () => {
+    Keyboard.dismiss();
+    console.log(email, password);
+    if (email == undefined || password == undefined) {
+      alert('Credentials are mandatory.');
+    } else {
+      auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('User signed in!');
+          alert('User signed in!');
+        })
+        .catch(error => {
+          console.error(error);
+          alert(error);
+        });
+    }
   };
 
   return (
@@ -49,10 +49,7 @@ function LoginScreen(props) {
         <AppInput title={'password'} onChangeText={text => setPassword(text)} />
 
         <View style={styles.buttonContainer}>
-          <AppButton
-            title="login"
-            onPress={() => onPressLoginButton(email, password)}
-          />
+          <AppButton title="login" onPress={() => onPressLoginButton()} />
         </View>
       </View>
 
