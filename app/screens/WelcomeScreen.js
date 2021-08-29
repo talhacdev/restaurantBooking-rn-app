@@ -157,24 +157,29 @@ function WelcomeScreen(props) {
         />
       </View>
       <View style={styles.lowerViewContainer}>
-        <AppButton
-          title="sign up with facebook"
-          onPress={() =>
-            onFacebookButtonPress().then(() =>
-              console.log('Signed in with Facebook!'),
-            )
-          }
-        />
-        <AppButton
-          title="sign up with google"
-          onPress={() =>
-            onGoogleButtonPress()
-              .then(() => console.log('Signed in with Google!'))
-              .catch(error => {
-                console.log(error);
-              })
-          }
-        />
+        <View style={styles.buttonContainer}>
+          <AppButton
+            title="sign up with facebook"
+            onPress={() =>
+              onFacebookButtonPress().then(() =>
+                console.log('Signed in with Facebook!'),
+              )
+            }
+          />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <AppButton
+            title="sign up with google"
+            onPress={() =>
+              onGoogleButtonPress()
+                .then(() => console.log('Signed in with Google!'))
+                .catch(error => {
+                  console.log(error);
+                })
+            }
+          />
+        </View>
 
         {/* <AppButton
           title="sign up with twitter"
@@ -192,11 +197,16 @@ function WelcomeScreen(props) {
           onPress={() => navigation.navigate(routes.PHONE_NUMBER)}
         /> */}
 
-        <AppButton
-          title="register"
-          onPress={() => navigation.navigate(routes.REGISTER)}
-        />
-        <AppButton title="demo" onPress={() => onPressDemoButton()} />
+        <View style={styles.buttonContainer}>
+          <AppButton
+            title="register"
+            onPress={() => navigation.navigate(routes.REGISTER)}
+          />
+        </View>
+
+        <View style={styles.buttonContainer}>
+          <AppButton title="demo" onPress={() => onPressDemoButton()} />
+        </View>
       </View>
 
       <View style={styles.bottomViewContainer}>
@@ -239,6 +249,9 @@ const styles = StyleSheet.create({
     marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonContainer: {
+    marginBottom: hp(1),
   },
 });
 

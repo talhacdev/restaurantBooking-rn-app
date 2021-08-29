@@ -42,10 +42,12 @@ function ForgotPasswordScreen(props) {
       </View>
       <View style={styles.lowerViewContainer}>
         <AppInput title={'email'} onChangeText={text => setEmail(text)} />
-        <AppButton
-          title="send email"
-          onPress={() => onPressSendEmailButton(email)}
-        />
+        <View style={styles.buttonContainer}>
+          <AppButton
+            title="send email"
+            onPress={() => onPressSendEmailButton(email)}
+          />
+        </View>
       </View>
     </View>
   );
@@ -75,6 +77,9 @@ const styles = StyleSheet.create({
     marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonContainer: {
+    marginVertical: hp(1),
   },
 });
 

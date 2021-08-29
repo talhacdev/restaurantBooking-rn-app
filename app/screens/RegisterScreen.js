@@ -44,10 +44,12 @@ function RegisterScreen(props) {
       <View style={styles.lowerViewContainer}>
         <AppInput title={'email'} onChangeText={text => setEmail(text)} />
         <AppInput title={'password'} onChangeText={text => setPassword(text)} />
-        <AppButton
-          title="register"
-          onPress={() => onPressRegisterButton(email, password)}
-        />
+        <View style={styles.buttonContainer}>
+          <AppButton
+            title="register"
+            onPress={() => onPressRegisterButton(email, password)}
+          />
+        </View>
       </View>
     </View>
   );
@@ -77,6 +79,9 @@ const styles = StyleSheet.create({
     marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  buttonContainer: {
+    marginVertical: hp(1),
   },
 });
 
