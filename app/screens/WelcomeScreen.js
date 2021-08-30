@@ -62,7 +62,25 @@ function WelcomeScreen(props) {
     return auth().signInWithCredential(googleCredential);
   }
 
-  CreateUserRecord = res => {
+  const ProceedWithSocialUser = res => {
+    firestore()
+      .collection('UserRecords')
+      // Filter results
+      .where('uid', '==', res.user._user.uid)
+      .get()
+      .then(querySnapshot => {
+        if (querySnapshot._docs.length == 0) {
+          CreateUserRecord(res);
+        } else {
+          // login user
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const CreateUserRecord = res => {
     let obj = {
       email: res.user._user.email,
       uid: res.user._user.uid,
@@ -109,7 +127,7 @@ function WelcomeScreen(props) {
           <AppButton
             title="sign up with facebook"
             onPress={() =>
-              onFacebookButtonPress().then(res => CreateUserRecord(res))
+              onFacebookButtonPress().then(res => ProceedWithSocialUser(res))
             }
           />
         </View>
@@ -119,7 +137,7 @@ function WelcomeScreen(props) {
             title="sign up with google"
             onPress={() =>
               onGoogleButtonPress()
-                .then(res => CreateUserRecord(res))
+                .then(res => ProceedWithSocialUser(res))
                 .catch(error => {
                   alert(error);
                 })

@@ -32,26 +32,26 @@ function RegisterScreen(props) {
           alert(error);
         });
     }
+  };
 
-    CreateUserRecord = res => {
-      let obj = {
-        email: res.user._user.email,
-        uid: res.user._user.uid,
-        displayName: res.user._user.displayName,
-        photoURL: res.user._user.photoURL,
-        phoneNumber: res.user._user.phoneNumber,
-      };
-      firestore()
-        .collection('UserRecords')
-        .doc(obj.uid)
-        .set(obj)
-        .then(() => {
-          console.log('UserRecords updated!');
-        })
-        .catch(error => {
-          console.log(error);
-        });
+  const CreateUserRecord = res => {
+    let obj = {
+      email: res.user._user.email,
+      uid: res.user._user.uid,
+      displayName: res.user._user.displayName,
+      photoURL: res.user._user.photoURL,
+      phoneNumber: res.user._user.phoneNumber,
     };
+    firestore()
+      .collection('UserRecords')
+      .doc(obj.uid)
+      .set(obj)
+      .then(() => {
+        console.log('UserRecords updated!');
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (
