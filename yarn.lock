@@ -1765,7 +1765,7 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/masked-view/-/masked-view-0.1.11.tgz"
   "version" "0.1.11"
 
-"@react-native-firebase/app@^12.4.0", "@react-native-firebase/app@12.7.3":
+"@react-native-firebase/app@^12.7.3", "@react-native-firebase/app@12.7.3":
   "integrity" "sha512-dp4lbLM0xJsR8mT5PHrCGSoCMCZ0KrXFIt69pAsjaQ22AEr2ETeBrCxbwHQjXylfPrg1PudqADzMIifS44Qq9g=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/app/-/app-12.7.3.tgz"
   "version" "12.7.3"
@@ -1777,6 +1777,11 @@
 "@react-native-firebase/auth@^12.4.0":
   "integrity" "sha512-BksvXxIJLxxnAY0v476XxIZA9F46p+wRCX5VMpLBnfXN7BThpT1nl0aqTs1Da4pIEmYTOuGcV+afbs46uklQ4A=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/auth/-/auth-12.7.3.tgz"
+  "version" "12.7.3"
+
+"@react-native-firebase/firestore@^12.7.3":
+  "integrity" "sha512-5nLOFf5bZlqzjivJ3asrsD2vQQ/GcdPLvXIq2/FurV977tdVmNyfvXSSX0qILn4YJXSFJ2jsRbXkGIZT327uHw=="
+  "resolved" "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-12.7.3.tgz"
   "version" "12.7.3"
 
 "@react-native-google-signin/google-signin@^6.0.1":

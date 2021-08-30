@@ -5,6 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -61,10 +62,31 @@ function WelcomeScreen(props) {
     return auth().signInWithCredential(googleCredential);
   }
 
+  CreateUserRecord = res => {
+    let obj = {
+      email: res.user._user.email,
+      uid: res.user._user.uid,
+      displayName: res.user._user.displayName,
+      photoURL: res.user._user.photoURL,
+      phoneNumber: res.user._user.phoneNumber,
+    };
+    firestore()
+      .collection('UserRecords')
+      .doc(obj.uid)
+      .set(obj)
+      .then(() => {
+        console.log('User added!');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   onPressDemoButton = () => {
     auth()
       .signInAnonymously()
-      .then(() => {
+      .then(res => {
+        CreateUserRecord(res);
         console.log('User signed in anonymously');
         alert('User signed in anonymously');
       })
@@ -87,9 +109,7 @@ function WelcomeScreen(props) {
           <AppButton
             title="sign up with facebook"
             onPress={() =>
-              onFacebookButtonPress().then(() =>
-                alert('Signed in with Facebook!'),
-              )
+              onFacebookButtonPress().then(res => CreateUserRecord(res))
             }
           />
         </View>
@@ -99,7 +119,7 @@ function WelcomeScreen(props) {
             title="sign up with google"
             onPress={() =>
               onGoogleButtonPress()
-                .then(() => alert('Signed in with Google!'))
+                .then(res => CreateUserRecord(res))
                 .catch(error => {
                   alert(error);
                 })

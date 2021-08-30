@@ -5,6 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
@@ -16,21 +17,41 @@ function RegisterScreen(props) {
 
   onPressRegisterButton = (email, password) => {
     Keyboard.dismiss();
-    console.log(email, password);
+
     if (email == undefined || password == undefined) {
       alert('Credentials are mandatory.');
     } else {
       auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(() => {
+        .then(res => {
           console.log('User account created & signed in!');
-          alert('User account created & signed in!');
+          CreateUserRecord(res);
         })
         .catch(error => {
           console.error(error);
           alert(error);
         });
     }
+
+    CreateUserRecord = res => {
+      let obj = {
+        email: res.user._user.email,
+        uid: res.user._user.uid,
+        displayName: res.user._user.displayName,
+        photoURL: res.user._user.photoURL,
+        phoneNumber: res.user._user.phoneNumber,
+      };
+      firestore()
+        .collection('UserRecords')
+        .doc(obj.uid)
+        .set(obj)
+        .then(() => {
+          console.log('UserRecords updated!');
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    };
   };
 
   return (
