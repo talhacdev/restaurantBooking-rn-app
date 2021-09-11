@@ -37,7 +37,7 @@ function Input({
               : {
                   fontWeight: 'bold',
                   color: colors.tertiary,
-                  fontSize: wp(3.5),
+                  fontSize: wp(3.3),
                   textTransform: 'uppercase',
                 }
           }>

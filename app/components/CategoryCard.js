@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,20 +12,14 @@ function CategoryCard({title, stylesTitleText, onPress}) {
     <TouchableOpacity
       style={styles.cardContainer}
       onPress={onPress ? onPress : () => console.log('Card pressed.')}>
-      <Text
-        numberOfLines={1}
-        style={
-          stylesTitleText
-            ? stylesTitleText
-            : {
-                fontWeight: 'bold',
-                color: colors.tertiary,
-                fontSize: wp(4),
-                textTransform: 'uppercase',
-              }
-        }>
-        {title ? title : 'title'}
-      </Text>
+      <Image
+        style={{
+          width: wp(20),
+          height: wp(20),
+          padding: wp(1),
+        }}
+        source={require('../assets/burger.png')}
+      />
     </TouchableOpacity>
   );
 }
@@ -35,6 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.secondary,
+    backgroundColor: colors.categoryCardBackground,
     width: wp('50%'),
     height: hp('12.5%'),
     elevation: wp(1),

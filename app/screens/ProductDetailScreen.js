@@ -28,12 +28,28 @@ function ProductDetailScreen(props) {
           />
         </View>
         <View style={styles.lowerViewContainer}>
-          <Text style={styles.productNameText}>{listing.productName}</Text>
-          <Text style={styles.companyNameText}>{listing.companyName}</Text>
+          <Text style={styles.productNameText}>{listing.itemName}</Text>
+          <Text style={styles.companyNameText}>{listing.restaurantName}</Text>
           <View style={{marginVertical: wp(2)}}>
-            <Text style={styles.unitText}>{listing.unit}</Text>
+            <Text style={styles.unitText}>{listing.category}</Text>
+          </View>
+          <View style={styles.ratingContainer}>
+            <View>
+              <Image
+                style={{
+                  width: wp(7),
+                  height: wp(7),
+                  padding: wp(1),
+                }}
+                source={require('../assets/star.png')}
+              />
+            </View>
+            <View>
+              <Text style={styles.ratingText}>{listing.rating}</Text>
+            </View>
           </View>
           <Text style={styles.priceText}>{listing.price}</Text>
+          <Text style={styles.priceText}>{listing.discountedPrice}</Text>
           <View style={{marginVertical: wp(2), height: wp(19)}}>
             <Text numberOfLines={3} style={styles.descriptionText}>
               {listing.description}
@@ -101,6 +117,16 @@ const styles = StyleSheet.create({
     flex: 0.1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ratingText: {
+    color: colors.ratingText,
+    paddingHorizontal: wp(1),
+    fontWeight: 'bold',
+    fontSize: wp(6.5),
   },
 });
 

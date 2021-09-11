@@ -30,15 +30,20 @@ function ProfileScreen(props) {
             source={require('../assets/snapchatLogoBlack.jpg')}
           />
           <AppInput
+            placeholder="first name"
+            title="first name"
+            style={styles.textInput}
+          />
+          <AppInput
+            placeholder="last name"
+            title="last name"
+            style={styles.textInput}
+          />
+          <AppInput
             placeholder="email"
             title="email"
             style={styles.textInput}
             keyboardType={'email-address'}
-          />
-          <AppInput
-            placeholder="username"
-            title="username"
-            style={styles.textInput}
           />
           <AppInput
             placeholder="phone"

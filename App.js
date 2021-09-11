@@ -36,8 +36,7 @@ export default function App() {
 
   return (
     <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-      {/* <AppNavigator /> */}
-      <AuthNavigator />
+      <AppNavigator />
     </NavigationContainer>
   );
 }

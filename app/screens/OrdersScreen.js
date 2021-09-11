@@ -88,7 +88,7 @@ function OrdersScreen(props) {
                 address={item.address}
                 status={item.status}
                 total={item.total}
-                onPress={() => navigation.navigate(routes.ORDER_DETAIL, item)}
+                //  onPress={() => navigation.navigate(routes.ORDER_DETAIL, item)}
               />
             )}
           />

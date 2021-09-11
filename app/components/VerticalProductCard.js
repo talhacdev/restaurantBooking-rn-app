@@ -8,31 +8,57 @@ import {
 import VerticalProductCardButton from '../components/VerticalProductCardButton';
 import colors from '../config/colors';
 
-function VerticalProductCard({productName, companyName, price, onPress}) {
+function VerticalProductCard({
+  itemName,
+  restaurantName,
+  discountedPrice,
+  price,
+  onPress,
+  rating,
+}) {
   return (
     <TouchableOpacity
       style={styles.cardContainer}
       onPress={onPress ? onPress : () => console.log('Card pressed.')}>
-      <View>
+      <View style={styles.imageContainer}>
         <Image
           style={{
-            width: wp(36),
-            height: wp(36),
-            margin: wp(1),
+            width: wp(30),
+            height: wp(30),
+            padding: wp(1),
           }}
-          source={require('../assets/snapchatLogoBlack.jpg')}
+          source={require('../assets/burger.png')}
         />
       </View>
+
       <View style={styles.detailContainer}>
+        <View style={styles.ratingContainer}>
+          <View>
+            <Image
+              style={{
+                width: wp(5),
+                height: wp(5),
+                padding: wp(1),
+              }}
+              source={require('../assets/star.png')}
+            />
+          </View>
+          <View>
+            <Text style={styles.ratingText}>{rating}</Text>
+          </View>
+        </View>
         <Text numberOfLines={1} style={styles.detailMainText}>
-          {productName}
+          {itemName}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {companyName}
+          {restaurantName}
         </Text>
         <View style={styles.priceContainer}>
           <Text numberOfLines={1} style={styles.priceText}>
             ${price}
+          </Text>
+          <Text numberOfLines={1} style={styles.discountedPriceText}>
+            ${discountedPrice}
           </Text>
         </View>
       </View>
@@ -48,6 +74,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.secondary,
+    // backgroundColor: 'pink',
     width: wp('40%'),
     height: hp('35%'),
     elevation: wp(1),
@@ -60,11 +87,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: wp(1),
     width: '100%',
+    // backgroundColor: 'pink',
   },
   priceContainer: {
+    flexDirection: 'row',
+    // backgroundColor: 'orange',
     margin: wp(1),
-    justifyContent: 'center',
-    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   detailMainText: {
     color: colors.tertiary,
@@ -74,9 +104,23 @@ const styles = StyleSheet.create({
     color: colors.tertiary,
     fontSize: wp(3),
   },
-  priceText: {
-    color: colors.tertiary,
+  discountedPriceText: {
+    color: colors.discountedPriceText,
     fontSize: wp(3.8),
+  },
+  priceText: {
+    color: colors.priceText,
+    fontSize: wp(3.8),
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  ratingText: {
+    color: colors.ratingText,
+    fontSize: wp(3.8),
+    paddingHorizontal: wp(1),
   },
 });
 

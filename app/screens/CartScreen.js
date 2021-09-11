@@ -134,7 +134,8 @@ function CartScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerViewContainer}>
+      <Text>CartNavigator</Text>
+      {/* <View style={styles.headerViewContainer}>
         <AppHeader title={'cart'} />
       </View>
       <View style={styles.contentViewContainer}>
@@ -172,7 +173,7 @@ function CartScreen(props) {
             onPress={() => navigation.navigate(routes.CHECKOUT)}
           />
         </View>
-      </View>
+      </View> */}
     </View>
   );
 }

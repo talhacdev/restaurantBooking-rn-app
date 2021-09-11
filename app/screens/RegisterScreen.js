@@ -6,17 +6,7 @@ import {
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from 'react-native-indicators';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
@@ -25,6 +15,7 @@ import colors from '../config/colors';
 function RegisterScreen(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState();
 
   onPressRegisterButton = (email, password) => {
     Keyboard.dismiss();
@@ -67,16 +58,18 @@ function RegisterScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          position: 'absolute',
-          padding: wp(5),
-          borderRadius: wp(10),
-          backgroundColor: 'black',
-          zIndex: 1,
-        }}>
-        <UIActivityIndicator color="white" />
-      </View>
+      {loading ? (
+        <View
+          style={{
+            position: 'absolute',
+            padding: wp(5),
+            borderRadius: wp(10),
+            backgroundColor: 'black',
+            zIndex: 1,
+          }}>
+          <UIActivityIndicator color="white" />
+        </View>
+      ) : null}
       <View style={styles.upperViewContainer}>
         <Image
           style={styles.image}

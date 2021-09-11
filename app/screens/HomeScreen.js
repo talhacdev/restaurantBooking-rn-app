@@ -15,104 +15,70 @@ import navigation from '../navigation/rootNavigation';
 function HomeScreen(props) {
   const data = [
     {
-      id: '1',
-      title: 'one',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      id: '0',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
+      reviews: 'reviews',
+    },
+    {
+      id: '1',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
+      description: 'description',
+      reviews: 'reviews',
     },
     {
       id: '2',
-      title: 'two',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
+      reviews: 'reviews',
     },
     {
       id: '3',
-      title: 'three',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
+      reviews: 'reviews',
     },
     {
       id: '4',
-      title: 'four',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
+      reviews: 'reviews',
     },
     {
       id: '5',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
-    },
-    {
-      id: '6',
-      title: 'six',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '7',
-      title: 'seven',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '8',
-      title: 'eigth',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '9',
-      title: 'nine',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '10',
-      title: 'ten',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
+      reviews: 'reviews',
     },
   ];
 
@@ -152,9 +118,10 @@ function HomeScreen(props) {
             renderItem={({item}) => (
               <View style={styles.wrapper}>
                 <VerticalProductCard
-                  title={item.title}
-                  productName={item.productName}
-                  companyName={item.companyName}
+                  itemName={item.itemName}
+                  discountedPrice={item.discountedPrice}
+                  rating={item.rating}
+                  restaurantName={item.restaurantName}
                   price={item.price}
                   onPress={() =>
                     navigation.navigate(routes.PRODUCT_DETAIL, item)
@@ -176,9 +143,10 @@ function HomeScreen(props) {
             renderItem={({item}) => (
               <View style={styles.wrapper}>
                 <VerticalProductCard
-                  title={item.title}
-                  productName={item.productName}
-                  companyName={item.companyName}
+                  itemName={item.itemName}
+                  discountedPrice={item.discountedPrice}
+                  rating={item.rating}
+                  restaurantName={item.restaurantName}
                   price={item.price}
                   onPress={() =>
                     navigation.navigate(routes.PRODUCT_DETAIL, item)

@@ -8,7 +8,14 @@ import {
 import VerticalProductCardButton from '../components/VerticalProductCardButton';
 import colors from '../config/colors';
 
-function ProductCard({productName, companyName, price, onPress}) {
+function ProductCard({
+  itemName,
+  restaurantName,
+  discountedPrice,
+  price,
+  onPress,
+  rating,
+}) {
   return (
     <TouchableOpacity
       style={styles.cardContainer}
@@ -16,23 +23,42 @@ function ProductCard({productName, companyName, price, onPress}) {
       <View>
         <Image
           style={{
-            width: wp(36),
-            height: wp(36),
-            margin: wp(1),
+            width: wp(30),
+            height: wp(30),
+            padding: wp(1),
           }}
-          source={require('../assets/snapchatLogoBlack.jpg')}
+          source={require('../assets/burger.png')}
         />
       </View>
       <View style={styles.detailContainer}>
+        <View style={styles.ratingContainer}>
+          <View>
+            <Image
+              style={{
+                width: wp(5),
+                height: wp(5),
+                padding: wp(1),
+              }}
+              source={require('../assets/star.png')}
+            />
+          </View>
+          <View>
+            <Text style={styles.ratingText}>{rating}</Text>
+          </View>
+        </View>
         <Text numberOfLines={1} style={styles.detailMainText}>
-          {productName}
+          {itemName}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {companyName}
+          {restaurantName}
         </Text>
+
         <View style={styles.priceContainer}>
           <Text numberOfLines={1} style={styles.priceText}>
             ${price}
+          </Text>
+          <Text numberOfLines={1} style={styles.discountedPriceText}>
+            ${discountedPrice}
           </Text>
         </View>
       </View>
@@ -48,8 +74,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.secondary,
-    width: wp('50%'),
-    height: hp('35%'),
+    // backgroundColor: 'pink',
+    width: wp('50'),
+    height: hp('35'),
     elevation: wp(1),
     padding: wp(4),
     borderColor: colors.primary,
@@ -74,9 +101,30 @@ const styles = StyleSheet.create({
     color: colors.tertiary,
     fontSize: wp(3),
   },
-  priceText: {
-    color: colors.tertiary,
+  discountedPriceText: {
+    color: colors.discountedPriceText,
     fontSize: wp(3.8),
+  },
+  priceText: {
+    color: colors.priceText,
+    fontSize: wp(3.8),
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  ratingText: {
+    color: colors.ratingText,
+    fontSize: wp(3.8),
+    paddingHorizontal: wp(1),
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    // backgroundColor: 'orange',
+    margin: wp(1),
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

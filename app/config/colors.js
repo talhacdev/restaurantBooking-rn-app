@@ -13,4 +13,9 @@ export default {
   input: '#000000',
 
   card: '#F9F6EE',
+
+  categoryCardBackground: 'white',
+  discountedPriceText: '#00FF00',
+  priceText: '#FF0000',
+  ratingText: '#FAB523',
 };
