@@ -23,4 +23,6 @@ export default Object.freeze({
   ORDER_SUCCESS: 'OrderSuccess',
   PHONE_NUMBER: 'PhoneNumber',
   RESTAURANT_DETAIL: 'RestaurantDetail',
+  BOOK_NOW: 'BookNow',
+  BOOKING_SUCCESS: 'BookingSuccess',
 });

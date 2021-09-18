@@ -18,4 +18,5 @@ export default {
   discountedPriceText: '#00FF00',
   priceText: '#FF0000',
   ratingText: '#FAB523',
+  selectionButton: 'grey',
 };

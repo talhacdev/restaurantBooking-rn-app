@@ -14,6 +14,9 @@ import {
 
 import AppHeader from '../components/Header';
 import ReviewCard from '../components/ReviewCard';
+import AppButton from '../components/Button';
+import routes from '../navigation/routes';
+import navigation from '../navigation/rootNavigation';
 
 import colors from '../config/colors';
 
@@ -76,6 +79,13 @@ function RestaurantDetailScreen(props) {
                   <ReviewCard user={item.user} comment={item.comment} />
                 </View>
               )}
+            />
+          </View>
+          <View style={styles.buttonViewContainer}>
+            <AppButton
+              onPress={() => navigation.navigate(routes.BOOK_NOW)}
+              widthContainer={wp(100)}
+              title={'book'}
             />
           </View>
         </ScrollView>

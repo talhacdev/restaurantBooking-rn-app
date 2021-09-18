@@ -5,6 +5,8 @@ import HomeScreen from '../screens/HomeScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
 import ProductScreen from '../screens/ProductScreen';
 import RestaurantDetailScreen from '../screens/RestaurantDetailScreen';
+import BookNowScreen from '../screens/BookNowScreen';
+import BookingSuccessScreen from '../screens/BookingSuccessScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +30,16 @@ const FeedNavigator = () => (
     <Stack.Screen
       name="RestaurantDetail"
       component={RestaurantDetailScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="BookNow"
+      component={BookNowScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="BookingSuccess"
+      component={BookingSuccessScreen}
       options={{headerShown: false}}
     />
   </Stack.Navigator>
