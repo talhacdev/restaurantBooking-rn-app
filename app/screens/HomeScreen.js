@@ -11,6 +11,8 @@ import CategoryCard from '../components/CategoryCard';
 import VerticalProductCard from '../components/VerticalProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
+import RestaurantVerticalCard from '../components/RestaurantVerticalCard';
+import ReviewCard from '../components/ReviewCard';
 
 function HomeScreen(props) {
   const data = [
@@ -82,6 +84,207 @@ function HomeScreen(props) {
     },
   ];
 
+  const dataRestaurant = [
+    {
+      id: '0',
+      restaurantName: 'restaurantName',
+      location: ['Johar Town, Lahore'],
+      photo: [],
+      rating: '1',
+      category: 'category',
+      contact: '+923331049859',
+      tables: [
+        {
+          id: '0',
+          status: 'booked',
+          description: 'table1',
+        },
+        {
+          id: '1',
+          status: 'available',
+          description: 'table2',
+        },
+      ],
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
+    },
+    {
+      id: '1',
+      restaurantName: 'restaurantName',
+      location: ['Johar Town, Lahore'],
+      photo: [],
+      rating: '1',
+      category: 'category',
+      contact: '+923331049859',
+      tables: [
+        {
+          id: '0',
+          status: 'booked',
+          description: 'table1',
+        },
+        {
+          id: '1',
+          status: 'available',
+          description: 'table2',
+        },
+      ],
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
+    },
+    {
+      id: '2',
+      restaurantName: 'restaurantName',
+      location: ['Johar Town, Lahore'],
+      photo: [],
+      rating: '1',
+      category: 'category',
+      contact: '+923331049859',
+      tables: [
+        {
+          id: '0',
+          status: 'booked',
+          description: 'table1',
+        },
+        {
+          id: '1',
+          status: 'available',
+          description: 'table2',
+        },
+      ],
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
+    },
+    {
+      id: '3',
+      restaurantName: 'restaurantName',
+      location: ['Johar Town, Lahore'],
+      photo: [],
+      rating: '1',
+      category: 'category',
+      contact: '+923331049859',
+      tables: [
+        {
+          id: '0',
+          status: 'booked',
+          description: 'table1',
+        },
+        {
+          id: '1',
+          status: 'available',
+          description: 'table2',
+        },
+      ],
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
+    },
+    {
+      id: '4',
+      restaurantName: 'restaurantName',
+      location: ['Johar Town, Lahore'],
+      photo: [],
+      rating: '1',
+      category: 'category',
+      contact: '+923331049859',
+      tables: [
+        {
+          id: '0',
+          status: 'booked',
+          description: 'table1',
+        },
+        {
+          id: '1',
+          status: 'available',
+          description: 'table2',
+        },
+      ],
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
+    },
+    {
+      id: '5',
+      restaurantName: 'restaurantName',
+      location: ['Johar Town, Lahore'],
+      photo: [],
+      rating: '1',
+      category: 'category',
+      contact: '+923331049859',
+      tables: [
+        {
+          id: '0',
+          status: 'booked',
+          description: 'table1',
+        },
+        {
+          id: '1',
+          status: 'available',
+          description: 'table2',
+        },
+      ],
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
+    },
+  ];
+
   return (
     <View style={styles.container}>
       <View style={styles.headerViewContainer}>
@@ -106,9 +309,11 @@ function HomeScreen(props) {
             )}
           />
         </View>
+
         <View style={styles.dividerView}>
           <Text style={styles.dividerText}>Suggested</Text>
         </View>
+
         <View style={styles.lowerViewContainer}>
           <FlatList
             horizontal
@@ -125,6 +330,33 @@ function HomeScreen(props) {
                   price={item.price}
                   onPress={() =>
                     navigation.navigate(routes.PRODUCT_DETAIL, item)
+                  }
+                />
+              </View>
+            )}
+          />
+        </View>
+        <View style={styles.dividerView}>
+          <Text style={styles.dividerText}>Restaurants</Text>
+        </View>
+        <View style={styles.lowerViewContainer}>
+          <FlatList
+            horizontal
+            showsVerticalScrollIndicator={false}
+            data={dataRestaurant}
+            keyExtractor={dataRestaurant => dataRestaurant.id.toString()}
+            renderItem={({item}) => (
+              <View style={styles.wrapper}>
+                <RestaurantVerticalCard
+                  restaurantName={item.restaurantName}
+                  location={item.location}
+                  rating={item.rating}
+                  category={item.category}
+                  tables={item.tables}
+                  reviews={item.reviews}
+                  contact={item.contact}
+                  onPress={() =>
+                    navigation.navigate(routes.RESTAURANT_DETAIL, item)
                   }
                 />
               </View>

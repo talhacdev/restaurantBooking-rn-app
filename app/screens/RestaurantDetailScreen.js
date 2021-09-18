@@ -1,15 +1,23 @@
 import React from 'react';
-import {View, Text, Image, ScrollView, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  ScrollView,
+  FlatList,
+  StyleSheet,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import AppButton from '../components/Button';
 import AppHeader from '../components/Header';
+import ReviewCard from '../components/ReviewCard';
+
 import colors from '../config/colors';
 
-function ProductDetailScreen(props) {
+function RestaurantDetailScreen(props) {
   const listing = props.route.params;
   console.log('listing=>', listing);
   return (
@@ -31,12 +39,17 @@ function ProductDetailScreen(props) {
               source={require('../assets/snapchatLogoBlack.jpg')}
             />
           </View>
+
           <View style={styles.lowerViewContainer}>
-            <Text style={styles.productNameText}>{listing.itemName}</Text>
-            <Text style={styles.companyNameText}>{listing.restaurantName}</Text>
+            <Text style={styles.productNameText}>{listing.restaurantName}</Text>
+            <Text style={styles.companyNameText}>{listing.location}</Text>
             <View style={{marginVertical: wp(2)}}>
               <Text style={styles.unitText}>{listing.category}</Text>
             </View>
+            <View>
+              <Text style={styles.unitText}>{listing.contact}</Text>
+            </View>
+
             <View style={styles.ratingContainer}>
               <View>
                 <Image
@@ -52,16 +65,18 @@ function ProductDetailScreen(props) {
                 <Text style={styles.ratingText}>{listing.rating}</Text>
               </View>
             </View>
-            <Text style={styles.priceText}>{listing.price}</Text>
-            <Text style={styles.priceText}>{listing.discountedPrice}</Text>
-            <View style={{marginVertical: wp(2), height: wp(19)}}>
-              <Text numberOfLines={3} style={styles.descriptionText}>
-                {listing.description}
-              </Text>
-            </View>
           </View>
-          <View style={styles.buttonViewContainer}>
-            <AppButton title={'add to cart'} />
+          <View>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={listing.reviews}
+              keyExtractor={data => data.id.toString()}
+              renderItem={({item}) => (
+                <View>
+                  <ReviewCard user={item.user} comment={item.comment} />
+                </View>
+              )}
+            />
           </View>
         </ScrollView>
       </View>
@@ -136,4 +151,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductDetailScreen;
+export default RestaurantDetailScreen;

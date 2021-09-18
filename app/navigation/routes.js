@@ -22,4 +22,5 @@ export default Object.freeze({
   PAYMENT_METHOD: 'PaymentMethod',
   ORDER_SUCCESS: 'OrderSuccess',
   PHONE_NUMBER: 'PhoneNumber',
+  RESTAURANT_DETAIL: 'RestaurantDetail',
 });
