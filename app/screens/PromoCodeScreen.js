@@ -149,6 +149,8 @@ function PromoCodeScreen(props) {
       <View style={styles.buttonContainer}>
         <Button
           title={'apply promo code'}
+          noElevation
+          widthContainer={wp(100)}
           onPress={() => navigation.navigate(routes.CHECKOUT)}
         />
       </View>
@@ -159,7 +161,7 @@ function PromoCodeScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.background,
   },
   headerViewContainer: {
     flex: 0.1,
@@ -177,6 +179,7 @@ const styles = StyleSheet.create({
   contentViewContainer: {
     flex: 1,
     top: hp(8.5),
+    backgroundColor: colors.background,
   },
   buttonContainer: {
     justifyContent: 'center',
@@ -185,6 +188,9 @@ const styles = StyleSheet.create({
   appInputContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  upperViewContainer: {
+    backgroundColor: colors.primary,
   },
 });
 

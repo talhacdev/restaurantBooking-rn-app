@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
   contentViewContainer: {
     flex: 1,
     top: hp(8.5),
+    backgroundColor: colors.background,
   },
   buttonContainer: {
     justifyContent: 'center',

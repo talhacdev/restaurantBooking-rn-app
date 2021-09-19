@@ -26,6 +26,7 @@ function BottomTextCard({
 }) {
   return (
     <TouchableOpacity
+      disabled
       style={
         stylesContainer
           ? stylesContainer

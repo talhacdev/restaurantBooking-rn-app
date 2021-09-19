@@ -9,10 +9,11 @@ import colors from '../config/colors';
 
 function Button({
   title,
-  elevation,
+  noElevation,
   widthContainer,
   stylesButtonContainer,
   stylesTitleText,
+  backgroundColorContainer,
   onPress,
 }) {
   return (
@@ -23,12 +24,14 @@ function Button({
           : {
               justifyContent: 'center',
               alignItems: 'center',
-              backgroundColor: colors.primary,
+              backgroundColor: backgroundColorContainer
+                ? backgroundColorContainer
+                : colors.primary,
               width: widthContainer ? widthContainer : wp(85),
               height: hp(5),
               borderRadius: wp(1),
               paddingVertical: hp(1),
-              elevation: hp(1),
+              elevation: noElevation ? hp(0) : hp(1),
             }
       }
       onPress={onPress ? onPress : () => console.log('Button pressed.')}>

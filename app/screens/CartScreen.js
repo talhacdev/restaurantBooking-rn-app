@@ -134,8 +134,7 @@ function CartScreen(props) {
 
   return (
     <View style={styles.container}>
-      <Text>CartNavigator</Text>
-      {/* <View style={styles.headerViewContainer}>
+      <View style={styles.headerViewContainer}>
         <AppHeader title={'cart'} />
       </View>
       <View style={styles.contentViewContainer}>
@@ -162,18 +161,19 @@ function CartScreen(props) {
         </View>
       </View>
       <View style={styles.bottomViewContainer}>
-        <BottomTextCard
-          leftTitle={totalQuantity + ' goods'}
-          rightTitle={'Total $' + totalPrice}
-        />
         <View style={styles.buttonContainer}>
           <Button
+            noElevation
             widthContainer={wp(100)}
             title={'CHECK OUT'}
             onPress={() => navigation.navigate(routes.CHECKOUT)}
           />
         </View>
-      </View> */}
+        <BottomTextCard
+          leftTitle={totalQuantity + ' goods'}
+          rightTitle={'Total $' + totalPrice}
+        />
+      </View>
     </View>
   );
 }
@@ -197,7 +197,6 @@ const styles = StyleSheet.create({
     top: hp(8.5),
   },
   buttonContainer: {
-    paddingVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -311,32 +311,6 @@ function HomeScreen(props) {
         </View>
 
         <View style={styles.dividerView}>
-          <Text style={styles.dividerText}>Suggested</Text>
-        </View>
-
-        <View style={styles.lowerViewContainer}>
-          <FlatList
-            horizontal
-            showsVerticalScrollIndicator={false}
-            data={data}
-            keyExtractor={data => data.id.toString()}
-            renderItem={({item}) => (
-              <View style={styles.wrapper}>
-                <VerticalProductCard
-                  itemName={item.itemName}
-                  discountedPrice={item.discountedPrice}
-                  rating={item.rating}
-                  restaurantName={item.restaurantName}
-                  price={item.price}
-                  onPress={() =>
-                    navigation.navigate(routes.PRODUCT_DETAIL, item)
-                  }
-                />
-              </View>
-            )}
-          />
-        </View>
-        <View style={styles.dividerView}>
           <Text style={styles.dividerText}>Restaurants</Text>
         </View>
         <View style={styles.lowerViewContainer}>
@@ -363,9 +337,11 @@ function HomeScreen(props) {
             )}
           />
         </View>
+
         <View style={styles.dividerView}>
-          <Text style={styles.dividerText}>Trending</Text>
+          <Text style={styles.dividerText}>Suggested</Text>
         </View>
+
         <View style={styles.lowerViewContainer}>
           <FlatList
             horizontal

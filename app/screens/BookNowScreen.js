@@ -15,6 +15,7 @@ import RestaurantVerticalCard from '../components/RestaurantVerticalCard';
 import ReviewCard from '../components/ReviewCard';
 import SelectionButton from '../components/SelectionButton';
 import AppButton from '../components/Button';
+import AppInput from '../components/Input';
 
 function BookNowScreen(props) {
   const tables = [
@@ -64,9 +65,7 @@ function BookNowScreen(props) {
       <View style={styles.headerViewContainer}>
         <AppHeader title="book now" />
       </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.contentViewContainer}>
+      <View style={styles.contentViewContainer}>
         <View style={styles.dividerView}>
           <Text style={styles.dividerText}>Tables</Text>
         </View>
@@ -106,14 +105,16 @@ function BookNowScreen(props) {
             )}
           />
         </View>
-        <View style={styles.buttonViewContainer}>
-          <AppButton
-            onPress={() => navigation.navigate(routes.BOOKING_SUCCESS)}
-            widthContainer={wp(100)}
-            title={'book now'}
-          />
+
+        <View style={styles.lowerViewContainer}>
+          <View style={styles.buttonContainer}>
+            <AppButton
+              title="book now"
+              onPress={() => navigation.navigate(routes.BOOKING_SUCCESS)}
+            />
+          </View>
         </View>
-      </ScrollView>
+      </View>
     </View>
   );
 }
@@ -129,9 +130,8 @@ const styles = StyleSheet.create({
     top: hp(0),
   },
   contentViewContainer: {
-    flex: 0.8,
+    flex: 0.9,
     top: hp(8.5),
-    marginBottom: hp(8.5),
   },
   upperViewContainer: {},
   dividerView: {
@@ -148,13 +148,17 @@ const styles = StyleSheet.create({
     fontSize: wp(4.5),
     textTransform: 'uppercase',
   },
-  lowerViewContainer: {},
-  bottomViewContainer: {
-    flex: 0.1,
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 0,
+    marginVertical: hp(3),
     justifyContent: 'center',
     alignItems: 'center',
   },
-  buttonViewContainer: {
+  lowerViewContainer: {
+    flex: 1,
+    paddingVertical: hp(1),
+    marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },

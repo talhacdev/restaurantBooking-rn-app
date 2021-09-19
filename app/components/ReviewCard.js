@@ -15,7 +15,7 @@ function ReviewCard({user, comment}) {
             height: wp(15),
             borderRadius: wp(7.5),
           }}
-          source={require('../assets/snapchatLogoBlack.jpg')}
+          source={require('../assets/user.jpg')}
         />
       </View>
       <View style={styles.subContainer}>

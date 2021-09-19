@@ -28,7 +28,7 @@ function ProductDetailScreen(props) {
                 width: wp(100),
                 height: wp(100),
               }}
-              source={require('../assets/snapchatLogoBlack.jpg')}
+              source={require('../assets/burger.png')}
             />
           </View>
           <View style={styles.lowerViewContainer}>
@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
   buttonViewContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: hp(3),
   },
   bottomViewContainer: {
     flex: 0.1,

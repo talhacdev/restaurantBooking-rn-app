@@ -39,7 +39,7 @@ function RestaurantDetailScreen(props) {
                 width: wp(100),
                 height: wp(100),
               }}
-              source={require('../assets/snapchatLogoBlack.jpg')}
+              source={require('../assets/restaurant.jpg')}
             />
           </View>
 
@@ -84,7 +84,6 @@ function RestaurantDetailScreen(props) {
           <View style={styles.buttonViewContainer}>
             <AppButton
               onPress={() => navigation.navigate(routes.BOOK_NOW)}
-              widthContainer={wp(100)}
               title={'book'}
             />
           </View>
@@ -143,6 +142,7 @@ const styles = StyleSheet.create({
   buttonViewContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: hp(3),
   },
   bottomViewContainer: {
     flex: 0.1,

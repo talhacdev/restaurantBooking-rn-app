@@ -142,6 +142,8 @@ function PaymentMethodScreen(props) {
       </View>
       <View style={styles.buttonContainer}>
         <Button
+          noElevation
+          widthContainer={wp(100)}
           title={'place order'}
           onPress={() => navigation.navigate(routes.ORDER_SUCCESS)}
         />
@@ -168,6 +170,7 @@ const styles = StyleSheet.create({
   contentViewContainer: {
     flex: 1,
     top: hp(8.5),
+    backgroundColor: colors.background,
   },
   buttonContainer: {
     justifyContent: 'center',
