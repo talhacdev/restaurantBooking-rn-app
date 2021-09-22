@@ -27,7 +27,18 @@ function SearchScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '1',
@@ -38,7 +49,18 @@ function SearchScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '2',
@@ -49,7 +71,18 @@ function SearchScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '3',
@@ -60,7 +93,18 @@ function SearchScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '4',
@@ -71,7 +115,18 @@ function SearchScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '5',
@@ -82,7 +137,18 @@ function SearchScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
   ];
 
@@ -326,7 +392,7 @@ function SearchScreen(props) {
               numColumns={2}
               showsVerticalScrollIndicator={false}
               data={dataRestaurant}
-              keyExtractor={dataRestaurant => dataRestaurant.id.toString()}
+              keyExtractor={dataRestaurant => dataRestaurant.id}
               renderItem={({item}) => (
                 <View style={styles.wrapper}>
                   <RestaurantCard
@@ -353,7 +419,7 @@ function SearchScreen(props) {
               numColumns={2}
               showsVerticalScrollIndicator={false}
               data={data}
-              keyExtractor={data => data.id.toString()}
+              keyExtractor={data => data.id}
               renderItem={({item}) => (
                 <View style={styles.wrapper}>
                   <ProductCard

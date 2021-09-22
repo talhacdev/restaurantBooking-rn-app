@@ -15,6 +15,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import colors from '../config/colors';
 
 function BottomTextCard({
+  disabled,
   title,
   leftTitle,
   stylesLeftTitleText,
@@ -26,7 +27,8 @@ function BottomTextCard({
 }) {
   return (
     <TouchableOpacity
-      disabled
+      onPress={onPress}
+      disabled={disabled}
       style={
         stylesContainer
           ? stylesContainer
@@ -40,8 +42,7 @@ function BottomTextCard({
               borderWidth: wp(0.05),
               borderColor: colors.primary,
             }
-      }
-      onPress={onPress}>
+      }>
       <View style={styles.titleView}>
         <Text
           style={

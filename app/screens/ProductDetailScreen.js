@@ -1,5 +1,12 @@
 import React from 'react';
-import {View, Text, Image, ScrollView, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -7,6 +14,7 @@ import {
 
 import AppButton from '../components/Button';
 import AppHeader from '../components/Header';
+import ReviewCard from '../components/ReviewCard';
 import colors from '../config/colors';
 
 function ProductDetailScreen(props) {
@@ -58,6 +66,18 @@ function ProductDetailScreen(props) {
               <Text numberOfLines={3} style={styles.descriptionText}>
                 {listing.description}
               </Text>
+            </View>
+            <View>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={listing.reviews}
+                keyExtractor={data => data.id}
+                renderItem={({item}) => (
+                  <View>
+                    <ReviewCard user={item.user} comment={item.comment} />
+                  </View>
+                )}
+              />
             </View>
           </View>
           <View style={styles.buttonViewContainer}>

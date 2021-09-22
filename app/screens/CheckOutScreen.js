@@ -140,6 +140,7 @@ function CheckoutScreen(props) {
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
           <BottomTextCard
+            disabled={true}
             leftTitle={totalQuantity + ' goods'}
             rightTitle={'Total $' + totalPrice}
           />

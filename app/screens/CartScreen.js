@@ -14,118 +14,206 @@ import BottomTextCard from '../components/BottomTextCard';
 import Button from '../components/Button';
 
 function CartScreen(props) {
+  // {
+  //   id: '1',
+  //   title: 'five',
+  //   productName: 'productName',
+  //   companyName: 'companyName',
+  //   price: 'price',
+  //   quantity: 'quantity',
+  //   unit: 'unit',
+  //   description: 'description',
+  //   status: 'status',
+  //   orderTime: 'orderTime',
+  //   total: 'total',
+  //   address: 'address',
+  // },
+
   const data = [
     {
-      id: '1',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      id: '0',
+      unit: '0',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
+    },
+
+    {
+      id: '1',
+      unit: '0',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
+      description: 'description',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '2',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      unit: '0',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '3',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      unit: '0',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '4',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      unit: '0',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '5',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      unit: '0',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '6',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      unit: '0',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '7',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      unit: '0',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      category: 'category',
       description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '8',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
   ];
 
@@ -146,12 +234,11 @@ function CartScreen(props) {
             keyExtractor={data => data.id.toString()}
             renderItem={({item}) => (
               <CartProductCard
-                productName={item.productName}
-                unit={item.unit}
-                orderTime={item.orderTime}
-                address={item.address}
-                status={item.status}
-                total={item.total}
+                productName={item.itemName}
+                restaurantName={item.restaurantName}
+                price={item.price}
+                discountedPrice={item.discountedPrice}
+                quantity={0}
                 onPress={() =>
                   navigation.navigate(routes.CART_PRODUCT_DETAIL, item)
                 }
@@ -161,16 +248,10 @@ function CartScreen(props) {
         </View>
       </View>
       <View style={styles.bottomViewContainer}>
-        <View style={styles.buttonContainer}>
-          <Button
-            noElevation
-            widthContainer={wp(100)}
-            title={'CHECK OUT'}
-            onPress={() => navigation.navigate(routes.CHECKOUT)}
-          />
-        </View>
         <BottomTextCard
           leftTitle={totalQuantity + ' goods'}
+          title={'CHECK OUT'}
+          onPress={() => navigation.navigate(routes.CHECKOUT)}
           rightTitle={'Total $' + totalPrice}
         />
       </View>
@@ -193,12 +274,8 @@ const styles = StyleSheet.create({
     bottom: hp(0),
   },
   contentViewContainer: {
-    flex: 0.72,
+    flex: 0.8,
     top: hp(8.5),
-  },
-  buttonContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

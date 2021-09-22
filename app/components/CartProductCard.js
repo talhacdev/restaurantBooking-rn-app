@@ -12,8 +12,10 @@ import colors from '../config/colors';
 
 function CartProductCard({
   productName,
-  unit,
+  restaurantName,
   price,
+  discountedPrice,
+  quantity,
   onPress,
   onDel,
   onAdd,
@@ -26,11 +28,11 @@ function CartProductCard({
       <View>
         <Image
           style={{
-            width: wp(36),
-            height: wp(36),
+            width: wp(25),
+            height: wp(25),
             margin: wp(1),
           }}
-          source={require('../assets/snapchatLogoBlack.jpg')}
+          source={require('../assets/burger.png')}
         />
       </View>
       <View style={styles.detailContainer}>
@@ -38,11 +40,14 @@ function CartProductCard({
           {productName}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {unit}
+          {restaurantName}
         </Text>
         <View style={styles.priceContainer}>
           <Text numberOfLines={1} style={styles.priceText}>
             ${price}
+          </Text>
+          <Text numberOfLines={1} style={styles.discountedPriceText}>
+            ${discountedPrice}
           </Text>
         </View>
         <View style={styles.allIconsContainer}>
@@ -60,7 +65,7 @@ function CartProductCard({
               </TouchableOpacity>
               <View style={styles.quantityContainer}>
                 <Text numberOfLines={1} style={styles.quantityText}>
-                  ${price}
+                  {quantity}
                 </Text>
               </View>
               <TouchableOpacity style={styles.icon} onPress={onSub}>
@@ -82,8 +87,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.secondary,
-    width: wp('50%'),
-    height: hp('42%'),
+    width: wp('50'),
+    height: hp('42'),
     elevation: wp(1),
     padding: wp(4),
     borderColor: colors.primary,
@@ -149,6 +154,19 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   icon: {},
+  priceContainer: {
+    margin: wp(1),
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+  },
+  priceText: {
+    color: colors.priceText,
+    fontSize: wp(3.8),
+  },
+  discountedPriceText: {
+    color: colors.discountedPriceText,
+    fontSize: wp(3.8),
+  },
 });
 
 export default CartProductCard;

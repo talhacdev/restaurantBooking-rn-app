@@ -5,7 +5,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import VerticalProductCardButton from '../components/VerticalProductCardButton';
 import colors from '../config/colors';
 
 function RestaurantCard({restaurantName, location, category, onPress, rating}) {

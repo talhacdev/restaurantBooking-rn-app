@@ -25,7 +25,18 @@ function HomeScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '1',
@@ -36,7 +47,18 @@ function HomeScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '2',
@@ -47,7 +69,18 @@ function HomeScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '3',
@@ -58,7 +91,18 @@ function HomeScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '4',
@@ -69,7 +113,18 @@ function HomeScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '5',
@@ -80,7 +135,18 @@ function HomeScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
   ];
 
