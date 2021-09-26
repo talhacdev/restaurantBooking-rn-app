@@ -75,9 +75,6 @@ function CartProductCard({
           </View>
         </View>
       </View>
-      <View>
-        <VerticalProductCardButton title={'add to cart'} />
-      </View>
     </TouchableOpacity>
   );
 }
@@ -88,7 +85,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.secondary,
     width: wp('50'),
-    height: hp('42'),
+    height: hp('35'),
     elevation: wp(1),
     padding: wp(4),
     borderColor: colors.primary,

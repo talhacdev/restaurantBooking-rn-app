@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     // backgroundColor: 'pink',
     width: wp('50'),
-    height: hp('32'),
+    height: hp('30'),
     elevation: wp(1),
     padding: wp(4),
     borderColor: colors.primary,

@@ -5,9 +5,18 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+import VerticalProductCardButton from '../components/VerticalProductCardButton';
 import colors from '../config/colors';
 
-function OrderProductCard({productName, companyName, price, status, onPress}) {
+function OrderProductCard({
+  itemName,
+  restaurantName,
+  discountedPrice,
+  price,
+  onPress,
+  rating,
+  quantity,
+}) {
   return (
     <TouchableOpacity
       style={styles.cardContainer}
@@ -15,28 +24,50 @@ function OrderProductCard({productName, companyName, price, status, onPress}) {
       <View>
         <Image
           style={{
-            width: wp(36),
-            height: wp(36),
-            margin: wp(1),
+            width: wp(30),
+            height: wp(30),
+            padding: wp(1),
           }}
-          source={require('../assets/snapchatLogoBlack.jpg')}
+          source={require('../assets/burger.png')}
         />
       </View>
       <View style={styles.detailContainer}>
+        <View style={styles.ratingContainer}>
+          <View>
+            <Image
+              style={{
+                width: wp(5),
+                height: wp(5),
+                padding: wp(1),
+              }}
+              source={require('../assets/star.png')}
+            />
+          </View>
+          <View>
+            <Text style={styles.ratingText}>{rating}</Text>
+          </View>
+        </View>
         <Text numberOfLines={1} style={styles.detailMainText}>
-          {productName}
+          {itemName}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {companyName}
+          {restaurantName}
         </Text>
+
         <View style={styles.priceContainer}>
           <Text numberOfLines={1} style={styles.priceText}>
             ${price}
           </Text>
+          <Text numberOfLines={1} style={styles.discountedPriceText}>
+            ${discountedPrice}
+          </Text>
         </View>
         <View style={styles.priceContainer}>
-          <Text numberOfLines={1} style={styles.priceText}>
-            {'4'}
+          <Text numberOfLines={1} style={styles.quantityText}>
+            Quantity
+          </Text>
+          <Text numberOfLines={1} style={styles.quantityText}>
+            {quantity}
           </Text>
         </View>
       </View>
@@ -49,8 +80,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.secondary,
-    width: wp('50%'),
-    height: hp('32%'),
+    // backgroundColor: 'pink',
+    width: wp('50'),
+    height: hp('35'),
     elevation: wp(1),
     padding: wp(4),
     borderColor: colors.primary,
@@ -62,6 +94,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(1),
     width: '100%',
   },
+
   priceContainer: {
     margin: wp(1),
     justifyContent: 'center',
@@ -75,26 +108,34 @@ const styles = StyleSheet.create({
     color: colors.tertiary,
     fontSize: wp(3),
   },
+  discountedPriceText: {
+    color: colors.discountedPriceText,
+    fontSize: wp(3.8),
+  },
   priceText: {
+    color: colors.priceText,
+    fontSize: wp(3.8),
+  },
+  quantityText: {
     color: colors.tertiary,
     fontSize: wp(3.8),
   },
-  statusContainer: {
-    justifyContent: 'center',
+  ratingContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: colors.primary,
-    padding: wp(2),
-    width: '100%',
-    height: hp('5%'),
-    elevation: wp(1),
-    borderRadius: wp(1),
-    margin: wp(1),
   },
-  statusText: {
-    fontWeight: 'bold',
-    color: colors.tertiary,
-    fontSize: wp(4),
-    textTransform: 'uppercase',
+  ratingText: {
+    color: colors.ratingText,
+    fontSize: wp(3.8),
+    paddingHorizontal: wp(1),
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    // backgroundColor: 'orange',
+    margin: wp(1),
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 });
 

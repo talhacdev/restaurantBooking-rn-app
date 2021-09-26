@@ -15,84 +15,27 @@ import AppInput from '../components/Input';
 function OrderDetailScreen(props) {
   const data = [
     {
-      id: '1',
-      title: 'one',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
+      id: '0',
+      itemName: 'itemName',
+      restaurantName: 'restaurantName',
+      price: '2500',
+      discountedPrice: '2200',
+      rating: '1',
+      quantity: '1',
+      category: 'category',
       description: 'description',
-    },
-    {
-      id: '2',
-      title: 'two',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '3',
-      title: 'three',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '4',
-      title: 'four',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '5',
-      title: 'four',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '6',
-      title: 'four',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '7',
-      title: 'four',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-    },
-    {
-      id: '8',
-      title: 'four',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
   ];
 
@@ -120,9 +63,12 @@ function OrderDetailScreen(props) {
               <View style={styles.wrapper}>
                 <OrderProductCard
                   title={item.title}
-                  productName={item.productName}
-                  companyName={item.companyName}
+                  itemName={item.itemName}
+                  restaurantName={item.restaurantName}
+                  rating={item.rating}
                   price={item.price}
+                  discountedPrice={item.discountedPrice}
+                  quantity={item.quantity}
                   onPress={() =>
                     navigation.navigate(routes.ORDER_PRODUCT_DETAIL, item)
                   }

@@ -1,12 +1,19 @@
 import React from 'react';
-import {View, Text, Image, FlatList, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import AppButton from '../components/Button';
 import AppHeader from '../components/Header';
+import ReviewCard from '../components/ReviewCard';
 import colors from '../config/colors';
 
 function OrderProductDetailScreen(props) {
@@ -17,29 +24,62 @@ function OrderProductDetailScreen(props) {
       <View style={styles.headerViewContainer}>
         <AppHeader title="detail" />
       </View>
-      <View style={styles.contentViewContainer}>
-        <View style={styles.upperViewContainer}>
-          <Image
-            style={{
-              width: wp(100),
-              height: wp(100),
-            }}
-            source={require('../assets/snapchatLogoBlack.jpg')}
-          />
-        </View>
-        <View style={styles.lowerViewContainer}>
-          <Text style={styles.productNameText}>{listing.productName}</Text>
-          <Text style={styles.companyNameText}>{listing.companyName}</Text>
-          <View style={{marginVertical: wp(2)}}>
-            <Text style={styles.unitText}>{listing.unit}</Text>
+
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={styles.contentViewContainer}>
+          <View style={styles.upperViewContainer}>
+            <Image
+              style={{
+                width: wp(100),
+                height: wp(100),
+              }}
+              source={require('../assets/burger.png')}
+            />
           </View>
-          <Text style={styles.priceText}>{listing.price}</Text>
-          <View style={{marginVertical: wp(2), height: wp(19)}}>
-            <Text numberOfLines={3} style={styles.descriptionText}>
-              {listing.description}
-            </Text>
+          <View style={styles.lowerViewContainer}>
+            <Text style={styles.productNameText}>{listing.itemName}</Text>
+            <Text style={styles.companyNameText}>{listing.restaurantName}</Text>
+            <View style={{marginVertical: wp(2)}}>
+              <Text style={styles.unitText}>{listing.category}</Text>
+            </View>
+            <View style={styles.ratingContainer}>
+              <View>
+                <Image
+                  style={{
+                    width: wp(7),
+                    height: wp(7),
+                    padding: wp(1),
+                  }}
+                  source={require('../assets/star.png')}
+                />
+              </View>
+              <View>
+                <Text style={styles.ratingText}>{listing.rating}</Text>
+              </View>
+            </View>
+            <Text style={styles.priceText}>{listing.price}</Text>
+            <Text style={styles.priceText}>{listing.discountedPrice}</Text>
+            <View style={{marginVertical: wp(2), height: wp(19)}}>
+              <Text numberOfLines={3} style={styles.descriptionText}>
+                {listing.description}
+              </Text>
+            </View>
+            <View>
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                data={listing.reviews}
+                keyExtractor={data => data.id}
+                renderItem={({item}) => (
+                  <View>
+                    <ReviewCard user={item.user} comment={item.comment} />
+                  </View>
+                )}
+              />
+            </View>
           </View>
-        </View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -48,7 +88,7 @@ function OrderProductDetailScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.secondary,
   },
   headerViewContainer: {
     flex: 0.1,
@@ -58,6 +98,7 @@ const styles = StyleSheet.create({
   contentViewContainer: {
     flex: 0.8,
     top: hp(8.5),
+    marginBottom: hp(8.5),
   },
   upperViewContainer: {
     justifyContent: 'center',
@@ -93,11 +134,22 @@ const styles = StyleSheet.create({
   buttonViewContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+    marginVertical: hp(3),
   },
   bottomViewContainer: {
     flex: 0.1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  ratingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  ratingText: {
+    color: colors.ratingText,
+    paddingHorizontal: wp(1),
+    fontWeight: 'bold',
+    fontSize: wp(6.5),
   },
 });
 

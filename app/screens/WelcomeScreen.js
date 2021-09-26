@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Image, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -6,6 +6,8 @@ import {
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import {UIActivityIndicator} from 'react-native-indicators';
+import Modal from 'react-native-modal';
 
 import {LoginManager, AccessToken} from 'react-native-fbsdk';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
@@ -17,6 +19,13 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 
 function WelcomeScreen(props) {
+  const [loading, setLoading] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   GoogleSignin.configure({
     webClientId:
       '816484953382-pr6gfesipg0slt2nh2r93e99rkscvhg7.apps.googleusercontent.com',
@@ -94,28 +103,53 @@ function WelcomeScreen(props) {
       .set(obj)
       .then(() => {
         console.log('User added!');
+        setLoading(false);
+        toggleModal();
       })
       .catch(error => {
         console.log(error);
+        setLoading(false);
+        toggleModal();
+        alert(error);
       });
   };
 
   onPressDemoButton = () => {
+    toggleModal();
+    setLoading(true);
     auth()
       .signInAnonymously()
       .then(res => {
         CreateUserRecord(res);
         console.log('User signed in anonymously');
-        alert('User signed in anonymously');
+        // alert('User signed in anonymously');
       })
       .catch(error => {
         console.error(error);
+        setLoading(false);
+        toggleModal();
         alert(error);
       });
   };
 
   return (
     <View style={styles.container}>
+      {loading ? (
+        <Modal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: wp(5),
+              borderRadius: wp(10),
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </Modal>
+      ) : null}
+
       <View style={styles.upperViewContainer}>
         <Image
           style={styles.image}

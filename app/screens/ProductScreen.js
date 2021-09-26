@@ -13,6 +13,7 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 
 function ProductScreen(props) {
+  console.log('ProductScreen Props: ', props);
   const data = [
     {
       id: '0',
@@ -23,7 +24,18 @@ function ProductScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '1',
@@ -34,7 +46,18 @@ function ProductScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '2',
@@ -45,7 +68,18 @@ function ProductScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '3',
@@ -56,7 +90,18 @@ function ProductScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '4',
@@ -67,7 +112,18 @@ function ProductScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
     {
       id: '5',
@@ -78,14 +134,25 @@ function ProductScreen(props) {
       rating: '1',
       category: 'category',
       description: 'description',
-      reviews: 'reviews',
+      reviews: [
+        {
+          id: '0',
+          user: 'user1',
+          comment: 'this is user1 comment.',
+        },
+        {
+          id: '1',
+          user: 'user2',
+          comment: 'this is user2 comment.',
+        },
+      ],
     },
   ];
 
   return (
     <View style={styles.container}>
       <View style={styles.headerViewContainer}>
-        <AppHeader title={'product'} />
+        <AppHeader title={props.route.params.title} />
       </View>
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>

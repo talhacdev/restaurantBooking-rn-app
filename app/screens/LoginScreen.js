@@ -5,6 +5,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
+import {UIActivityIndicator} from 'react-native-indicators';
+import Modal from 'react-native-modal';
 
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
@@ -16,6 +18,12 @@ import navigation from '../navigation/rootNavigation';
 function LoginScreen(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   onPressLoginButton = () => {
     Keyboard.dismiss();
@@ -23,14 +31,20 @@ function LoginScreen(props) {
     if (email == undefined || password == undefined) {
       alert('Credentials are mandatory.');
     } else {
+      toggleModal();
+      setLoading(true);
       auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
+          setLoading(false);
+          toggleModal();
           console.log('User signed in!');
-          alert('User signed in!');
+          // alert('User signed in!');
         })
         .catch(error => {
           console.error(error);
+          setLoading(false);
+          toggleModal();
           alert(error);
         });
     }
@@ -38,6 +52,21 @@ function LoginScreen(props) {
 
   return (
     <View style={styles.container}>
+      {loading ? (
+        <Modal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: wp(5),
+              borderRadius: wp(10),
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </Modal>
+      ) : null}
       <View style={styles.upperViewContainer}>
         <Image
           style={styles.image}

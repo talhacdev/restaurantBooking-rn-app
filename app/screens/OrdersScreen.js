@@ -19,55 +19,52 @@ function OrdersScreen(props) {
       orderTime: 'orderTime',
       total: 'total',
       address: 'address',
-    },
-    {
-      id: '2',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '3',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '4',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '5',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '6',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '7',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '8',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
+      items: [
+        {
+          id: '0',
+          itemName: 'itemName',
+          restaurantName: 'restaurantName',
+          price: '2500',
+          discountedPrice: '2200',
+          rating: '1',
+          category: 'category',
+          description: 'description',
+          reviews: [
+            {
+              id: '0',
+              user: 'user1',
+              comment: 'this is user1 comment.',
+            },
+            {
+              id: '1',
+              user: 'user2',
+              comment: 'this is user2 comment.',
+            },
+          ],
+        },
+        {
+          id: '1',
+          itemName: 'itemName',
+          restaurantName: 'restaurantName',
+          price: '2500',
+          discountedPrice: '2200',
+          rating: '1',
+          category: 'category',
+          description: 'description',
+          reviews: [
+            {
+              id: '0',
+              user: 'user1',
+              comment: 'this is user1 comment.',
+            },
+            {
+              id: '1',
+              user: 'user2',
+              comment: 'this is user2 comment.',
+            },
+          ],
+        },
+      ],
     },
   ];
 
@@ -88,7 +85,7 @@ function OrdersScreen(props) {
                 address={item.address}
                 status={item.status}
                 total={item.total}
-                //  onPress={() => navigation.navigate(routes.ORDER_DETAIL, item)}
+                onPress={() => navigation.navigate(routes.ORDER_DETAIL, item)}
               />
             )}
           />

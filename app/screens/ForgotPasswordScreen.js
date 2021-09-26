@@ -5,6 +5,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
+import {UIActivityIndicator} from 'react-native-indicators';
+import Modal from 'react-native-modal';
 
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
@@ -12,6 +14,12 @@ import colors from '../config/colors';
 
 function ForgotPasswordScreen(props) {
   const [email, setEmail] = useState();
+  const [loading, setLoading] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   onPressSendEmailButton = email => {
     console.log(email);
@@ -19,14 +27,21 @@ function ForgotPasswordScreen(props) {
     if (email == undefined) {
       alert('Email is mandatory.');
     } else {
+      toggleModal();
+      setLoading(true);
       auth()
         .sendPasswordResetEmail(email)
         .then(() => {
           console.log('Password reset email sent!');
+          setLoading(false);
+          toggleModal();
           alert('Password reset email sent!');
         })
         .catch(error => {
           console.error(error);
+          A;
+          setLoading(false);
+          toggleModal();
           alert(error);
         });
     }
@@ -34,6 +49,21 @@ function ForgotPasswordScreen(props) {
 
   return (
     <View style={styles.container}>
+      {loading ? (
+        <Modal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: wp(5),
+              borderRadius: wp(10),
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </Modal>
+      ) : null}
       <View style={styles.upperViewContainer}>
         <Image
           style={styles.image}

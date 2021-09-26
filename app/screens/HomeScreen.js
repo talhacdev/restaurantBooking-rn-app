@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, FlatList, StyleSheet, ScrollView} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import firestore from '@react-native-firebase/firestore';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -15,6 +16,23 @@ import RestaurantVerticalCard from '../components/RestaurantVerticalCard';
 import ReviewCard from '../components/ReviewCard';
 
 function HomeScreen(props) {
+  const [categories, setCategories] = useState();
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    await firestore()
+      .collection('Categories')
+      .get()
+      .then(res => {
+        setCategories(res._docs[0]._data.categories);
+        console.log('categories: ', categories);
+      })
+      .catch(error => alert(error));
+  };
+
   const data = [
     {
       id: '0',
@@ -363,12 +381,13 @@ function HomeScreen(props) {
           <FlatList
             numColumns={2}
             showsVerticalScrollIndicator={false}
-            data={data}
-            keyExtractor={data => data.id.toString()}
+            data={categories}
+            keyExtractor={categories => categories.id.toString()}
             renderItem={({item}) => (
               <View style={styles.wrapper}>
                 <CategoryCard
                   title={item.title}
+                  imageUrl={item.imageUrl}
                   onPress={() => navigation.navigate(routes.PRODUCT, item)}
                 />
               </View>

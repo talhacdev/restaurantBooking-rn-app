@@ -23,7 +23,7 @@ function CartProductDetailScreen(props) {
   return (
     <View style={styles.container}>
       <View style={styles.headerViewContainer}>
-        <AppHeader title="cart detail" />
+        <AppHeader title="detail" />
       </View>
 
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -89,7 +89,7 @@ function CartProductDetailScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.secondary,
   },
   headerViewContainer: {
     flex: 0.1,

@@ -7,6 +7,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {UIActivityIndicator} from 'react-native-indicators';
+import Modal from 'react-native-modal';
 
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
@@ -16,6 +17,11 @@ function RegisterScreen(props) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   onPressRegisterButton = (email, password) => {
     Keyboard.dismiss();
@@ -23,6 +29,8 @@ function RegisterScreen(props) {
     if (email == undefined || password == undefined) {
       alert('Credentials are mandatory.');
     } else {
+      toggleModal();
+      setLoading(true);
       auth()
         .createUserWithEmailAndPassword(email, password)
         .then(res => {
@@ -31,6 +39,8 @@ function RegisterScreen(props) {
         })
         .catch(error => {
           console.error(error);
+          setLoading(false);
+          toggleModal();
           alert(error);
         });
     }
@@ -49,26 +59,34 @@ function RegisterScreen(props) {
       .doc(obj.uid)
       .set(obj)
       .then(() => {
+        setLoading(false);
+        toggleModal();
         console.log('UserRecords updated!');
       })
       .catch(error => {
         console.log(error);
+        setLoading(false);
+        toggleModal();
+        alert(error);
       });
   };
 
   return (
     <View style={styles.container}>
       {loading ? (
-        <View
-          style={{
-            position: 'absolute',
-            padding: wp(5),
-            borderRadius: wp(10),
-            backgroundColor: 'black',
-            zIndex: 1,
-          }}>
-          <UIActivityIndicator color="white" />
-        </View>
+        <Modal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: wp(5),
+              borderRadius: wp(10),
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </Modal>
       ) : null}
       <View style={styles.upperViewContainer}>
         <Image

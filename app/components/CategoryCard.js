@@ -7,7 +7,7 @@ import {
 
 import colors from '../config/colors';
 
-function CategoryCard({title, stylesTitleText, onPress}) {
+function CategoryCard({title, stylesTitleText, imageUrl, onPress}) {
   return (
     <TouchableOpacity
       style={styles.cardContainer}
@@ -18,7 +18,9 @@ function CategoryCard({title, stylesTitleText, onPress}) {
           height: wp(20),
           padding: wp(1),
         }}
-        source={require('../assets/burger.png')}
+        source={{
+          uri: imageUrl,
+        }}
       />
     </TouchableOpacity>
   );
@@ -29,7 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.secondary,
-    backgroundColor: colors.categoryCardBackground,
+    // backgroundColor: colors.categoryCardBackground,
     width: wp('50%'),
     height: hp('12.5%'),
     elevation: wp(1),
