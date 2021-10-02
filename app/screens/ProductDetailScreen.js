@@ -36,7 +36,9 @@ function ProductDetailScreen(props) {
                 width: wp(100),
                 height: wp(100),
               }}
-              source={require('../assets/burger.png')}
+              source={{
+                uri: listing.imageUrl,
+              }}
             />
           </View>
           <View style={styles.lowerViewContainer}>
@@ -61,7 +63,7 @@ function ProductDetailScreen(props) {
               </View>
             </View>
             <Text style={styles.priceText}>{listing.price}</Text>
-            <Text style={styles.priceText}>{listing.discountedPrice}</Text>
+            <Text style={styles.discountedText}>{listing.discountedPrice}</Text>
             <View style={{marginVertical: wp(2), height: wp(19)}}>
               <Text numberOfLines={3} style={styles.descriptionText}>
                 {listing.description}
@@ -74,7 +76,11 @@ function ProductDetailScreen(props) {
                 keyExtractor={data => data.id}
                 renderItem={({item}) => (
                   <View>
-                    <ReviewCard user={item.user} comment={item.comment} />
+                    <ReviewCard
+                      user={item.user}
+                      comment={item.comment}
+                      imageUrl={item.imageUrl}
+                    />
                   </View>
                 )}
               />
@@ -128,7 +134,12 @@ const styles = StyleSheet.create({
   },
   priceText: {
     fontWeight: 'bold',
-    color: colors.tertiary,
+    color: colors.priceText,
+    fontSize: wp(6.5),
+  },
+  discountedText: {
+    color: colors.discountedPriceText,
+    fontWeight: 'bold',
     fontSize: wp(6.5),
   },
   descriptionText: {

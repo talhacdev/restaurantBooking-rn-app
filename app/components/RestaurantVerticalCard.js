@@ -13,6 +13,7 @@ function RestaurantVerticalCard({
   category,
   onPress,
   rating,
+  imageUrl,
 }) {
   return (
     <TouchableOpacity
@@ -25,7 +26,9 @@ function RestaurantVerticalCard({
             height: wp(30),
             padding: wp(1),
           }}
-          source={require('../assets/restaurant.jpg')}
+          source={{
+            uri: imageUrl,
+          }}
         />
       </View>
 

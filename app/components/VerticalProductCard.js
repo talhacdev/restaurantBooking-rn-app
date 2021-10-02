@@ -15,6 +15,7 @@ function VerticalProductCard({
   price,
   onPress,
   rating,
+  imageUrl,
 }) {
   return (
     <TouchableOpacity
@@ -27,7 +28,9 @@ function VerticalProductCard({
             height: wp(30),
             padding: wp(1),
           }}
-          source={require('../assets/burger.png')}
+          source={{
+            uri: imageUrl,
+          }}
         />
       </View>
 

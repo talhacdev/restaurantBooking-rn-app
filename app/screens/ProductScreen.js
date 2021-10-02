@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -7,152 +7,18 @@ import {
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
-import CategoryCard from '../components/CategoryCard';
 import ProductCard from '../components/ProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 
 function ProductScreen(props) {
-  console.log('ProductScreen Props: ', props);
-  const data = [
-    {
-      id: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '1',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '2',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '3',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '4',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '5',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-  ];
+  const item = props.route.params.item;
+  const data = props.route.params.filteredList;
 
   return (
     <View style={styles.container}>
       <View style={styles.headerViewContainer}>
-        <AppHeader title={props.route.params.title} />
+        <AppHeader title={item.title} />
       </View>
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
@@ -169,6 +35,7 @@ function ProductScreen(props) {
                   rating={item.rating}
                   restaurantName={item.restaurantName}
                   price={item.price}
+                  imageUrl={item.imageUrl}
                   onPress={() =>
                     navigation.navigate(routes.PRODUCT_DETAIL, item)
                   }

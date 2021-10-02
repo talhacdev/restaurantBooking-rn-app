@@ -39,7 +39,9 @@ function RestaurantDetailScreen(props) {
                 width: wp(100),
                 height: wp(100),
               }}
-              source={require('../assets/restaurant.jpg')}
+              source={{
+                uri: listing.imageUrl,
+              }}
             />
           </View>
 
@@ -69,21 +71,30 @@ function RestaurantDetailScreen(props) {
               </View>
             </View>
           </View>
-          <View>
+          <View style={styles.commentsContainer}>
             <FlatList
               showsVerticalScrollIndicator={false}
               data={listing.reviews}
               keyExtractor={data => data.id.toString()}
               renderItem={({item}) => (
                 <View>
-                  <ReviewCard user={item.user} comment={item.comment} />
+                  <ReviewCard
+                    user={item.user}
+                    comment={item.comment}
+                    imageUrl={item.imageUrl}
+                  />
                 </View>
               )}
             />
           </View>
           <View style={styles.buttonViewContainer}>
             <AppButton
-              onPress={() => navigation.navigate(routes.BOOK_NOW)}
+              onPress={() =>
+                navigation.navigate(routes.BOOK_NOW, {
+                  tables: listing.tables,
+                  timeslot: listing.timeslot,
+                })
+              }
               title={'book'}
             />
           </View>
@@ -158,6 +169,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(1),
     fontWeight: 'bold',
     fontSize: wp(6.5),
+  },
+  commentsContainer: {
+    paddingLeft: wp(6),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

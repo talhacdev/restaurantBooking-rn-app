@@ -6,12 +6,13 @@ import FeedNavigator from './FeedNavigator';
 import SearchNavigator from './SearchNavigator';
 import CartNavigator from './CartNavigator';
 import AccountNavigator from './AccountNavigator';
+import routes from './routes';
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName={routes.HOME}>
       <Tab.Screen
         name="Home"
         component={FeedNavigator}

@@ -14,6 +14,7 @@ function ProductCard({
   discountedPrice,
   price,
   onPress,
+  imageUrl,
   rating,
 }) {
   return (
@@ -27,7 +28,9 @@ function ProductCard({
             height: wp(30),
             padding: wp(1),
           }}
-          source={require('../assets/burger.png')}
+          source={{
+            uri: imageUrl,
+          }}
         />
       </View>
       <View style={styles.detailContainer}>

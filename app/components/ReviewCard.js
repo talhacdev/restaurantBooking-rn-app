@@ -5,7 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-function ReviewCard({user, comment}) {
+function ReviewCard({user, comment, imageUrl}) {
   return (
     <View style={styles.container}>
       <View>
@@ -15,18 +15,26 @@ function ReviewCard({user, comment}) {
             height: wp(15),
             borderRadius: wp(7.5),
           }}
-          source={require('../assets/user.jpg')}
+          source={{
+            uri: imageUrl,
+          }}
         />
       </View>
       <View style={styles.subContainer}>
         <View style={styles.userContainer}>
-          <Text numberOfLines={1} style={styles.userText}>
-            {user}
+          <View style={styles.usernameContainer}>
+            <Text numberOfLines={1} style={styles.userText}>
+              {user}
+            </Text>
+          </View>
+        </View>
+        <View style={styles.userCommentContaine}>
+          <Text
+            // numberOfLines={1}
+            style={styles.commentText}>
+            {comment}
           </Text>
         </View>
-        <Text numberOfLines={1} style={styles.commentText}>
-          {comment}
-        </Text>
       </View>
     </View>
   );
@@ -55,6 +63,14 @@ const styles = StyleSheet.create({
   },
   commentText: {
     fontSize: wp(3.5),
+  },
+  usernameContainer: {
+    // backgroundColor: 'pink',
+    marginRight: wp(10),
+  },
+  userCommentContaine: {
+    // backgroundColor: 'pink',
+    marginRight: wp(10),
   },
 });
 

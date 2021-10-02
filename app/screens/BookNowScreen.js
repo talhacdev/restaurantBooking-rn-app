@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, FlatList, StyleSheet, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -7,58 +7,16 @@ import {
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
-import CategoryCard from '../components/CategoryCard';
-import VerticalProductCard from '../components/VerticalProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
-import RestaurantVerticalCard from '../components/RestaurantVerticalCard';
-import ReviewCard from '../components/ReviewCard';
 import SelectionButton from '../components/SelectionButton';
 import AppButton from '../components/Button';
-import AppInput from '../components/Input';
 
 function BookNowScreen(props) {
-  const tables = [
-    {
-      id: '0',
-      title: 'table1',
-    },
-    {
-      id: '1',
-      title: 'table2',
-    },
-    {
-      id: '2',
-      title: 'table3',
-    },
-    {
-      id: '3',
-      title: 'table4',
-    },
-  ];
-
-  const timeslot = [
-    {
-      id: '0',
-      slot: '9am to 12pm',
-    },
-    {
-      id: '1',
-      slot: '12pm to 3pm',
-    },
-    {
-      id: '2',
-      slot: '3pm to 6pm',
-    },
-    {
-      id: '3',
-      slot: '6pm to 9pm',
-    },
-    {
-      id: '4',
-      slot: '9pm to 12am',
-    },
-  ];
+  const [selectedTable, setSelectedTable] = useState();
+  const [selectedTimeslot, setSelectedTimeslot] = useState();
+  const tables = props?.route?.params.tables;
+  const timeslot = props?.route?.params.timeslot;
 
   return (
     <View style={styles.container}>
@@ -76,12 +34,11 @@ function BookNowScreen(props) {
             data={tables}
             keyExtractor={tables => tables.id.toString()}
             renderItem={({item}) => (
-              <View style={styles.wrapper}>
-                <SelectionButton
-                  title={item.title}
-                  onPress={() => navigation.navigate(routes.PRODUCT, item)}
-                />
-              </View>
+              <SelectionButton
+                title={item.title}
+                onPress={() => setSelectedTable(item.id)}
+                selected={selectedTable == item.id ? true : false}
+              />
             )}
           />
         </View>
@@ -96,12 +53,11 @@ function BookNowScreen(props) {
             data={timeslot}
             keyExtractor={timeslot => timeslot.id.toString()}
             renderItem={({item}) => (
-              <View style={styles.wrapper}>
-                <SelectionButton
-                  title={item.slot}
-                  onPress={() => navigation.navigate(routes.PRODUCT, item)}
-                />
-              </View>
+              <SelectionButton
+                title={item.slot}
+                onPress={() => setSelectedTimeslot(item.id)}
+                selected={selectedTimeslot == item.id ? true : false}
+              />
             )}
           />
         </View>
@@ -133,7 +89,9 @@ const styles = StyleSheet.create({
     flex: 0.9,
     top: hp(8.5),
   },
-  upperViewContainer: {},
+  upperViewContainer: {
+    marginVertical: hp(1),
+  },
   dividerView: {
     justifyContent: 'center',
     alignItems: 'center',

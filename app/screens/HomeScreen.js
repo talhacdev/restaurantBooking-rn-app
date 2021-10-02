@@ -13,13 +13,28 @@ import VerticalProductCard from '../components/VerticalProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import RestaurantVerticalCard from '../components/RestaurantVerticalCard';
-import ReviewCard from '../components/ReviewCard';
+import {UIActivityIndicator} from 'react-native-indicators';
+import Modal from 'react-native-modal';
 
 function HomeScreen(props) {
+  const [loading, setLoading] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
   const [categories, setCategories] = useState();
+  const [products, setProducts] = useState();
+  const [restaurants, setRestaurants] = useState();
+  const [filteredProducts, setFilteredProducts] = useState();
+  const [filteredRestaurants, setFilteredRestaurants] = useState();
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   useEffect(() => {
+    toggleModal();
+    setLoading(true);
     fetchCategories();
+    fetchRestaurants();
+    fetchProducts();
   }, []);
 
   const fetchCategories = async () => {
@@ -28,428 +43,209 @@ function HomeScreen(props) {
       .get()
       .then(res => {
         setCategories(res._docs[0]._data.categories);
-        console.log('categories: ', categories);
+        console.log('categories: ', res._docs[0]._data.categories);
       })
       .catch(error => alert(error));
   };
 
-  const data = [
-    {
-      id: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '1',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '2',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '3',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '4',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '5',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-  ];
+  const fetchRestaurants = async () => {
+    await firestore()
+      .collection('Restaurants')
+      .get()
+      .then(res => {
+        setRestaurants(res._docs[0]._data.restaurants);
+        console.log('Restaurants: ', res._docs[0]._data.restaurants);
+        filterSuggestedRestaurants(res._docs[0]._data.restaurants);
+      })
+      .catch(error => alert(error));
+  };
 
-  const dataRestaurant = [
-    {
-      id: '0',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '1',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '2',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '3',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '4',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '5',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-  ];
+  const filterSuggestedRestaurants = restaurants => {
+    let filteredList = restaurants.filter(m => m.sponsored == true);
+    setFilteredRestaurants(filteredList);
+  };
+
+  const fetchProducts = async () => {
+    await firestore()
+      .collection('Products')
+      .get()
+      .then(res => {
+        setProducts(res._docs[0]._data.products);
+        console.log('products: ', res._docs[0]._data.products);
+        filterSuggestedProducts(res._docs[0]._data.products);
+      })
+      .catch(error => alert(error));
+  };
+
+  const filterSuggestedProducts = products => {
+    let filteredList = products.filter(m => m.sponsored == true);
+    setFilteredProducts(filteredList);
+    setLoading(false);
+    toggleModal();
+  };
+
+  const onPressCategoryCard = item => {
+    console.log('onPress item: ', item.title.toLowerCase());
+    let filteredList = products.filter(
+      m => m.category[0].toLowerCase() == item.title.toLowerCase(),
+    );
+    console.log('filteredList: ', filteredList);
+    navigation.navigate(routes.PRODUCT, {item, filteredList});
+  };
 
   return (
     <View style={styles.container}>
+      {loading ? (
+        <Modal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: wp(5),
+              borderRadius: wp(10),
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </Modal>
+      ) : null}
       <View style={styles.headerViewContainer}>
         <AppHeader title="commerce" />
       </View>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.contentViewContainer}>
-        <View style={styles.upperViewContainer}>
-          <FlatList
-            numColumns={2}
+      {!loading ? (
+        <View style={{flex: 1}}>
+          <ScrollView
             showsVerticalScrollIndicator={false}
-            data={categories}
-            keyExtractor={categories => categories.id.toString()}
-            renderItem={({item}) => (
-              <View style={styles.wrapper}>
-                <CategoryCard
-                  title={item.title}
-                  imageUrl={item.imageUrl}
-                  onPress={() => navigation.navigate(routes.PRODUCT, item)}
-                />
-              </View>
-            )}
-          />
-        </View>
+            style={styles.contentViewContainer}>
+            <View style={styles.upperViewContainer}>
+              <FlatList
+                numColumns={2}
+                showsVerticalScrollIndicator={false}
+                data={categories}
+                keyExtractor={categories => categories.id.toString()}
+                renderItem={({item}) => (
+                  <CategoryCard
+                    title={item.title}
+                    imageUrl={item.imageUrl}
+                    onPress={() => onPressCategoryCard(item)}
+                  />
+                )}
+              />
+            </View>
 
-        <View style={styles.dividerView}>
-          <Text style={styles.dividerText}>Restaurants</Text>
-        </View>
-        <View style={styles.lowerViewContainer}>
-          <FlatList
-            horizontal
-            showsVerticalScrollIndicator={false}
-            data={dataRestaurant}
-            keyExtractor={dataRestaurant => dataRestaurant.id.toString()}
-            renderItem={({item}) => (
-              <View style={styles.wrapper}>
-                <RestaurantVerticalCard
-                  restaurantName={item.restaurantName}
-                  location={item.location}
-                  rating={item.rating}
-                  category={item.category}
-                  tables={item.tables}
-                  reviews={item.reviews}
-                  contact={item.contact}
-                  onPress={() =>
-                    navigation.navigate(routes.RESTAURANT_DETAIL, item)
-                  }
-                />
-              </View>
-            )}
-          />
-        </View>
+            <View style={styles.dividerView}>
+              <Text style={styles.dividerText}>sponsored restaurants</Text>
+            </View>
+            <View style={styles.lowerViewContainer}>
+              <FlatList
+                horizontal
+                showsVerticalScrollIndicator={false}
+                data={filteredRestaurants}
+                keyExtractor={filteredRestaurants =>
+                  filteredRestaurants.id.toString()
+                }
+                renderItem={({item}) => (
+                  <RestaurantVerticalCard
+                    restaurantName={item.restaurantName}
+                    location={item.location}
+                    rating={item.rating}
+                    category={item.category}
+                    tables={item.tables}
+                    reviews={item.reviews}
+                    contact={item.contact}
+                    imageUrl={item.imageUrl}
+                    onPress={() =>
+                      navigation.navigate(routes.RESTAURANT_DETAIL, item)
+                    }
+                  />
+                )}
+              />
+            </View>
 
-        <View style={styles.dividerView}>
-          <Text style={styles.dividerText}>Suggested</Text>
-        </View>
+            <View style={styles.dividerView}>
+              <Text style={styles.dividerText}>sponsored products</Text>
+            </View>
 
-        <View style={styles.lowerViewContainer}>
-          <FlatList
-            horizontal
-            showsVerticalScrollIndicator={false}
-            data={data}
-            keyExtractor={data => data.id.toString()}
-            renderItem={({item}) => (
-              <View style={styles.wrapper}>
-                <VerticalProductCard
-                  itemName={item.itemName}
-                  discountedPrice={item.discountedPrice}
-                  rating={item.rating}
-                  restaurantName={item.restaurantName}
-                  price={item.price}
-                  onPress={() =>
-                    navigation.navigate(routes.PRODUCT_DETAIL, item)
-                  }
-                />
-              </View>
-            )}
-          />
+            <View style={styles.lowerViewContainer}>
+              <FlatList
+                horizontal
+                showsVerticalScrollIndicator={false}
+                data={filteredProducts}
+                keyExtractor={filteredProducts =>
+                  filteredProducts.id.toString()
+                }
+                renderItem={({item}) => (
+                  <VerticalProductCard
+                    itemName={item.itemName}
+                    discountedPrice={item.discountedPrice}
+                    rating={item.rating}
+                    restaurantName={item.restaurantName}
+                    price={item.price}
+                    imageUrl={item.imageUrl}
+                    onPress={() =>
+                      navigation.navigate(routes.PRODUCT_DETAIL, item)
+                    }
+                  />
+                )}
+              />
+            </View>
+
+            <View style={styles.dividerView}>
+              <Text style={styles.dividerText}>restaurants</Text>
+            </View>
+            <View style={styles.lowerViewContainer}>
+              <FlatList
+                horizontal
+                showsVerticalScrollIndicator={false}
+                data={restaurants}
+                keyExtractor={restaurants => restaurants.id.toString()}
+                renderItem={({item}) => (
+                  <RestaurantVerticalCard
+                    restaurantName={item.restaurantName}
+                    location={item.location}
+                    rating={item.rating}
+                    category={item.category}
+                    tables={item.tables}
+                    reviews={item.reviews}
+                    contact={item.contact}
+                    imageUrl={item.imageUrl}
+                    onPress={() =>
+                      navigation.navigate(routes.RESTAURANT_DETAIL, item)
+                    }
+                  />
+                )}
+              />
+            </View>
+
+            <View style={styles.dividerView}>
+              <Text style={styles.dividerText}>products</Text>
+            </View>
+
+            <View style={styles.lowerViewContainer}>
+              <FlatList
+                horizontal
+                showsVerticalScrollIndicator={false}
+                data={products}
+                keyExtractor={products => products.id.toString()}
+                renderItem={({item}) => (
+                  <VerticalProductCard
+                    itemName={item.itemName}
+                    discountedPrice={item.discountedPrice}
+                    rating={item.rating}
+                    restaurantName={item.restaurantName}
+                    price={item.price}
+                    imageUrl={item.imageUrl}
+                    onPress={() =>
+                      navigation.navigate(routes.PRODUCT_DETAIL, item)
+                    }
+                  />
+                )}
+              />
+            </View>
+          </ScrollView>
         </View>
-      </ScrollView>
+      ) : null}
     </View>
   );
 }
