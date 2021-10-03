@@ -5,6 +5,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import firestore from '@react-native-firebase/firestore';
+import {UIActivityIndicator} from 'react-native-indicators';
+import Modal from 'react-native-modal';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -13,8 +15,6 @@ import VerticalProductCard from '../components/VerticalProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import RestaurantVerticalCard from '../components/RestaurantVerticalCard';
-import {UIActivityIndicator} from 'react-native-indicators';
-import Modal from 'react-native-modal';
 
 function HomeScreen(props) {
   const [loading, setLoading] = useState();

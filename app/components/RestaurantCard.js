@@ -7,7 +7,14 @@ import {
 
 import colors from '../config/colors';
 
-function RestaurantCard({restaurantName, location, category, onPress, rating}) {
+function RestaurantCard({
+  restaurantName,
+  location,
+  category,
+  onPress,
+  rating,
+  imageUrl,
+}) {
   return (
     <TouchableOpacity
       style={styles.cardContainer}
@@ -19,7 +26,9 @@ function RestaurantCard({restaurantName, location, category, onPress, rating}) {
             height: wp(30),
             padding: wp(1),
           }}
-          source={require('../assets/restaurant.jpg')}
+          source={{
+            uri: imageUrl,
+          }}
         />
       </View>
       <View style={styles.detailContainer}>

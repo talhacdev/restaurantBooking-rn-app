@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import {UIActivityIndicator} from 'react-native-indicators';
+import Modal from 'react-native-modal';
+import firestore from '@react-native-firebase/firestore';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -15,429 +18,173 @@ import AppButton from '../components/Button';
 import RestaurantCard from '../components/RestaurantCard';
 
 function SearchScreen(props) {
+  const [loading, setLoading] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
   const [toggle, setToggle] = useState(false);
+  const [products, setProducts] = useState();
+  const [restaurants, setRestaurants] = useState();
+  const [searchedProducts, setSearchedProducts] = useState();
+  const [searchedRestaurants, setSearchedRestaurants] = useState();
 
-  const data = [
-    {
-      id: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '1',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '2',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '3',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '4',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '5',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-  ];
+  useEffect(() => {
+    toggleModal();
+    setLoading(true);
+    fetchRestaurants();
+    fetchProducts();
+  }, []);
 
-  const dataRestaurant = [
-    {
-      id: '0',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '1',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '2',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '3',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '4',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '5',
-      restaurantName: 'restaurantName',
-      location: ['Johar Town, Lahore'],
-      photo: [],
-      rating: '1',
-      category: 'category',
-      contact: '+923331049859',
-      tables: [
-        {
-          id: '0',
-          status: 'booked',
-          description: 'table1',
-        },
-        {
-          id: '1',
-          status: 'available',
-          description: 'table2',
-        },
-      ],
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-  ];
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
+  const fetchRestaurants = async () => {
+    await firestore()
+      .collection('Restaurants')
+      .get()
+      .then(res => {
+        setRestaurants(res._docs[0]._data.restaurants);
+        // console.log('search Restaurants: ', res._docs[0]._data.restaurants);
+        // filterSuggestedRestaurants(res._docs[0]._data.restaurants);
+      })
+      .catch(error => alert(error));
+  };
+
+  const fetchProducts = async () => {
+    await firestore()
+      .collection('Products')
+      .get()
+      .then(res => {
+        setProducts(res._docs[0]._data.products);
+        // console.log('search products: ', res._docs[0]._data.products);
+        // filterSuggestedProducts(res._docs[0]._data.products);
+        setLoading(false);
+        toggleModal();
+      })
+      .catch(error => alert(error));
+  };
+
+  const submitHandler = val => {
+    console.log(val);
+    // Keyboard.dismiss();
+    if (val) {
+      let searchFilterProducts = products.filter(m =>
+        m.itemName.toLowerCase().includes(val.toLowerCase()),
+      );
+      let searchFilterRestaurants = restaurants.filter(m =>
+        m.restaurantName.toLowerCase().includes(val.toLowerCase()),
+      );
+
+      setSearchedProducts(searchFilterProducts);
+      setSearchedRestaurants(searchFilterRestaurants);
+    } else {
+      setSearchedProducts(products);
+      setSearchedRestaurants(restaurants);
+    }
+  };
 
   return (
     <View style={styles.container}>
+      {loading ? (
+        <Modal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: wp(5),
+              borderRadius: wp(10),
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </Modal>
+      ) : null}
       <View style={styles.headerViewContainer}>
         <AppHeader title={'search'} />
       </View>
-      <View style={styles.contentViewContainer}>
-        <View style={styles.searchViewContainer}>
-          <AppInput
-            placeholder="product name"
-            title="search"
-            returnKeyType="search"
-            style={styles.textInput}
-          />
-        </View>
-        <View style={styles.buttonViewContainer}>
-          <AppButton
-            onPress={() => setToggle(false)}
-            widthContainer={wp(50)}
-            backgroundColorContainer={
-              !toggle ? colors.primary : colors.secondary
-            }
-            title={'restaurant'}
-          />
-          <AppButton
-            onPress={() => setToggle(true)}
-            widthContainer={wp(50)}
-            backgroundColorContainer={
-              toggle ? colors.primary : colors.secondary
-            }
-            title={'product'}
-          />
-        </View>
+      {!loading ? (
+        <View style={{flex: 1}}>
+          <View style={styles.contentViewContainer}>
+            <View style={styles.searchViewContainer}>
+              <AppInput
+                placeholder="product name"
+                title="search"
+                returnKeyType="search"
+                style={styles.textInput}
+                onChangeText={val => submitHandler(val)}
+              />
+            </View>
+            <View style={styles.buttonViewContainer}>
+              <AppButton
+                onPress={() => setToggle(false)}
+                widthContainer={wp(50)}
+                backgroundColorContainer={
+                  !toggle ? colors.primary : colors.secondary
+                }
+                title={'restaurant'}
+              />
+              <AppButton
+                onPress={() => setToggle(true)}
+                widthContainer={wp(50)}
+                backgroundColorContainer={
+                  toggle ? colors.primary : colors.secondary
+                }
+                title={'product'}
+              />
+            </View>
 
-        {!toggle ? (
-          <View style={styles.upperViewContainer}>
-            <FlatList
-              numColumns={2}
-              showsVerticalScrollIndicator={false}
-              data={dataRestaurant}
-              keyExtractor={dataRestaurant => dataRestaurant.id}
-              renderItem={({item}) => (
-                <View style={styles.wrapper}>
-                  <RestaurantCard
-                    restaurantName={item.restaurantName}
-                    location={item.location}
-                    rating={item.rating}
-                    category={item.category}
-                    tables={item.tables}
-                    reviews={item.reviews}
-                    contact={item.contact}
-                    onPress={() =>
-                      navigation.navigate(routes.RESTAURANT_DETAIL, item)
-                    }
-                  />
-                </View>
-              )}
-            />
-          </View>
-        ) : null}
+            {!toggle ? (
+              <View style={styles.upperViewContainer}>
+                <FlatList
+                  numColumns={2}
+                  showsVerticalScrollIndicator={false}
+                  data={searchedRestaurants || restaurants}
+                  keyExtractor={restaurants => restaurants.id}
+                  renderItem={({item}) => (
+                    <RestaurantCard
+                      restaurantName={item.restaurantName}
+                      location={item.location}
+                      rating={item.rating}
+                      category={item.category}
+                      tables={item.tables}
+                      reviews={item.reviews}
+                      contact={item.contact}
+                      imageUrl={item.imageUrl}
+                      onPress={() =>
+                        navigation.navigate(routes.RESTAURANT_DETAIL, item)
+                      }
+                    />
+                  )}
+                />
+              </View>
+            ) : null}
 
-        {toggle ? (
-          <View style={styles.upperViewContainer}>
-            <FlatList
-              numColumns={2}
-              showsVerticalScrollIndicator={false}
-              data={data}
-              keyExtractor={data => data.id}
-              renderItem={({item}) => (
-                <View style={styles.wrapper}>
-                  <ProductCard
-                    itemName={item.itemName}
-                    discountedPrice={item.discountedPrice}
-                    rating={item.rating}
-                    restaurantName={item.restaurantName}
-                    price={item.price}
-                    onPress={() =>
-                      navigation.navigate(routes.PRODUCT_DETAIL, item)
-                    }
-                  />
-                </View>
-              )}
-            />
+            {toggle ? (
+              <View style={styles.upperViewContainer}>
+                <FlatList
+                  numColumns={2}
+                  showsVerticalScrollIndicator={false}
+                  data={searchedProducts || products}
+                  keyExtractor={products => products.id}
+                  renderItem={({item}) => (
+                    <ProductCard
+                      itemName={item.itemName}
+                      discountedPrice={item.discountedPrice}
+                      rating={item.rating}
+                      restaurantName={item.restaurantName}
+                      price={item.price}
+                      imageUrl={item.imageUrl}
+                      onPress={() =>
+                        navigation.navigate(routes.PRODUCT_DETAIL, item)
+                      }
+                    />
+                  )}
+                />
+              </View>
+            ) : null}
           </View>
-        ) : null}
-      </View>
+        </View>
+      ) : null}
     </View>
   );
 }
