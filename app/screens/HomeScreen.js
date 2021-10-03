@@ -15,6 +15,7 @@ import VerticalProductCard from '../components/VerticalProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import RestaurantVerticalCard from '../components/RestaurantVerticalCard';
+import hardcodeCart from '../hardcode/hardcodeCart';
 
 function HomeScreen(props) {
   const [loading, setLoading] = useState();
@@ -91,6 +92,11 @@ function HomeScreen(props) {
     );
     console.log('filteredList: ', filteredList);
     navigation.navigate(routes.PRODUCT, {item, filteredList});
+  };
+
+  const onAddToCart = item => {
+    console.log('item: ', item);
+    hardcodeCart.checkAlreadyAdded(item);
   };
 
   return (
@@ -186,6 +192,7 @@ function HomeScreen(props) {
                     onPress={() =>
                       navigation.navigate(routes.PRODUCT_DETAIL, item)
                     }
+                    onBottomButtonPress={() => onAddToCart(item)}
                   />
                 )}
               />
@@ -239,6 +246,7 @@ function HomeScreen(props) {
                     onPress={() =>
                       navigation.navigate(routes.PRODUCT_DETAIL, item)
                     }
+                    onBottomButtonPress={() => onAddToCart(item)}
                   />
                 )}
               />

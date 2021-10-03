@@ -20,6 +20,7 @@ function CartProductCard({
   onDel,
   onAdd,
   onSub,
+  imageUrl,
 }) {
   return (
     <TouchableOpacity
@@ -32,7 +33,9 @@ function CartProductCard({
             height: wp(25),
             margin: wp(1),
           }}
-          source={require('../assets/burger.png')}
+          source={{
+            uri: imageUrl,
+          }}
         />
       </View>
       <View style={styles.detailContainer}>

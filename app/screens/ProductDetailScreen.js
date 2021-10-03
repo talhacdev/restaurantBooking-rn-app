@@ -11,15 +11,21 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+const _ = require('lodash');
 
 import AppButton from '../components/Button';
 import AppHeader from '../components/Header';
 import ReviewCard from '../components/ReviewCard';
 import colors from '../config/colors';
+import hardcodeCart from '../hardcode/hardcodeCart';
 
 function ProductDetailScreen(props) {
   const listing = props.route.params;
   console.log('listing=>', listing);
+
+  const onAddToCart = item => {
+    hardcodeCart.checkAlreadyAdded(item);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headerViewContainer}>
@@ -87,7 +93,10 @@ function ProductDetailScreen(props) {
             </View>
           </View>
           <View style={styles.buttonViewContainer}>
-            <AppButton title={'add to cart'} />
+            <AppButton
+              title={'add to cart'}
+              onPress={() => onAddToCart(listing)}
+            />
           </View>
         </ScrollView>
       </View>

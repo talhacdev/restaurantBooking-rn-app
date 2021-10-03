@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Alert, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -11,214 +11,91 @@ import CartProductCard from '../components/CartProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import BottomTextCard from '../components/BottomTextCard';
-import Button from '../components/Button';
+import hardcodeCart from '../hardcode/hardcodeCart';
 
 function CartScreen(props) {
-  // {
-  //   id: '1',
-  //   title: 'five',
-  //   productName: 'productName',
-  //   companyName: 'companyName',
-  //   price: 'price',
-  //   quantity: 'quantity',
-  //   unit: 'unit',
-  //   description: 'description',
-  //   status: 'status',
-  //   orderTime: 'orderTime',
-  //   total: 'total',
-  //   address: 'address',
-  // },
+  const [products, setProducts] = useState();
 
-  const data = [
-    {
-      id: '0',
-      unit: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
+  useEffect(() => {
+    fetchCart();
+  }, []);
 
-    {
-      id: '1',
-      unit: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '2',
-      unit: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '3',
-      unit: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '4',
-      unit: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '5',
-      unit: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '6',
-      unit: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-    {
-      id: '7',
-      unit: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-  ];
+  const fetchCart = () => {
+    hardcodeCart
+      .getData()
+      .then(json => {
+        setProducts(json);
+      })
+      .catch(error => alert(error));
+  };
 
   let totalQuantity = 0;
   let totalPrice = 0;
+
+  if (products) {
+    products.forEach(item => {
+      totalQuantity += item.quantity;
+    });
+
+    products.forEach(item => {
+      totalPrice += item.quantity * item.discountedPrice;
+    });
+  }
+
+  const onAdd = item => {
+    const productsNow = [...products];
+    var idx = productsNow.indexOf(item);
+    productsNow[idx].quantity += 1;
+    setProducts(productsNow);
+    const jsonArray = JSON.stringify(productsNow);
+    hardcodeCart.changeInCart(idx, productsNow[idx]);
+    hardcodeCart.storeData(jsonArray);
+  };
+
+  const onSub = item => {
+    const productsNow = [...products];
+    var idx = productsNow.indexOf(item);
+    if (productsNow[idx].quantity > 1) {
+      productsNow[idx].quantity -= 1;
+      setProducts(productsNow);
+    } else {
+      setProducts(productsNow);
+    }
+    const jsonArray = JSON.stringify(productsNow);
+    hardcodeCart.changeInCart(idx, productsNow[idx]);
+    hardcodeCart.storeData(jsonArray);
+  };
+
+  const onDel = item => {
+    const productsNow = [...products];
+    var idx = productsNow.indexOf(item);
+    productsNow.splice(idx, 1);
+    setProducts(productsNow);
+    const jsonArray = JSON.stringify(productsNow);
+    hardcodeCart.deleteCartItem(idx, jsonArray);
+  };
+
+  const onCheckoutPress = () => {
+    if (products) {
+      if (products.length > 0) {
+        navigation.navigate(routes.CHECKOUT, products);
+      } else {
+        Alert.alert('OOPS!', 'Cart is currently empty.', [
+          {
+            text: 'Continue Shopping',
+            onPress: () => navigation.navigate(routes.HOME),
+          },
+        ]);
+      }
+    } else {
+      Alert.alert('OOPS!', 'Cart is currently empty.', [
+        {
+          text: 'Continue Shopping',
+          onPress: () => navigation.navigate(routes.HOME),
+        },
+      ]);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -230,15 +107,19 @@ function CartScreen(props) {
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={2}
-            data={data}
-            keyExtractor={data => data.id.toString()}
+            data={products}
+            keyExtractor={products => products.id}
             renderItem={({item}) => (
               <CartProductCard
                 productName={item.itemName}
                 restaurantName={item.restaurantName}
                 price={item.price}
                 discountedPrice={item.discountedPrice}
-                quantity={0}
+                quantity={item.quantity}
+                imageUrl={item.imageUrl}
+                onDel={() => onDel(item)}
+                onAdd={() => onAdd(item)}
+                onSub={() => onSub(item)}
                 onPress={() =>
                   navigation.navigate(routes.CART_PRODUCT_DETAIL, item)
                 }
@@ -251,7 +132,7 @@ function CartScreen(props) {
         <BottomTextCard
           leftTitle={totalQuantity + ' goods'}
           title={'CHECK OUT'}
-          onPress={() => navigation.navigate(routes.CHECKOUT)}
+          onPress={() => onCheckoutPress()}
           rightTitle={'Total $' + totalPrice}
         />
       </View>
