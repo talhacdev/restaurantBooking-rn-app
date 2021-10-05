@@ -4,6 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import firestore from '@react-native-firebase/firestore';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -14,123 +15,28 @@ import BottomTextCard from '../components/BottomTextCard';
 import Button from '../components/Button';
 
 function PaymentMethodScreen(props) {
-  const data = [
-    {
-      id: '1',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '2',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '3',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '4',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '5',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '6',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '7',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '8',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-  ];
+  const onPressPlaceOrder = () => {
+    const orderObject = {
+      products: props?.route?.params?.products,
+      totalPrice: props?.route?.params?.totalPrice,
+      totalQuantity: props?.route?.params?.totalQuantity,
+    };
 
-  let totalQuantity = 0;
-  let totalPrice = 0;
+    createOrder(orderObject);
+  };
+
+  const createOrder = async orderObject => {
+    firestore()
+      .collection('Orders')
+      .add(orderObject)
+      .then(() => {
+        console.log('Order Placed!');
+        navigation.navigate(routes.ORDER_SUCCESS);
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -145,7 +51,7 @@ function PaymentMethodScreen(props) {
           noElevation
           widthContainer={wp(100)}
           title={'place order'}
-          onPress={() => navigation.navigate(routes.ORDER_SUCCESS)}
+          onPress={() => onPressPlaceOrder()}
         />
       </View>
     </View>

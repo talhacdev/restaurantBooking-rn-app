@@ -78,7 +78,11 @@ function CartScreen(props) {
   const onCheckoutPress = () => {
     if (products) {
       if (products.length > 0) {
-        navigation.navigate(routes.CHECKOUT, products);
+        navigation.navigate(routes.CHECKOUT, {
+          products,
+          totalPrice,
+          totalQuantity,
+        });
       } else {
         Alert.alert('OOPS!', 'Cart is currently empty.', [
           {

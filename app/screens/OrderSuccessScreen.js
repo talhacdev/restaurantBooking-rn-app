@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -12,125 +12,16 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import BottomTextCard from '../components/BottomTextCard';
 import Button from '../components/Button';
+import hardcodeCart from '../hardcode/hardcodeCart';
 
 function OrderSuccessScreen(props) {
-  const data = [
-    {
-      id: '1',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '2',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '3',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '4',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '5',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '6',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '7',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '8',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-  ];
+  useEffect(() => {
+    hardcodeCart.removeItem();
 
-  let totalQuantity = 0;
-  let totalPrice = 0;
+    setTimeout(function () {
+      navigation.navigate(routes.HOME);
+    }, 1000);
+  }, []);
 
   return (
     <View style={styles.container}>

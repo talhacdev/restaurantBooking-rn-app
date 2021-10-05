@@ -82,6 +82,7 @@ const getTotalAmount = async () => {
     console.log('\nError Getting Data\n', e);
   }
 };
+
 const removeItem = async () => {
   try {
     cartId.splice(0, cartId.length);

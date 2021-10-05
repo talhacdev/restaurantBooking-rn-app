@@ -7,131 +7,12 @@ import {
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
-import CartProductCard from '../components/CartProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import BottomTextCard from '../components/BottomTextCard';
 import Button from '../components/Button';
 
 function CheckoutScreen(props) {
-  const data = [
-    {
-      id: '1',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '2',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '3',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '4',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '5',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '6',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '7',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-    {
-      id: '8',
-      title: 'five',
-      productName: 'productName',
-      companyName: 'companyName',
-      price: 'price',
-      quantity: 'quantity',
-      unit: 'unit',
-      description: 'description',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-    },
-  ];
-
-  let totalQuantity = 0;
-  let totalPrice = 0;
-
   return (
     <View style={styles.container}>
       <View style={styles.headerViewContainer}>
@@ -141,8 +22,8 @@ function CheckoutScreen(props) {
         <View style={styles.upperViewContainer}>
           <BottomTextCard
             disabled={true}
-            leftTitle={totalQuantity + ' goods'}
-            rightTitle={'Total $' + totalPrice}
+            leftTitle={props?.route?.params?.totalQuantity + ' goods'}
+            rightTitle={'Total $' + props?.route?.params?.totalPrice}
           />
         </View>
       </View>
@@ -155,7 +36,13 @@ function CheckoutScreen(props) {
         <Button
           title={'payment method'}
           widthContainer={wp(100)}
-          onPress={() => navigation.navigate(routes.PAYMENT_METHOD)}
+          onPress={() =>
+            navigation.navigate(routes.PAYMENT_METHOD, {
+              products: props?.route?.params?.products,
+              totalPrice: props?.route?.params?.totalPrice,
+              totalQuantity: props?.route?.params?.totalQuantity,
+            })
+          }
         />
       </View>
     </View>
