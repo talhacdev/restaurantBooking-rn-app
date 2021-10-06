@@ -89,12 +89,13 @@ function RestaurantDetailScreen(props) {
           </View>
           <View style={styles.buttonViewContainer}>
             <AppButton
-              onPress={() =>
-                navigation.navigate(routes.BOOK_NOW, {
-                  tables: listing.tables,
-                  timeslot: listing.timeslot,
-                })
-              }
+              // onPress={() =>
+              //   navigation.navigate(routes.BOOK_NOW, {
+              //     tables: listing.tables,
+              //     timeslot: listing.timeslot,
+              //   })
+              // }
+              onPress={() => navigation.navigate(routes.BOOK_NOW, listing)}
               title={'book'}
             />
           </View>

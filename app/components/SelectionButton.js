@@ -17,6 +17,7 @@ function SelectionButton({title, onPress, selected}) {
         backgroundColor: selected ? colors.primary : colors.secondary,
         justifyContent: 'center',
         alignItems: 'center',
+        elevation: selected ? hp(1) : hp(0),
       }}>
       <Text
         style={{

@@ -15,9 +15,11 @@ function Button({
   stylesTitleText,
   backgroundColorContainer,
   onPress,
+  disabled,
 }) {
   return (
     <TouchableOpacity
+      disabled={disabled}
       style={
         stylesButtonContainer
           ? stylesButtonContainer

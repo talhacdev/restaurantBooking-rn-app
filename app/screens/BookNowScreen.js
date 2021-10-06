@@ -4,6 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import firestore from '@react-native-firebase/firestore';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -17,6 +18,48 @@ function BookNowScreen(props) {
   const [selectedTimeslot, setSelectedTimeslot] = useState();
   const tables = props?.route?.params.tables;
   const timeslot = props?.route?.params.timeslot;
+
+  console.log(tables);
+
+  const onPressBookNow = () => {
+    const bookingObject = {
+      restaurantId: props?.route?.params?.id,
+      selectedTable,
+      selectedTimeslot,
+    };
+
+    bookingStatus(bookingObject);
+  };
+
+  const bookingStatus = async bookingObject => {
+    firestore()
+      .collection('Booking')
+      .where('restaurantId', '==', props?.route?.params?.id)
+      .where('selectedTable', '==', selectedTable)
+      .where('selectedTimeslot', '==', selectedTimeslot)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot._docs.length != 0
+          ? alert('Booking already exists!\nTry a different combination.')
+          : createBooking(bookingObject);
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
+
+  const createBooking = async bookingObject => {
+    firestore()
+      .collection('Booking')
+      .add(bookingObject)
+      .then(() => {
+        console.log('Booking Reserved!');
+        navigation.navigate(routes.BOOKING_SUCCESS);
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
 
   return (
     <View style={styles.container}>
@@ -36,8 +79,8 @@ function BookNowScreen(props) {
             renderItem={({item}) => (
               <SelectionButton
                 title={item.title}
-                onPress={() => setSelectedTable(item.id)}
-                selected={selectedTable == item.id ? true : false}
+                onPress={() => setSelectedTable(item)}
+                selected={selectedTable == item ? true : false}
               />
             )}
           />
@@ -55,8 +98,8 @@ function BookNowScreen(props) {
             renderItem={({item}) => (
               <SelectionButton
                 title={item.slot}
-                onPress={() => setSelectedTimeslot(item.id)}
-                selected={selectedTimeslot == item.id ? true : false}
+                onPress={() => setSelectedTimeslot(item)}
+                selected={selectedTimeslot == item ? true : false}
               />
             )}
           />
@@ -65,8 +108,9 @@ function BookNowScreen(props) {
         <View style={styles.lowerViewContainer}>
           <View style={styles.buttonContainer}>
             <AppButton
+              disabled={(selectedTable, selectedTimeslot) ? false : true}
               title="book now"
-              onPress={() => navigation.navigate(routes.BOOKING_SUCCESS)}
+              onPress={() => onPressBookNow()}
             />
           </View>
         </View>
