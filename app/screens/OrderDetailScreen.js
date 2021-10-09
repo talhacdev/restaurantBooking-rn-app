@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -14,10 +14,25 @@ import AppInput from '../components/Input';
 
 function OrderDetailScreen(props) {
   const [data, setData] = useState();
+  const [searchedData, setSearchedData] = useState();
 
   useEffect(() => {
     setData(props.route.params);
   }, []);
+
+  const submitHandler = val => {
+    console.log(val);
+    // Keyboard.dismiss();
+    if (val) {
+      let searchFilterProducts = data.filter(m =>
+        m.itemName.toLowerCase().includes(val.toLowerCase()),
+      );
+
+      setSearchedData(searchFilterProducts);
+    } else {
+      setSearchedData(data);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -31,30 +46,29 @@ function OrderDetailScreen(props) {
             title="search"
             returnKeyType="search"
             style={styles.textInput}
+            onChangeText={val => submitHandler(val)}
           />
         </View>
         <View style={styles.upperViewContainer}>
           <FlatList
             numColumns={2}
             showsVerticalScrollIndicator={false}
-            data={data}
+            data={searchedData || data}
             keyExtractor={data => data.id.toString()}
             renderItem={({item}) => (
-              <View style={styles.wrapper}>
-                <OrderProductCard
-                  title={item.title}
-                  itemName={item.itemName}
-                  restaurantName={item.restaurantName}
-                  rating={item.rating}
-                  price={item.price}
-                  discountedPrice={item.discountedPrice}
-                  quantity={item.quantity}
-                  imageUrl={item.imageUrl}
-                  onPress={() =>
-                    navigation.navigate(routes.ORDER_PRODUCT_DETAIL, item)
-                  }
-                />
-              </View>
+              <OrderProductCard
+                title={item.title}
+                itemName={item.itemName}
+                restaurantName={item.restaurantName}
+                rating={item.rating}
+                price={item.price}
+                discountedPrice={item.discountedPrice}
+                quantity={item.quantity}
+                imageUrl={item.imageUrl}
+                onPress={() =>
+                  navigation.navigate(routes.ORDER_PRODUCT_DETAIL, item)
+                }
+              />
             )}
           />
         </View>

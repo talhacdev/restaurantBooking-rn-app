@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,

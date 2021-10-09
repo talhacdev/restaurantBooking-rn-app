@@ -46,7 +46,7 @@ function OrdersScreen(props) {
             keyExtractor={data => data.id.toString()}
             renderItem={({item}) => (
               <OrderCard
-                orderTime={item.orderTime}
+                orderTime={item._data.orderTime}
                 address={item.address}
                 status={item._data.status}
                 total={item._data.totalPrice}

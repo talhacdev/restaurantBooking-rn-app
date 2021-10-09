@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -12,6 +12,7 @@ import colors from '../config/colors';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import Button from '../components/Button';
+import moment from 'moment';
 
 function PaymentMethodScreen(props) {
   const onPressPlaceOrder = () => {
@@ -21,6 +22,7 @@ function PaymentMethodScreen(props) {
       totalPrice: props?.route?.params?.totalPrice,
       totalQuantity: props?.route?.params?.totalQuantity,
       uid: auth().currentUser._user.uid,
+      orderTime: moment().format('hh:mm:ss A'),
     };
 
     console.log('orderObject', orderObject);
