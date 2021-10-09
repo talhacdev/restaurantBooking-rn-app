@@ -4,23 +4,26 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
-import CartProductCard from '../components/CartProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
-import BottomTextCard from '../components/BottomTextCard';
 import Button from '../components/Button';
 
 function PaymentMethodScreen(props) {
   const onPressPlaceOrder = () => {
     const orderObject = {
+      status: 'in-progress',
       products: props?.route?.params?.products,
       totalPrice: props?.route?.params?.totalPrice,
       totalQuantity: props?.route?.params?.totalQuantity,
+      uid: auth().currentUser._user.uid,
     };
+
+    console.log('orderObject', orderObject);
 
     createOrder(orderObject);
   };

@@ -19,8 +19,6 @@ function BookNowScreen(props) {
   const tables = props?.route?.params.tables;
   const timeslot = props?.route?.params.timeslot;
 
-  console.log(tables);
-
   const onPressBookNow = () => {
     const bookingObject = {
       restaurantId: props?.route?.params?.id,

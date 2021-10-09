@@ -1,9 +1,11 @@
-import React from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -12,61 +14,24 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 
 function OrdersScreen(props) {
-  const data = [
-    {
-      id: '1',
-      status: 'status',
-      orderTime: 'orderTime',
-      total: 'total',
-      address: 'address',
-      items: [
-        {
-          id: '0',
-          itemName: 'itemName',
-          restaurantName: 'restaurantName',
-          price: '2500',
-          discountedPrice: '2200',
-          rating: '1',
-          category: 'category',
-          description: 'description',
-          reviews: [
-            {
-              id: '0',
-              user: 'user1',
-              comment: 'this is user1 comment.',
-            },
-            {
-              id: '1',
-              user: 'user2',
-              comment: 'this is user2 comment.',
-            },
-          ],
-        },
-        {
-          id: '1',
-          itemName: 'itemName',
-          restaurantName: 'restaurantName',
-          price: '2500',
-          discountedPrice: '2200',
-          rating: '1',
-          category: 'category',
-          description: 'description',
-          reviews: [
-            {
-              id: '0',
-              user: 'user1',
-              comment: 'this is user1 comment.',
-            },
-            {
-              id: '1',
-              user: 'user2',
-              comment: 'this is user2 comment.',
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+  const fetchOrders = () => {
+    firestore()
+      .collection('Orders')
+      // Filter results
+      .where('uid', '==', auth().currentUser._user.uid)
+      .get()
+      .then(querySnapshot => {
+        setData(querySnapshot._docs);
+        console.log('data: ', data);
+      })
+      .catch(err => alert(err));
+  };
 
   return (
     <View style={styles.container}>
@@ -83,9 +48,11 @@ function OrdersScreen(props) {
               <OrderCard
                 orderTime={item.orderTime}
                 address={item.address}
-                status={item.status}
-                total={item.total}
-                onPress={() => navigation.navigate(routes.ORDER_DETAIL, item)}
+                status={item._data.status}
+                total={item._data.totalPrice}
+                onPress={() =>
+                  navigation.navigate(routes.ORDER_DETAIL, item._data.products)
+                }
               />
             )}
           />

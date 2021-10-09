@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -13,31 +13,11 @@ import navigation from '../navigation/rootNavigation';
 import AppInput from '../components/Input';
 
 function OrderDetailScreen(props) {
-  const data = [
-    {
-      id: '0',
-      itemName: 'itemName',
-      restaurantName: 'restaurantName',
-      price: '2500',
-      discountedPrice: '2200',
-      rating: '1',
-      quantity: '1',
-      category: 'category',
-      description: 'description',
-      reviews: [
-        {
-          id: '0',
-          user: 'user1',
-          comment: 'this is user1 comment.',
-        },
-        {
-          id: '1',
-          user: 'user2',
-          comment: 'this is user2 comment.',
-        },
-      ],
-    },
-  ];
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    setData(props.route.params);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -69,6 +49,7 @@ function OrderDetailScreen(props) {
                   price={item.price}
                   discountedPrice={item.discountedPrice}
                   quantity={item.quantity}
+                  imageUrl={item.imageUrl}
                   onPress={() =>
                     navigation.navigate(routes.ORDER_PRODUCT_DETAIL, item)
                   }

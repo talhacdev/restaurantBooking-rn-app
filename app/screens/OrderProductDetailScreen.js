@@ -35,7 +35,9 @@ function OrderProductDetailScreen(props) {
                 width: wp(100),
                 height: wp(100),
               }}
-              source={require('../assets/burger.png')}
+              source={{
+                uri: listing.imageUrl,
+              }}
             />
           </View>
           <View style={styles.lowerViewContainer}>
@@ -73,7 +75,11 @@ function OrderProductDetailScreen(props) {
                 keyExtractor={data => data.id}
                 renderItem={({item}) => (
                   <View>
-                    <ReviewCard user={item.user} comment={item.comment} />
+                    <ReviewCard
+                      user={item.user}
+                      comment={item.comment}
+                      imageUrl={item.imageUrl}
+                    />
                   </View>
                 )}
               />

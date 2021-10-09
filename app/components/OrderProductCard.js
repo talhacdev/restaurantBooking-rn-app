@@ -16,6 +16,7 @@ function OrderProductCard({
   onPress,
   rating,
   quantity,
+  imageUrl,
 }) {
   return (
     <TouchableOpacity
@@ -28,7 +29,9 @@ function OrderProductCard({
             height: wp(30),
             padding: wp(1),
           }}
-          source={require('../assets/burger.png')}
+          source={{
+            uri: imageUrl,
+          }}
         />
       </View>
       <View style={styles.detailContainer}>
