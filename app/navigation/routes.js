@@ -25,4 +25,5 @@ export default Object.freeze({
   RESTAURANT_DETAIL: 'RestaurantDetail',
   BOOK_NOW: 'BookNow',
   BOOKING_SUCCESS: 'BookingSuccess',
+  CAMERA: 'Camera',
 });

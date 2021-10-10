@@ -6,6 +6,8 @@ import {
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import {UIActivityIndicator} from 'react-native-indicators';
+import Modal from 'react-native-modal';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -14,9 +16,17 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 
 function OrdersScreen(props) {
+  const [loading, setLoading] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState();
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   useEffect(() => {
+    toggleModal();
+    setLoading(true);
     fetchOrders();
   }, []);
 
@@ -28,6 +38,8 @@ function OrdersScreen(props) {
       .get()
       .then(querySnapshot => {
         setData(querySnapshot._docs);
+        setLoading(false);
+        toggleModal();
         console.log('data: ', data);
       })
       .catch(err => alert(err));
@@ -35,6 +47,21 @@ function OrdersScreen(props) {
 
   return (
     <View style={styles.container}>
+      {loading ? (
+        <Modal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: wp(5),
+              borderRadius: wp(10),
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </Modal>
+      ) : null}
       <View style={styles.headerViewContainer}>
         <AppHeader title={'Orders'} />
       </View>

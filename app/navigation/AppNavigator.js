@@ -6,6 +6,7 @@ import FeedNavigator from './FeedNavigator';
 import SearchNavigator from './SearchNavigator';
 import CartNavigator from './CartNavigator';
 import AccountNavigator from './AccountNavigator';
+import CameraNavigator from './CameraNavigator';
 import routes from './routes';
 
 const Tab = createBottomTabNavigator();
@@ -29,6 +30,16 @@ const AppNavigator = () => {
         options={{
           tabBarIcon: ({color, size}) => (
             <Icon name="search" size={size} color={color} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Camera"
+        component={CameraNavigator}
+        options={{
+          tabBarIcon: ({color, size}) => (
+            <Icon name="camera" size={size} color={color} />
           ),
         }}
       />
