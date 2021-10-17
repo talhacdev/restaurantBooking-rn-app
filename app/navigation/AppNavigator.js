@@ -8,10 +8,22 @@ import CartNavigator from './CartNavigator';
 import AccountNavigator from './AccountNavigator';
 import CameraNavigator from './CameraNavigator';
 import routes from './routes';
+import ChatNavigator from './ChatNavigator';
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
+  const getTabBarVisibility = route => {
+    const routeName = route.state
+      ? route.state.routes[route.state.index].name
+      : '';
+
+    if (routeName === 'Chat') {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <Tab.Navigator initialRouteName={routes.HOME}>
       <Tab.Screen
@@ -42,6 +54,18 @@ const AppNavigator = () => {
             <Icon name="camera" size={size} color={color} />
           ),
         }}
+      />
+
+      <Tab.Screen
+        name="Chat"
+        component={ChatNavigator}
+        options={({route}) => ({
+          tabBarVisible: getTabBarVisibility(route),
+          tabBarVisible: route.state && route.state.index === 0,
+          tabBarIcon: ({color, size}) => (
+            <Icon name="camera" size={size} color={color} />
+          ),
+        })}
       />
 
       <Tab.Screen

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,7 +11,10 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
+import AppInput from '../components/Input';
 import AppHeader from '../components/Header';
 import ReviewCard from '../components/ReviewCard';
 import AppButton from '../components/Button';
@@ -21,8 +24,72 @@ import navigation from '../navigation/rootNavigation';
 import colors from '../config/colors';
 
 function RestaurantDetailScreen(props) {
-  const listing = props.route.params;
-  console.log('listing=>', listing);
+  const [comment, setComment] = useState();
+  const [listing, setListing] = useState(props.route.params);
+
+  const onPressPostButton = val => {
+    console.log(comment);
+    fetchUserRecords();
+  };
+
+  const fetchUserRecords = async () => {
+    await firestore()
+      .collection('UserRecords')
+      .doc(auth()._user.uid)
+      .get()
+      .then(res => {
+        updateComments(res._data);
+      })
+      .catch(error => alert(error));
+  };
+
+  const updateComments = async user => {
+    let comments = [];
+    if (listing.reviews) {
+      comments = [
+        ...listing.reviews,
+        {
+          comment,
+          user,
+          id: Date.now(),
+        },
+      ];
+    } else {
+      comments = [
+        {
+          comment,
+          user,
+          id: Date.now(),
+        },
+      ];
+    }
+    let obj = {
+      reviews: comments,
+    };
+    console.log('obj: ', obj);
+    firestore()
+      .collection('Restaurants')
+      .doc(listing.id)
+      .update(obj)
+      .then(() => {
+        fetchRestaurants();
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
+
+  const fetchRestaurants = async () => {
+    await firestore()
+      .collection('Restaurants')
+      .doc(listing.id)
+      .get()
+      .then(res => {
+        setListing(res._data);
+      })
+      .catch(error => alert(error));
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerViewContainer}>
@@ -79,22 +146,29 @@ function RestaurantDetailScreen(props) {
               renderItem={({item}) => (
                 <View>
                   <ReviewCard
-                    user={item.user}
-                    comment={item.comment}
-                    imageUrl={item.imageUrl}
+                    disabled={auth()._user.uid === item.user.uid}
+                    user={item?.user?.displayName}
+                    comment={item?.comment}
+                    imageUrl={item?.user.photoURL}
+                    onPressImage={() => {
+                      navigation.navigate(routes.CHAT, item);
+                    }}
                   />
                 </View>
               )}
             />
           </View>
           <View style={styles.buttonViewContainer}>
+            <View style={styles.commentContainer}>
+              <AppInput
+                multiline
+                maxLength={256}
+                title={'comment'}
+                onChangeText={val => setComment(val)}
+              />
+              <AppButton onPress={() => onPressPostButton()} title={'post'} />
+            </View>
             <AppButton
-              // onPress={() =>
-              //   navigation.navigate(routes.BOOK_NOW, {
-              //     tables: listing.tables,
-              //     timeslot: listing.timeslot,
-              //   })
-              // }
               onPress={() => navigation.navigate(routes.BOOK_NOW, listing)}
               title={'book'}
             />
@@ -175,6 +249,11 @@ const styles = StyleSheet.create({
     paddingLeft: wp(6),
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  commentContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: hp(2),
   },
 });
 

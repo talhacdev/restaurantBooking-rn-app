@@ -28,6 +28,8 @@ function PaymentMethodScreen(props) {
     console.log('orderObject', orderObject);
 
     createOrder(orderObject);
+
+    // createRestaurants();
   };
 
   const createOrder = async orderObject => {
@@ -37,6 +39,54 @@ function PaymentMethodScreen(props) {
       .then(() => {
         console.log('Order Placed!');
         navigation.navigate(routes.ORDER_SUCCESS);
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
+
+  const createRestaurants = async () => {
+    let obj = {
+      id: Date.now().toString(),
+      category: ['fast-food'],
+      contact: '042-111-116-787',
+      imageUrl:
+        'https://pbs.twimg.com/profile_images/1397098771394215936/W72q-pDv_400x400.jpg',
+      location:
+        '39-C Abul Hassan Isfashani Rd, Block C Faisal Town, Lahore, Punjab',
+      rating: '5',
+      restaurantName: 'OPTP',
+      reviews: [
+        {
+          id: Math.random().toString(),
+          comment: 'OPTP sucks!',
+          displayName: 'Fawad Khan',
+          imageUrl:
+            'https://i.pinimg.com/222x/80/d2/50/80d25096a32c10afb9d39acdd051e45e.jpg',
+        },
+      ],
+      sponsored: 'true',
+      tables: [
+        {id: 1, title: 'Table 1'},
+        {id: 2, title: 'Table 2'},
+        {id: 3, title: 'Table 3'},
+        {id: 4, title: 'Table 4'},
+      ],
+      timeslot: [
+        {id: 0, slot: '9am to 12pm'},
+        {id: 1, slot: '12pm to 3pm'},
+        {id: 2, slot: '3pm to 6pm'},
+        {id: 4, slot: '6pm to 9pm'},
+        // {id: 5, slot: '9pm to 12am'},
+      ],
+    };
+    console.log('createRestaurants');
+    firestore()
+      .collection('Restaurants')
+      .doc(obj.id)
+      .set(obj)
+      .then(() => {
+        console.log('Restaurants added!');
       })
       .catch(err => {
         alert(err);

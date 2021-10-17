@@ -11,7 +11,6 @@ function Input({
   title,
   placeholder,
   placeholderTextColor,
-  editable,
   multiline,
   maxLength,
   numberOfLines,
@@ -49,7 +48,6 @@ function Input({
           placeholder={placeholder}
           value={value}
           placeholderTextColor={placeholderTextColor}
-          editable={editable ? editable : true}
           multiline={multiline ? true : false}
           maxLength={maxLength ? maxLength : 32}
           numberOfLines={numberOfLines ? numberOfLines : 1}

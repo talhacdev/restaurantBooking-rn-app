@@ -31,11 +31,11 @@ function HomeScreen(props) {
   };
 
   useEffect(() => {
-    toggleModal();
-    setLoading(true);
-    fetchCategories();
+    // toggleModal();
+    // setLoading(true);
+    // fetchCategories();
     fetchRestaurants();
-    fetchProducts();
+    // fetchProducts();
   }, []);
 
   const fetchCategories = async () => {
@@ -54,9 +54,10 @@ function HomeScreen(props) {
       .collection('Restaurants')
       .get()
       .then(res => {
-        setRestaurants(res._docs[0]._data.restaurants);
-        console.log('Restaurants: ', res._docs[0]._data.restaurants);
-        filterSuggestedRestaurants(res._docs[0]._data.restaurants);
+        console.log('Restaurants: ', res._docs);
+        setRestaurants(res._docs);
+        // console.log('Restaurants: ', res._docs[0]._data.restaurants);
+        // filterSuggestedRestaurants(res._docs[0]._data.restaurants);
       })
       .catch(error => alert(error));
   };
@@ -209,16 +210,16 @@ function HomeScreen(props) {
                 keyExtractor={restaurants => restaurants.id.toString()}
                 renderItem={({item}) => (
                   <RestaurantVerticalCard
-                    restaurantName={item.restaurantName}
-                    location={item.location}
-                    rating={item.rating}
-                    category={item.category}
-                    tables={item.tables}
-                    reviews={item.reviews}
-                    contact={item.contact}
-                    imageUrl={item.imageUrl}
+                    restaurantName={item._data.restaurantName}
+                    location={item._data.location}
+                    rating={item._data.rating}
+                    category={item._data.category}
+                    tables={item._data.tables}
+                    reviews={item._data.reviews}
+                    contact={item._data.contact}
+                    imageUrl={item._data.imageUrl}
                     onPress={() =>
-                      navigation.navigate(routes.RESTAURANT_DETAIL, item)
+                      navigation.navigate(routes.RESTAURANT_DETAIL, item._data)
                     }
                   />
                 )}

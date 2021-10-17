@@ -1,14 +1,15 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-function ReviewCard({user, comment, imageUrl}) {
+function ReviewCard({user, comment, imageUrl, onPressImage, disabled}) {
   return (
     <View style={styles.container}>
-      <View>
+      <TouchableOpacity disabled={disabled} onPress={onPressImage}>
         <Image
           style={{
             width: wp(15),
@@ -19,7 +20,7 @@ function ReviewCard({user, comment, imageUrl}) {
             uri: imageUrl,
           }}
         />
-      </View>
+      </TouchableOpacity>
       <View style={styles.subContainer}>
         <View style={styles.userContainer}>
           <View style={styles.usernameContainer}>

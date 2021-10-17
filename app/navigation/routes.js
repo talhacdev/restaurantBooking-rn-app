@@ -26,4 +26,6 @@ export default Object.freeze({
   BOOK_NOW: 'BookNow',
   BOOKING_SUCCESS: 'BookingSuccess',
   CAMERA: 'Camera',
+  CHAT: 'Chat',
+  MESSAGES: 'Messages',
 });
