@@ -30,6 +30,10 @@ function PaymentMethodScreen(props) {
     createOrder(orderObject);
 
     // createRestaurants();
+
+    // createProducts();
+
+    // createCategories();
   };
 
   const createOrder = async orderObject => {
@@ -45,53 +49,102 @@ function PaymentMethodScreen(props) {
       });
   };
 
-  const createRestaurants = async () => {
-    let obj = {
-      id: Date.now().toString(),
-      category: ['fast-food'],
-      contact: '042-111-116-787',
-      imageUrl:
-        'https://pbs.twimg.com/profile_images/1397098771394215936/W72q-pDv_400x400.jpg',
-      location:
-        '39-C Abul Hassan Isfashani Rd, Block C Faisal Town, Lahore, Punjab',
-      rating: '5',
-      restaurantName: 'OPTP',
-      reviews: [
-        {
-          id: Math.random().toString(),
-          comment: 'OPTP sucks!',
-          displayName: 'Fawad Khan',
-          imageUrl:
-            'https://i.pinimg.com/222x/80/d2/50/80d25096a32c10afb9d39acdd051e45e.jpg',
-        },
-      ],
-      sponsored: 'true',
-      tables: [
-        {id: 1, title: 'Table 1'},
-        {id: 2, title: 'Table 2'},
-        {id: 3, title: 'Table 3'},
-        {id: 4, title: 'Table 4'},
-      ],
-      timeslot: [
-        {id: 0, slot: '9am to 12pm'},
-        {id: 1, slot: '12pm to 3pm'},
-        {id: 2, slot: '3pm to 6pm'},
-        {id: 4, slot: '6pm to 9pm'},
-        // {id: 5, slot: '9pm to 12am'},
-      ],
-    };
-    console.log('createRestaurants');
-    firestore()
-      .collection('Restaurants')
-      .doc(obj.id)
-      .set(obj)
-      .then(() => {
-        console.log('Restaurants added!');
-      })
-      .catch(err => {
-        alert(err);
-      });
-  };
+  // const createRestaurants = async () => {
+  //   let obj = {
+  //     id: Date.now().toString(),
+  //     category: ['fast-food'],
+  //     contact: '042-111-116-787',
+  //     imageUrl:
+  //       'https://pbs.twimg.com/profile_images/1397098771394215936/W72q-pDv_400x400.jpg',
+  //     location:
+  //       '39-C Abul Hassan Isfashani Rd, Block C Faisal Town, Lahore, Punjab',
+  //     rating: '5',
+  //     restaurantName: 'OPTP',
+  //     reviews: [
+  //       {
+  //         id: Math.random().toString(),
+  //         comment: 'OPTP sucks!',
+  //         displayName: 'Fawad Khan',
+  //         imageUrl:
+  //           'https://i.pinimg.com/222x/80/d2/50/80d25096a32c10afb9d39acdd051e45e.jpg',
+  //       },
+  //     ],
+  //     sponsored: 'true',
+  //     tables: [
+  //       {id: 1, title: 'Table 1'},
+  //       {id: 2, title: 'Table 2'},
+  //       {id: 3, title: 'Table 3'},
+  //       {id: 4, title: 'Table 4'},
+  //     ],
+  //     timeslot: [
+  //       {id: 0, slot: '9am to 12pm'},
+  //       {id: 1, slot: '12pm to 3pm'},
+  //       {id: 2, slot: '3pm to 6pm'},
+  //       {id: 4, slot: '6pm to 9pm'},
+  //       // {id: 5, slot: '9pm to 12am'},
+  //     ],
+  //   };
+  //   console.log('createRestaurants');
+  //   firestore()
+  //     .collection('Restaurants')
+  //     .doc(obj.id)
+  //     .set(obj)
+  //     .then(() => {
+  //       console.log('Restaurants added!');
+  //     })
+  //     .catch(err => {
+  //       alert(err);
+  //     });
+  // };
+
+  // const createProducts = async () => {
+  //   let obj = {
+  //     id: Date.now().toString(),
+  //     category: ['fries'],
+  //     description: "this is OPTP's finest flagship fries.",
+  //     discountedPrice: '100',
+  //     imageUrl:
+  //       'https://www.optp.biz:3000/3000d9b0-a80f-11eb-8176-598fa979e369-Regular-Plain-Fries_variant_0-2021-04-28104754.jpg',
+  //     itemName: 'Loaded Fries',
+  //     price: '200',
+  //     rating: '5',
+  //     restaurantName: 'OPTP',
+
+  //     quantity: 1,
+  //     sponsored: false,
+  //   };
+  //   console.log('createProducts');
+  //   firestore()
+  //     .collection('Products')
+  //     .doc(obj.id)
+  //     .set(obj)
+  //     .then(() => {
+  //       console.log('Products added!');
+  //     })
+  //     .catch(err => {
+  //       alert(err);
+  //     });
+  // };
+
+  // const createCategories = async () => {
+  //   let obj = {
+  //     id: Date.now().toString(),
+  //     title: 'Drinks',
+  //     imageUrl:
+  //       'https://listimg.pinclipart.com/picdir/s/546-5460117_boba-pixel-art-clipart.png',
+  //   };
+  //   console.log('createCategories');
+  //   firestore()
+  //     .collection('Categories')
+  //     .doc(obj.id)
+  //     .set(obj)
+  //     .then(() => {
+  //       console.log('Categories added!');
+  //     })
+  //     .catch(err => {
+  //       alert(err);
+  //     });
+  // };
 
   return (
     <View style={styles.container}>

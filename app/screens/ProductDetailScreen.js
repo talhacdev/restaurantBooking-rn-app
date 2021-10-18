@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,8 +11,11 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-const _ = require('lodash');
+// const _ = require('lodash');
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
+import AppInput from '../components/Input';
 import AppButton from '../components/Button';
 import AppHeader from '../components/Header';
 import ReviewCard from '../components/ReviewCard';
@@ -20,8 +23,72 @@ import colors from '../config/colors';
 import hardcodeCart from '../hardcode/hardcodeCart';
 
 function ProductDetailScreen(props) {
-  const listing = props.route.params;
-  console.log('listing=>', listing);
+  const [comment, setComment] = useState();
+  const [listing, setListing] = useState(props.route.params);
+
+  const onPressPostButton = () => {
+    console.log(comment);
+    fetchUserRecords();
+  };
+
+  const fetchUserRecords = async () => {
+    await firestore()
+      .collection('UserRecords')
+      .doc(auth()._user.uid)
+      .get()
+      .then(res => {
+        console.log(res);
+        updateComments(res._data);
+      })
+      .catch(error => alert(error));
+  };
+
+  const updateComments = async user => {
+    let comments = [];
+    if (listing.reviews) {
+      comments = [
+        ...listing.reviews,
+        {
+          comment,
+          user,
+          id: Date.now(),
+        },
+      ];
+    } else {
+      comments = [
+        {
+          comment,
+          user,
+          id: Date.now(),
+        },
+      ];
+    }
+    let obj = {
+      reviews: comments,
+    };
+    console.log('obj: ', obj);
+    firestore()
+      .collection('Products')
+      .doc(listing.id)
+      .update(obj)
+      .then(() => {
+        fetchProducts();
+      })
+      .catch(err => {
+        alert(err);
+      });
+  };
+
+  const fetchProducts = async () => {
+    await firestore()
+      .collection('Products')
+      .doc(listing.id)
+      .get()
+      .then(res => {
+        setListing(res._data);
+      })
+      .catch(error => alert(error));
+  };
 
   const onAddToCart = item => {
     hardcodeCart.checkAlreadyAdded(item);
@@ -83,9 +150,13 @@ function ProductDetailScreen(props) {
                 renderItem={({item}) => (
                   <View>
                     <ReviewCard
-                      user={item.user}
-                      comment={item.comment}
-                      imageUrl={item.imageUrl}
+                      disabled={auth()._user.uid === item.user.uid}
+                      user={item?.user?.displayName}
+                      comment={item?.comment}
+                      imageUrl={item?.user.photoURL}
+                      onPressImage={() => {
+                        navigation.navigate(routes.CHAT, item);
+                      }}
                     />
                   </View>
                 )}
@@ -93,6 +164,15 @@ function ProductDetailScreen(props) {
             </View>
           </View>
           <View style={styles.buttonViewContainer}>
+            <View style={styles.commentContainer}>
+              <AppInput
+                multiline
+                maxLength={256}
+                title={'comment'}
+                onChangeText={val => setComment(val)}
+              />
+              <AppButton onPress={() => onPressPostButton()} title={'post'} />
+            </View>
             <AppButton
               title={'add to cart'}
               onPress={() => onAddToCart(listing)}
@@ -174,6 +254,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: wp(1),
     fontWeight: 'bold',
     fontSize: wp(6.5),
+  },
+  commentContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: hp(2),
   },
 });
 

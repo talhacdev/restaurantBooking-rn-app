@@ -16,6 +16,7 @@ import navigation from '../navigation/rootNavigation';
 import AppInput from '../components/Input';
 import AppButton from '../components/Button';
 import RestaurantCard from '../components/RestaurantCard';
+import hardcodeCart from '../hardcode/hardcodeCart';
 
 function SearchScreen(props) {
   const [loading, setLoading] = useState();
@@ -42,9 +43,7 @@ function SearchScreen(props) {
       .collection('Restaurants')
       .get()
       .then(res => {
-        setRestaurants(res._docs[0]._data.restaurants);
-        // console.log('search Restaurants: ', res._docs[0]._data.restaurants);
-        // filterSuggestedRestaurants(res._docs[0]._data.restaurants);
+        setRestaurants(res._docs);
       })
       .catch(error => alert(error));
   };
@@ -54,9 +53,7 @@ function SearchScreen(props) {
       .collection('Products')
       .get()
       .then(res => {
-        setProducts(res._docs[0]._data.products);
-        // console.log('search products: ', res._docs[0]._data.products);
-        // filterSuggestedProducts(res._docs[0]._data.products);
+        setProducts(res._docs);
         setLoading(false);
         toggleModal();
       })
@@ -68,10 +65,10 @@ function SearchScreen(props) {
     // Keyboard.dismiss();
     if (val) {
       let searchFilterProducts = products.filter(m =>
-        m.itemName.toLowerCase().includes(val.toLowerCase()),
+        m._data.itemName.toLowerCase().includes(val.toLowerCase()),
       );
       let searchFilterRestaurants = restaurants.filter(m =>
-        m.restaurantName.toLowerCase().includes(val.toLowerCase()),
+        m._data.restaurantName.toLowerCase().includes(val.toLowerCase()),
       );
 
       setSearchedProducts(searchFilterProducts);
@@ -80,6 +77,11 @@ function SearchScreen(props) {
       setSearchedProducts(products);
       setSearchedRestaurants(restaurants);
     }
+  };
+
+  const onAddToCart = item => {
+    console.log('item: ', item);
+    hardcodeCart.checkAlreadyAdded(item);
   };
 
   return (
@@ -142,16 +144,19 @@ function SearchScreen(props) {
                   keyExtractor={restaurants => restaurants.id}
                   renderItem={({item}) => (
                     <RestaurantCard
-                      restaurantName={item.restaurantName}
-                      location={item.location}
-                      rating={item.rating}
-                      category={item.category}
-                      tables={item.tables}
-                      reviews={item.reviews}
-                      contact={item.contact}
-                      imageUrl={item.imageUrl}
+                      restaurantName={item._data.restaurantName}
+                      location={item._data.location}
+                      rating={item._data.rating}
+                      category={item._data.category}
+                      tables={item._data.tables}
+                      reviews={item._data.reviews}
+                      contact={item._data.contact}
+                      imageUrl={item._data.imageUrl}
                       onPress={() =>
-                        navigation.navigate(routes.RESTAURANT_DETAIL, item)
+                        navigation.navigate(
+                          routes.RESTAURANT_DETAIL,
+                          item._data,
+                        )
                       }
                     />
                   )}
@@ -168,15 +173,16 @@ function SearchScreen(props) {
                   keyExtractor={products => products.id}
                   renderItem={({item}) => (
                     <ProductCard
-                      itemName={item.itemName}
-                      discountedPrice={item.discountedPrice}
-                      rating={item.rating}
-                      restaurantName={item.restaurantName}
-                      price={item.price}
-                      imageUrl={item.imageUrl}
+                      itemName={item._data.itemName}
+                      discountedPrice={item._data.discountedPrice}
+                      rating={item._data.rating}
+                      restaurantName={item._data.restaurantName}
+                      price={item._data.price}
+                      imageUrl={item._data.imageUrl}
                       onPress={() =>
-                        navigation.navigate(routes.PRODUCT_DETAIL, item)
+                        navigation.navigate(routes.PRODUCT_DETAIL, item._data)
                       }
+                      onBottomButtonPress={() => onAddToCart(item._data)}
                     />
                   )}
                 />

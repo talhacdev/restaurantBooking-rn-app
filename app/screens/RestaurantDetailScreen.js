@@ -27,7 +27,7 @@ function RestaurantDetailScreen(props) {
   const [comment, setComment] = useState();
   const [listing, setListing] = useState(props.route.params);
 
-  const onPressPostButton = val => {
+  const onPressPostButton = () => {
     console.log(comment);
     fetchUserRecords();
   };

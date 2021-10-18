@@ -33,9 +33,9 @@ function HomeScreen(props) {
   useEffect(() => {
     // toggleModal();
     // setLoading(true);
-    // fetchCategories();
+    fetchCategories();
     fetchRestaurants();
-    // fetchProducts();
+    fetchProducts();
   }, []);
 
   const fetchCategories = async () => {
@@ -43,8 +43,7 @@ function HomeScreen(props) {
       .collection('Categories')
       .get()
       .then(res => {
-        setCategories(res._docs[0]._data.categories);
-        console.log('categories: ', res._docs[0]._data.categories);
+        setCategories(res._docs);
       })
       .catch(error => alert(error));
   };
@@ -54,16 +53,14 @@ function HomeScreen(props) {
       .collection('Restaurants')
       .get()
       .then(res => {
-        console.log('Restaurants: ', res._docs);
         setRestaurants(res._docs);
-        // console.log('Restaurants: ', res._docs[0]._data.restaurants);
-        // filterSuggestedRestaurants(res._docs[0]._data.restaurants);
+        filterSuggestedRestaurants(res._docs);
       })
       .catch(error => alert(error));
   };
 
   const filterSuggestedRestaurants = restaurants => {
-    let filteredList = restaurants.filter(m => m.sponsored == true);
+    let filteredList = restaurants.filter(m => m._data.sponsored == true);
     setFilteredRestaurants(filteredList);
   };
 
@@ -72,15 +69,14 @@ function HomeScreen(props) {
       .collection('Products')
       .get()
       .then(res => {
-        setProducts(res._docs[0]._data.products);
-        console.log('products: ', res._docs[0]._data.products);
-        filterSuggestedProducts(res._docs[0]._data.products);
+        setProducts(res._docs);
+        filterSuggestedProducts(res._docs);
       })
       .catch(error => alert(error));
   };
 
   const filterSuggestedProducts = products => {
-    let filteredList = products.filter(m => m.sponsored == true);
+    let filteredList = products.filter(m => m._data.sponsored == true);
     setFilteredProducts(filteredList);
     setLoading(false);
     toggleModal();
@@ -89,9 +85,10 @@ function HomeScreen(props) {
   const onPressCategoryCard = item => {
     console.log('onPress item: ', item.title.toLowerCase());
     let filteredList = products.filter(
-      m => m.category[0].toLowerCase() == item.title.toLowerCase(),
+      m => m._data.category == item.title.toLowerCase(),
     );
     console.log('filteredList: ', filteredList);
+
     navigation.navigate(routes.PRODUCT, {item, filteredList});
   };
 
@@ -130,12 +127,12 @@ function HomeScreen(props) {
                 numColumns={2}
                 showsVerticalScrollIndicator={false}
                 data={categories}
-                keyExtractor={categories => categories.id.toString()}
+                keyExtractor={categories => categories.id}
                 renderItem={({item}) => (
                   <CategoryCard
-                    title={item.title}
-                    imageUrl={item.imageUrl}
-                    onPress={() => onPressCategoryCard(item)}
+                    title={item._data.title}
+                    imageUrl={item._data.imageUrl}
+                    onPress={() => onPressCategoryCard(item._data)}
                   />
                 )}
               />
@@ -149,21 +146,19 @@ function HomeScreen(props) {
                 horizontal
                 showsVerticalScrollIndicator={false}
                 data={filteredRestaurants}
-                keyExtractor={filteredRestaurants =>
-                  filteredRestaurants.id.toString()
-                }
+                keyExtractor={filteredRestaurants => filteredRestaurants.id}
                 renderItem={({item}) => (
                   <RestaurantVerticalCard
-                    restaurantName={item.restaurantName}
-                    location={item.location}
-                    rating={item.rating}
-                    category={item.category}
-                    tables={item.tables}
-                    reviews={item.reviews}
-                    contact={item.contact}
-                    imageUrl={item.imageUrl}
+                    restaurantName={item._data.restaurantName}
+                    location={item._data.location}
+                    rating={item._data.rating}
+                    category={item._data.category}
+                    tables={item._data.tables}
+                    reviews={item._data.reviews}
+                    contact={item._data.contact}
+                    imageUrl={item._data.imageUrl}
                     onPress={() =>
-                      navigation.navigate(routes.RESTAURANT_DETAIL, item)
+                      navigation.navigate(routes.RESTAURANT_DETAIL, item._data)
                     }
                   />
                 )}
@@ -179,21 +174,19 @@ function HomeScreen(props) {
                 horizontal
                 showsVerticalScrollIndicator={false}
                 data={filteredProducts}
-                keyExtractor={filteredProducts =>
-                  filteredProducts.id.toString()
-                }
+                keyExtractor={filteredProducts => filteredProducts.id}
                 renderItem={({item}) => (
                   <VerticalProductCard
-                    itemName={item.itemName}
-                    discountedPrice={item.discountedPrice}
-                    rating={item.rating}
-                    restaurantName={item.restaurantName}
-                    price={item.price}
-                    imageUrl={item.imageUrl}
+                    itemName={item._data.itemName}
+                    discountedPrice={item._data.discountedPrice}
+                    rating={item._data.rating}
+                    restaurantName={item._data.restaurantName}
+                    price={item._data.price}
+                    imageUrl={item._data.imageUrl}
                     onPress={() =>
-                      navigation.navigate(routes.PRODUCT_DETAIL, item)
+                      navigation.navigate(routes.PRODUCT_DETAIL, item._data)
                     }
-                    onBottomButtonPress={() => onAddToCart(item)}
+                    onBottomButtonPress={() => onAddToCart(item._data)}
                   />
                 )}
               />
@@ -235,19 +228,19 @@ function HomeScreen(props) {
                 horizontal
                 showsVerticalScrollIndicator={false}
                 data={products}
-                keyExtractor={products => products.id.toString()}
+                keyExtractor={products => products.id}
                 renderItem={({item}) => (
                   <VerticalProductCard
-                    itemName={item.itemName}
-                    discountedPrice={item.discountedPrice}
-                    rating={item.rating}
-                    restaurantName={item.restaurantName}
-                    price={item.price}
-                    imageUrl={item.imageUrl}
+                    itemName={item._data.itemName}
+                    discountedPrice={item._data.discountedPrice}
+                    rating={item._data.rating}
+                    restaurantName={item._data.restaurantName}
+                    price={item._data.price}
+                    imageUrl={item._data.imageUrl}
                     onPress={() =>
-                      navigation.navigate(routes.PRODUCT_DETAIL, item)
+                      navigation.navigate(routes.PRODUCT_DETAIL, item._data)
                     }
-                    onBottomButtonPress={() => onAddToCart(item)}
+                    onBottomButtonPress={() => onAddToCart(item._data)}
                   />
                 )}
               />

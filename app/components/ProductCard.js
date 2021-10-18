@@ -16,6 +16,7 @@ function ProductCard({
   onPress,
   imageUrl,
   rating,
+  onBottomButtonPress,
 }) {
   return (
     <TouchableOpacity
@@ -66,7 +67,10 @@ function ProductCard({
         </View>
       </View>
       <View>
-        <VerticalProductCardButton title={'add to cart'} />
+        <VerticalProductCardButton
+          onPress={onBottomButtonPress}
+          title={'add to cart'}
+        />
       </View>
     </TouchableOpacity>
   );
