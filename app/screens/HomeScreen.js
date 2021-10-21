@@ -31,8 +31,8 @@ function HomeScreen(props) {
   };
 
   useEffect(() => {
-    // toggleModal();
-    // setLoading(true);
+    toggleModal();
+    setLoading(true);
     fetchCategories();
     fetchRestaurants();
     fetchProducts();

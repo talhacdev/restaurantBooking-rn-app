@@ -53,7 +53,6 @@ function RegisterScreen(props) {
       displayName: res.user._user.displayName,
       photoURL: res.user._user.photoURL,
       phoneNumber: res.user._user.phoneNumber,
-      ChatThreads: [],
     };
     firestore()
       .collection('UserRecords')

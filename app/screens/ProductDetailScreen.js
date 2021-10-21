@@ -14,6 +14,8 @@ import {
 // const _ = require('lodash');
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import {UIActivityIndicator} from 'react-native-indicators';
+import Modal from 'react-native-modal';
 
 import AppInput from '../components/Input';
 import AppButton from '../components/Button';
@@ -23,10 +25,18 @@ import colors from '../config/colors';
 import hardcodeCart from '../hardcode/hardcodeCart';
 
 function ProductDetailScreen(props) {
+  const [loading, setLoading] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
   const [comment, setComment] = useState();
   const [listing, setListing] = useState(props.route.params);
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   const onPressPostButton = () => {
+    toggleModal();
+    setLoading(true);
     console.log(comment);
     fetchUserRecords();
   };
@@ -86,6 +96,8 @@ function ProductDetailScreen(props) {
       .get()
       .then(res => {
         setListing(res._data);
+        setLoading(false);
+        toggleModal();
       })
       .catch(error => alert(error));
   };
@@ -95,6 +107,21 @@ function ProductDetailScreen(props) {
   };
   return (
     <View style={styles.container}>
+      {loading ? (
+        <Modal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: wp(5),
+              borderRadius: wp(10),
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </Modal>
+      ) : null}
       <View style={styles.headerViewContainer}>
         <AppHeader title="detail" />
       </View>
@@ -144,6 +171,7 @@ function ProductDetailScreen(props) {
             </View>
             <View>
               <FlatList
+                // inverted
                 showsVerticalScrollIndicator={false}
                 data={listing.reviews}
                 keyExtractor={data => data.id}

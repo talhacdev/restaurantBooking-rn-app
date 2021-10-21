@@ -13,6 +13,8 @@ import {
 } from 'react-native-responsive-screen';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import {UIActivityIndicator} from 'react-native-indicators';
+import Modal from 'react-native-modal';
 
 import AppInput from '../components/Input';
 import AppHeader from '../components/Header';
@@ -24,10 +26,18 @@ import navigation from '../navigation/rootNavigation';
 import colors from '../config/colors';
 
 function RestaurantDetailScreen(props) {
+  const [loading, setLoading] = useState();
+  const [isModalVisible, setModalVisible] = useState(false);
   const [comment, setComment] = useState();
   const [listing, setListing] = useState(props.route.params);
 
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   const onPressPostButton = () => {
+    toggleModal();
+    setLoading(true);
     console.log(comment);
     fetchUserRecords();
   };
@@ -86,12 +96,30 @@ function RestaurantDetailScreen(props) {
       .get()
       .then(res => {
         setListing(res._data);
+        setLoading(false);
+        toggleModal();
       })
       .catch(error => alert(error));
   };
 
   return (
     <View style={styles.container}>
+      {loading ? (
+        <Modal
+          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          isVisible={isModalVisible}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: wp(5),
+              borderRadius: wp(10),
+              backgroundColor: 'black',
+            }}>
+            <UIActivityIndicator color="white" />
+          </View>
+        </Modal>
+      ) : null}
+
       <View style={styles.headerViewContainer}>
         <AppHeader title="detail" />
       </View>
@@ -140,6 +168,7 @@ function RestaurantDetailScreen(props) {
           </View>
           <View style={styles.commentsContainer}>
             <FlatList
+              // inverted
               showsVerticalScrollIndicator={false}
               data={listing.reviews}
               keyExtractor={data => data.id.toString()}
@@ -159,6 +188,10 @@ function RestaurantDetailScreen(props) {
             />
           </View>
           <View style={styles.buttonViewContainer}>
+            <AppButton
+              onPress={() => navigation.navigate(routes.BOOK_NOW, listing)}
+              title={'book'}
+            />
             <View style={styles.commentContainer}>
               <AppInput
                 multiline
@@ -168,10 +201,6 @@ function RestaurantDetailScreen(props) {
               />
               <AppButton onPress={() => onPressPostButton()} title={'post'} />
             </View>
-            <AppButton
-              onPress={() => navigation.navigate(routes.BOOK_NOW, listing)}
-              title={'book'}
-            />
           </View>
         </ScrollView>
       </View>
