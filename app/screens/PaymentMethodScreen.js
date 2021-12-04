@@ -148,9 +148,9 @@ function PaymentMethodScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerViewContainer}>
+      {/* <View style={styles.headerViewContainer}>
         <AppHeader title={'payment method'} />
-      </View>
+      </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}></View>
       </View>
@@ -171,11 +171,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primary,
   },
-  headerViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: hp(0),
-  },
+  // headerViewContainer: {
+  //   flex: 0.1,
+  //   position: 'absolute',
+  //   top: hp(0),
+  // },
   bottomViewContainer: {
     flex: 0.1,
     position: 'absolute',
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   contentViewContainer: {
     flex: 1,
-    top: hp(8.5),
+    // top: hp(8.5),
     backgroundColor: colors.background,
   },
   buttonContainer: {

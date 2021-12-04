@@ -62,9 +62,9 @@ function OrdersScreen(props) {
           </View>
         </Modal>
       ) : null}
-      <View style={styles.headerViewContainer}>
+      {/* <View style={styles.headerViewContainer}>
         <AppHeader title={'Orders'} />
-      </View>
+      </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
           <FlatList
@@ -94,14 +94,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primary,
   },
-  headerViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: hp(0),
-  },
+  // headerViewContainer: {
+  //   flex: 0.1,
+  //   position: 'absolute',
+  //   top: hp(0),
+  // },
   contentViewContainer: {
-    flex: 0.91,
-    top: hp(8.5),
+    flex: 1,
+    // top: hp(8.5),
   },
 });
 

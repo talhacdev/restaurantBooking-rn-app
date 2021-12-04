@@ -22,9 +22,9 @@ function AccountScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerViewContainer}>
+      {/* <View style={styles.headerViewContainer}>
         <AppHeader title={'Account'} />
-      </View>
+      </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
           <TextCard
@@ -69,14 +69,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.secondary,
   },
-  headerViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: hp(0),
-  },
+  // headerViewContainer: {
+  //   flex: 0.1,
+  //   position: 'absolute',
+  //   top: hp(0),
+  // },
   contentViewContainer: {
-    flex: 0.8,
-    top: hp(8.5),
+    flex: 1,
+    // top: hp(8.5),
   },
 });
 

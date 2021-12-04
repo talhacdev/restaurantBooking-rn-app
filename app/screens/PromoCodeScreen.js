@@ -136,9 +136,9 @@ function PromoCodeScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerViewContainer}>
+      {/* <View style={styles.headerViewContainer}>
         <AppHeader title={'promo code'} />
-      </View>
+      </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
           <View style={styles.appInputContainer}>
@@ -163,11 +163,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  headerViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: hp(0),
-  },
+  // headerViewContainer: {
+  //   flex: 0.1,
+  //   position: 'absolute',
+  //   top: hp(0),
+  // },
   bottomViewContainer: {
     flex: 0.1,
     position: 'absolute',
@@ -178,8 +178,9 @@ const styles = StyleSheet.create({
   },
   contentViewContainer: {
     flex: 1,
-    top: hp(8.5),
+    // top: hp(8.5),
     backgroundColor: colors.background,
+    // backgroundColor: 'black',
   },
   buttonContainer: {
     justifyContent: 'center',

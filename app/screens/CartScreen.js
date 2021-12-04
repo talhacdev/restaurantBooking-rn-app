@@ -103,9 +103,9 @@ function CartScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerViewContainer}>
+      {/* <View style={styles.headerViewContainer}>
         <AppHeader title={'cart'} />
-      </View>
+      </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
           <FlatList
@@ -149,18 +149,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primary,
   },
-  headerViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: hp(0),
-  },
+  // headerViewContainer: {
+  //   flex: 0.1,
+  //   position: 'absolute',
+  //   top: hp(0),
+  // },
   bottomViewContainer: {
     position: 'absolute',
     bottom: hp(0),
   },
   contentViewContainer: {
-    flex: 0.8,
-    top: hp(8.5),
+    flex: 0.9,
+    // backgroundColor: 'black',
+    // top: hp(8.5),
   },
 });
 

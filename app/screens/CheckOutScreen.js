@@ -15,9 +15,9 @@ import Button from '../components/Button';
 function CheckoutScreen(props) {
   return (
     <View style={styles.container}>
-      <View style={styles.headerViewContainer}>
+      {/* <View style={styles.headerViewContainer}>
         <AppHeader title={'check out'} />
-      </View>
+      </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
           <BottomTextCard
@@ -54,14 +54,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  headerViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: hp(0),
-  },
+  // headerViewContainer: {
+  //   flex: 0.1,
+  //   position: 'absolute',
+  //   top: hp(0),
+  // },
   contentViewContainer: {
     flex: 1,
-    top: hp(8.5),
+    // top: hp(8.5),
+    // backgroundColor: 'black',
   },
   buttonContainer: {
     paddingTop: hp(1),
