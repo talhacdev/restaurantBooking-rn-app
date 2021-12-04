@@ -121,18 +121,18 @@ function HomeScreen(props) {
           </View>
         </Modal>
       ) : null}
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={() => navigation.navigate(routes.SEARCH)}
-        style={styles.headerViewContainer}>
-        <SearchInput
-          placeholder="product name"
-          title="search"
-          returnKeyType="search"
-        />
-      </TouchableOpacity>
+
       {!loading ? (
         <View style={{flex: 1}}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={() => navigation.navigate(routes.SEARCH)}>
+            <SearchInput
+              placeholder="product name"
+              title="search"
+              returnKeyType="search"
+            />
+          </TouchableOpacity>
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.contentViewContainer}>
@@ -271,18 +271,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.backgroundColor,
   },
-  headerViewContainer: {
-    width: wp(100),
-    position: 'absolute',
-    top: hp(0),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   contentViewContainer: {
-    flex: 0.8,
-    top: hp(6),
-    marginBottom: hp(6.5),
-    // backgroundColor: 'black',
+    flex: 1,
   },
   dividerView: {
     justifyContent: 'center',
@@ -301,11 +291,6 @@ const styles = StyleSheet.create({
   lowerViewContainer: {},
   bottomViewContainer: {
     flex: 0.1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  searchViewContainer: {
-    width: wp(100),
     justifyContent: 'center',
     alignItems: 'center',
   },
