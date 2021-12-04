@@ -14,7 +14,7 @@ function SelectionButton({title, onPress, selected}) {
         marginHorizontal: wp(1),
         width: wp(33),
         height: hp(5),
-        backgroundColor: selected ? colors.primary : colors.secondary,
+        backgroundColor: selected ? colors.cardColor : colors.secondary,
         justifyContent: 'center',
         alignItems: 'center',
         elevation: selected ? hp(1) : hp(0),

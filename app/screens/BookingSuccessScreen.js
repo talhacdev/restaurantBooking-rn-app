@@ -134,9 +134,9 @@ function BookingSuccessScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerViewContainer}>
+      {/* <View style={styles.headerViewContainer}>
         <AppHeader title={'booking success'} />
-      </View>
+      </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}></View>
       </View>
@@ -150,11 +150,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.primary,
   },
-  headerViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: hp(0),
-  },
+  // headerViewContainer: {
+  //   flex: 0.1,
+  //   position: 'absolute',
+  //   top: hp(0),
+  // },
   bottomViewContainer: {
     flex: 0.1,
     position: 'absolute',
@@ -162,8 +162,8 @@ const styles = StyleSheet.create({
   },
   contentViewContainer: {
     flex: 1,
-    top: hp(8.5),
-    backgroundColor: colors.background,
+    // top: hp(8.5),
+    backgroundColor: colors.backgroundColor,
   },
   buttonContainer: {
     justifyContent: 'center',

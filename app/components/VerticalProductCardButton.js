@@ -19,7 +19,7 @@ function VerticalProductCardButton({title, stylesTitleText, onPress}) {
             ? stylesTitleText
             : {
                 fontWeight: 'bold',
-                color: colors.tertiary,
+                color: colors.buttonTextColor,
                 fontSize: wp(4),
                 textTransform: 'uppercase',
               }
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.buttonColor,
     padding: wp(2),
     width: '100%',
     height: hp('5%'),

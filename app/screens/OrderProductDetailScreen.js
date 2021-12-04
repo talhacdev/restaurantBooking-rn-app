@@ -94,7 +94,7 @@ function OrderProductDetailScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.backgroundColor,
   },
   // headerViewContainer: {
   //   flex: 0.1,

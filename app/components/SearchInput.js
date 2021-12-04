@@ -35,7 +35,7 @@ function SearchInput({
               ? stylesTitleText
               : {
                   fontWeight: 'bold',
-                  color: colors.tertiary,
+                  color: colors.buttonTextColor,
                   fontSize: wp(3.3),
                   textTransform: 'uppercase',
                 }
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     paddingHorizontal: wp(5),
-    backgroundColor: colors.primary,
+    backgroundColor: colors.buttonColor,
   },
   textInputContainer: {
     width: wp(55),

@@ -45,7 +45,7 @@ function CameraScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.backgroundColor,
   },
   centerText: {
     flex: 1,

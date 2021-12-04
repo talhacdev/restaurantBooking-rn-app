@@ -36,7 +36,7 @@ function BottomTextCard({
               flexDirection: 'row',
               justifyContent: 'space-between',
               alignItems: 'center',
-              backgroundColor: colors.primary,
+              backgroundColor: colors.buttonColor,
               width: wp(100),
               height: hp(9),
               borderWidth: wp(0.05),
@@ -50,7 +50,7 @@ function BottomTextCard({
               ? stylesLeftTitleText
               : {
                   fontWeight: 'bold',
-                  color: colors.tertiary,
+                  color: colors.buttonTextColor,
                   fontSize: wp(5),
                 }
           }>
@@ -65,7 +65,7 @@ function BottomTextCard({
               ? stylesTitleText
               : {
                   fontWeight: 'bold',
-                  color: colors.tertiary,
+                  color: colors.buttonTextColor,
                   fontSize: wp(5),
                 }
           }>
@@ -79,7 +79,7 @@ function BottomTextCard({
               ? stylesRightTitleText
               : {
                   fontWeight: 'bold',
-                  color: colors.tertiary,
+                  color: colors.buttonTextColor,
                   fontSize: wp(5),
                 }
           }>

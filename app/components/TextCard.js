@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: colors.card,
+    backgroundColor: colors.cardColor,
     width: wp('100%'),
     height: hp('8.5%'),
     elevation: wp(1),

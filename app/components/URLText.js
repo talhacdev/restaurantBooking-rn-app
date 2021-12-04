@@ -18,8 +18,8 @@ function URLText({title, stylesUrlText, onPress}) {
             ? stylesUrlText
             : {
                 fontWeight: 'bold',
-                color: colors.tertiary,
-                fontSize: wp(5),
+                color: colors.hyperlinkTextColor,
+                fontSize: wp(4),
                 fontStyle: 'italic',
               }
         }>

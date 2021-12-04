@@ -163,36 +163,39 @@ function ProfileScreen(props) {
               />
             )}
           </TouchableOpacity>
-          <AppInput
-            placeholder="name"
-            title="name"
-            defaultValue={user.displayName}
-            onChangeText={val => setDisplayName(val)}
-          />
+          <View style={{marginTop: hp(5)}}>
+            <AppInput
+              placeholder="name"
+              title="name"
+              defaultValue={user.displayName}
+              onChangeText={val => setDisplayName(val)}
+            />
 
-          <AppInput
-            placeholder="email"
-            title="email"
-            keyboardType={'email-address'}
-            value={user.email}
-          />
-          <AppInput
-            placeholder="phone"
-            title="phone"
-            keyboardType={'phone-pad'}
-            defaultValue={user.phoneNumber}
-            onChangeText={val => setPhoneNumber(val)}
-          />
-          <AppInput
-            placeholder="address"
-            title="address"
-            defaultValue={user.address}
-            onChangeText={val => setAddress(val)}
-          />
+            <AppInput
+              placeholder="email"
+              title="email"
+              keyboardType={'email-address'}
+              value={user.email}
+            />
+            <AppInput
+              placeholder="phone"
+              title="phone"
+              keyboardType={'phone-pad'}
+              defaultValue={user.phoneNumber}
+              onChangeText={val => setPhoneNumber(val)}
+            />
+            <AppInput
+              placeholder="address"
+              title="address"
+              defaultValue={user.address}
+              onChangeText={val => setAddress(val)}
+            />
+          </View>
+
+          <View style={{margin: hp(1)}}>
+            <AppButton onPress={() => onPressUpdateButton()} title={'update'} />
+          </View>
         </View>
-      </View>
-      <View style={styles.buttonViewContainer}>
-        <AppButton onPress={() => onPressUpdateButton()} title={'update'} />
       </View>
     </View>
   );
@@ -201,7 +204,6 @@ function ProfileScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
   },
   // headerViewContainer: {
   //   flex: 0.1,
@@ -211,16 +213,11 @@ const styles = StyleSheet.create({
   contentViewContainer: {
     flex: 1,
     // top: hp(8.5),
-    backgroundColor: colors.primary,
+    backgroundColor: colors.backgroundColor,
   },
   upperViewContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  buttonViewContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: hp(3),
   },
 });
 

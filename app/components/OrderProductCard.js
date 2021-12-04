@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.cardColor,
     // backgroundColor: 'pink',
     width: wp('50'),
     height: hp('35'),

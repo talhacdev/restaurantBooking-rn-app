@@ -169,7 +169,6 @@ function PaymentMethodScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
   },
   // headerViewContainer: {
   //   flex: 0.1,
@@ -184,7 +183,7 @@ const styles = StyleSheet.create({
   contentViewContainer: {
     flex: 1,
     // top: hp(8.5),
-    backgroundColor: colors.background,
+    backgroundColor: colors.backgroundColor,
   },
   buttonContainer: {
     justifyContent: 'center',

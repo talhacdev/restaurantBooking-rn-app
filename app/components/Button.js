@@ -14,6 +14,7 @@ function Button({
   stylesButtonContainer,
   stylesTitleText,
   backgroundColorContainer,
+  buttonTextContainer,
   onPress,
   disabled,
 }) {
@@ -28,7 +29,7 @@ function Button({
               alignItems: 'center',
               backgroundColor: backgroundColorContainer
                 ? backgroundColorContainer
-                : colors.primary,
+                : colors.buttonColor,
               width: widthContainer ? widthContainer : wp(85),
               height: hp(5),
               borderRadius: wp(1),
@@ -43,9 +44,11 @@ function Button({
           stylesTitleText
             ? stylesTitleText
             : {
-                fontWeight: 'bold',
-                color: colors.tertiary,
-                fontSize: wp(5),
+                // fontWeight: 'bold',
+                color: buttonTextContainer
+                  ? buttonTextContainer
+                  : colors.buttonTextColor,
+                fontSize: wp(4),
                 textTransform: 'uppercase',
               }
         }>

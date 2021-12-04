@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.cardColor,
     width: wp('100%'),
     height: hp('20%'),
     padding: wp(5),

@@ -121,7 +121,10 @@ function SearchScreen(props) {
                 onPress={() => setToggle(false)}
                 widthContainer={wp(50)}
                 backgroundColorContainer={
-                  !toggle ? colors.primary : colors.secondary
+                  !toggle ? colors.buttonColor : colors.secondary
+                }
+                buttonTextContainer={
+                  !toggle ? colors.buttonTextColor : colors.buttonTextColor
                 }
                 title={'restaurant'}
               />
@@ -129,7 +132,10 @@ function SearchScreen(props) {
                 onPress={() => setToggle(true)}
                 widthContainer={wp(50)}
                 backgroundColorContainer={
-                  toggle ? colors.primary : colors.secondary
+                  toggle ? colors.buttonColor : colors.secondary
+                }
+                buttonTextContainer={
+                  toggle ? colors.buttonTextColor : colors.buttonTextColor
                 }
                 title={'product'}
               />
@@ -198,7 +204,7 @@ function SearchScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.backgroundColor,
   },
   // headerViewContainer: {
   //   flex: 0.1,

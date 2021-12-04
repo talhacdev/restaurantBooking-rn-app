@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.cardColor,
     // backgroundColor: colors.categoryCardBackground,
     width: wp('50%'),
     height: hp('12.5%'),

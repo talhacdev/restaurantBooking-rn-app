@@ -120,7 +120,7 @@ function BookNowScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.backgroundColor,
   },
   // headerViewContainer: {
   //   flex: 0.1,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   dividerView: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.dividerColor,
     width: wp('100%'),
     height: hp('5%'),
     elevation: wp(1),

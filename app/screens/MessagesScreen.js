@@ -226,7 +226,7 @@ function MessagesScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.backgroundColor,
     paddingHorizontal: wp(5),
   },
   headerViewContainer: {

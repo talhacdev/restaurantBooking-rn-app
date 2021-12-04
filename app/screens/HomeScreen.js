@@ -269,7 +269,7 @@ function HomeScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.primary,
+    backgroundColor: colors.backgroundColor,
   },
   headerViewContainer: {
     width: wp(100),
@@ -287,14 +287,14 @@ const styles = StyleSheet.create({
   dividerView: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.primary,
+    backgroundColor: colors.dividerColor,
     width: wp('100%'),
     height: hp('5%'),
     elevation: wp(1),
   },
   dividerText: {
     fontWeight: 'bold',
-    color: colors.tertiary,
+    color: colors.buttonTextColor,
     fontSize: wp(4.5),
     textTransform: 'uppercase',
   },
