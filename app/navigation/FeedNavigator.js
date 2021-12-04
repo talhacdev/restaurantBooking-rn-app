@@ -8,6 +8,7 @@ import RestaurantDetailScreen from '../screens/RestaurantDetailScreen';
 import BookNowScreen from '../screens/BookNowScreen';
 import BookingSuccessScreen from '../screens/BookingSuccessScreen';
 import ChatScreen from '../screens/ChatScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,11 @@ const FeedNavigator = () => (
     <Stack.Screen
       name="Home"
       component={HomeScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="Search"
+      component={SearchScreen}
       options={{headerShown: false}}
     />
     <Stack.Screen

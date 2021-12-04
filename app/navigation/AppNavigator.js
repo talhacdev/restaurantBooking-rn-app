@@ -3,7 +3,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import FeedNavigator from './FeedNavigator';
-import SearchNavigator from './SearchNavigator';
 import CartNavigator from './CartNavigator';
 import AccountNavigator from './AccountNavigator';
 import CameraNavigator from './CameraNavigator';
@@ -32,16 +31,6 @@ const AppNavigator = () => {
         options={{
           tabBarIcon: ({color, size}) => (
             <Icon name="home" color={color} size={size} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="Search"
-        component={SearchNavigator}
-        options={{
-          tabBarIcon: ({color, size}) => (
-            <Icon name="search" size={size} color={color} />
           ),
         }}
       />

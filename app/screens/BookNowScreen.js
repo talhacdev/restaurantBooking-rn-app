@@ -61,9 +61,9 @@ function BookNowScreen(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerViewContainer}>
+      {/* <View style={styles.headerViewContainer}>
         <AppHeader title="book now" />
-      </View>
+      </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.dividerView}>
           <Text style={styles.dividerText}>Tables</Text>
@@ -122,14 +122,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-  headerViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: hp(0),
-  },
+  // headerViewContainer: {
+  //   flex: 0.1,
+  //   position: 'absolute',
+  //   top: hp(0),
+  // },
   contentViewContainer: {
-    flex: 0.9,
-    top: hp(8.5),
+    flex: 1,
+    // top: hp(8.5),
   },
   upperViewContainer: {
     marginVertical: hp(1),

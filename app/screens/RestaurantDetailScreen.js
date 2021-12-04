@@ -120,9 +120,9 @@ function RestaurantDetailScreen(props) {
         </Modal>
       ) : null}
 
-      <View style={styles.headerViewContainer}>
+      {/* <View style={styles.headerViewContainer}>
         <AppHeader title="detail" />
-      </View>
+      </View> */}
 
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ScrollView
@@ -213,15 +213,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.secondary,
   },
-  headerViewContainer: {
-    flex: 0.1,
-    position: 'absolute',
-    top: hp(0),
-  },
+  // headerViewContainer: {
+  //   flex: 0.1,
+  //   position: 'absolute',
+  //   top: hp(0),
+  // },
   contentViewContainer: {
-    flex: 0.8,
-    top: hp(8.5),
-    marginBottom: hp(8.5),
+    flex: 1,
+    // top: hp(8.5),
+    // marginBottom: hp(8.5),
   },
   upperViewContainer: {
     justifyContent: 'center',

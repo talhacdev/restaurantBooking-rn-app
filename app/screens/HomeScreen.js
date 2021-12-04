@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, FlatList, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -8,7 +15,6 @@ import firestore from '@react-native-firebase/firestore';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 
-import AppHeader from '../components/Header';
 import colors from '../config/colors';
 import CategoryCard from '../components/CategoryCard';
 import VerticalProductCard from '../components/VerticalProductCard';
@@ -16,6 +22,7 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import RestaurantVerticalCard from '../components/RestaurantVerticalCard';
 import hardcodeCart from '../hardcode/hardcodeCart';
+import SearchInput from '../components/SearchInput';
 
 function HomeScreen(props) {
   const [loading, setLoading] = useState();
@@ -114,9 +121,16 @@ function HomeScreen(props) {
           </View>
         </Modal>
       ) : null}
-      <View style={styles.headerViewContainer}>
-        <AppHeader title="commerce" />
-      </View>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => navigation.navigate(routes.SEARCH)}
+        style={styles.headerViewContainer}>
+        <SearchInput
+          placeholder="product name"
+          title="search"
+          returnKeyType="search"
+        />
+      </TouchableOpacity>
       {!loading ? (
         <View style={{flex: 1}}>
           <ScrollView
@@ -258,16 +272,18 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
   },
   headerViewContainer: {
-    flex: 0.1,
+    width: wp(100),
     position: 'absolute',
     top: hp(0),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   contentViewContainer: {
     flex: 0.8,
-    top: hp(8.5),
-    marginBottom: hp(8.5),
+    top: hp(6),
+    marginBottom: hp(6.5),
+    // backgroundColor: 'black',
   },
-  upperViewContainer: {},
   dividerView: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -285,6 +301,11 @@ const styles = StyleSheet.create({
   lowerViewContainer: {},
   bottomViewContainer: {
     flex: 0.1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  searchViewContainer: {
+    width: wp(100),
     justifyContent: 'center',
     alignItems: 'center',
   },
