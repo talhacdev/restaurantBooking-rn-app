@@ -28,11 +28,11 @@ function CheckoutScreen(props) {
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <Button
+        {/* <Button
           title={'add promo code'}
           widthContainer={wp(100)}
           onPress={() => navigation.navigate(routes.PROMO_CODE)}
-        />
+        /> */}
         <Button
           title={'payment method'}
           widthContainer={wp(100)}

@@ -37,7 +37,7 @@ function VerticalProductCard({
 
       <View style={styles.detailContainer}>
         <View style={styles.ratingContainer}>
-          <View>
+          {/* <View>
             <Image
               style={{
                 width: wp(5),
@@ -49,7 +49,7 @@ function VerticalProductCard({
           </View>
           <View>
             <Text style={styles.ratingText}>{rating}</Text>
-          </View>
+          </View> */}
         </View>
         <Text numberOfLines={1} style={styles.detailMainText}>
           {itemName}

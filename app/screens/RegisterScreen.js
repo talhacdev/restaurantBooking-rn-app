@@ -95,8 +95,11 @@ function RegisterScreen(props) {
         />
       </View>
       <View style={styles.lowerViewContainer}>
+        <AppInput title={'first name'} onChangeText={text => setEmail(text)} />
+        <AppInput title={'last name'} onChangeText={text => setEmail(text)} />
         <AppInput title={'email'} onChangeText={text => setEmail(text)} />
         <AppInput title={'password'} onChangeText={text => setPassword(text)} />
+        <AppInput title={'phone'} onChangeText={text => setEmail(text)} />
         <View style={styles.buttonContainer}>
           <AppButton
             title="register"

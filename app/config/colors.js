@@ -26,5 +26,6 @@ export default {
   backgroundColor: '#f8e7e4',
   dividerColor: '#f0a050',
   cardColor: '#ee8b95',
+  cardColor: '#ffffff',
   cardTextColor: '#FFFFFF', // tertiary
 };

@@ -19,9 +19,10 @@ function ProductCard({
   onBottomButtonPress,
 }) {
   return (
-    <TouchableOpacity
+    <View
       style={styles.cardContainer}
-      onPress={onPress ? onPress : () => console.log('Card pressed.')}>
+      // onPress={onPress ? onPress : () => console.log('Card pressed.')}
+    >
       <View>
         <Image
           style={{
@@ -36,7 +37,7 @@ function ProductCard({
       </View>
       <View style={styles.detailContainer}>
         <View style={styles.ratingContainer}>
-          <View>
+          {/* <View>
             <Image
               style={{
                 width: wp(5),
@@ -48,7 +49,7 @@ function ProductCard({
           </View>
           <View>
             <Text style={styles.ratingText}>{rating}</Text>
-          </View>
+          </View> */}
         </View>
         <Text numberOfLines={1} style={styles.detailMainText}>
           {itemName}
@@ -72,7 +73,7 @@ function ProductCard({
           title={'add to cart'}
         />
       </View>
-    </TouchableOpacity>
+    </View>
   );
 }
 

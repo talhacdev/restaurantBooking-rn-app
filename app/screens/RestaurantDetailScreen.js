@@ -166,7 +166,7 @@ function RestaurantDetailScreen(props) {
               </View>
             </View>
           </View>
-          <View style={styles.commentsContainer}>
+          {/* <View style={styles.commentsContainer}>
             <FlatList
               // inverted
               showsVerticalScrollIndicator={false}
@@ -186,13 +186,13 @@ function RestaurantDetailScreen(props) {
                 </View>
               )}
             />
-          </View>
+          </View> */}
           <View style={styles.buttonViewContainer}>
             <AppButton
               onPress={() => navigation.navigate(routes.BOOK_NOW, listing)}
               title={'book'}
             />
-            <View style={styles.commentContainer}>
+            {/* <View style={styles.commentContainer}>
               <AppInput
                 multiline
                 maxLength={256}
@@ -200,7 +200,7 @@ function RestaurantDetailScreen(props) {
                 onChangeText={val => setComment(val)}
               />
               <AppButton onPress={() => onPressPostButton()} title={'post'} />
-            </View>
+            </View> */}
           </View>
         </ScrollView>
       </View>

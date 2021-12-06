@@ -136,7 +136,7 @@ function HomeScreen(props) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.contentViewContainer}>
-            <View style={styles.upperViewContainer}>
+            {/* <View style={styles.upperViewContainer}>
               <FlatList
                 numColumns={2}
                 showsVerticalScrollIndicator={false}
@@ -150,10 +150,10 @@ function HomeScreen(props) {
                   />
                 )}
               />
-            </View>
+            </View> */}
 
             <View style={styles.dividerView}>
-              <Text style={styles.dividerText}>sponsored restaurants</Text>
+              <Text style={styles.dividerText}>Top Rated restaurants</Text>
             </View>
             <View style={styles.lowerViewContainer}>
               <FlatList
@@ -179,7 +179,7 @@ function HomeScreen(props) {
               />
             </View>
 
-            <View style={styles.dividerView}>
+            {/* <View style={styles.dividerView}>
               <Text style={styles.dividerText}>sponsored products</Text>
             </View>
 
@@ -204,7 +204,7 @@ function HomeScreen(props) {
                   />
                 )}
               />
-            </View>
+            </View> */}
 
             <View style={styles.dividerView}>
               <Text style={styles.dividerText}>restaurants</Text>
@@ -233,7 +233,7 @@ function HomeScreen(props) {
               />
             </View>
 
-            <View style={styles.dividerView}>
+            {/* <View style={styles.dividerView}>
               <Text style={styles.dividerText}>products</Text>
             </View>
 
@@ -258,7 +258,7 @@ function HomeScreen(props) {
                   />
                 )}
               />
-            </View>
+            </View> */}
           </ScrollView>
         </View>
       ) : null}

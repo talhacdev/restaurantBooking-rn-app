@@ -13,6 +13,7 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import Button from '../components/Button';
 import moment from 'moment';
+import AppInput from '../components/Input';
 
 function PaymentMethodScreen(props) {
   const onPressPlaceOrder = () => {
@@ -152,7 +153,9 @@ function PaymentMethodScreen(props) {
         <AppHeader title={'payment method'} />
       </View> */}
       <View style={styles.contentViewContainer}>
-        <View style={styles.upperViewContainer}></View>
+        <View style={styles.upperViewContainer}>
+          <AppInput title={'address'} onChangeText={text => setEmail(text)} />
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <Button

@@ -37,22 +37,22 @@ function AccountScreen(props) {
             leftIcon={'list'}
             onPress={() => navigation.navigate(routes.ORDERS)}
           />
-          <TextCard
+          {/* <TextCard
             title="Promo Alerts"
             leftIcon={'notifications'}
             onPress={() => navigation.navigate(routes.PROMO_ALERT)}
-          />
-          <TextCard title="Rate Us" leftIcon={'star'} />
+          /> */}
+          {/* <TextCard title="Rate Us" leftIcon={'star'} /> */}
           <TextCard
             title="Contact Us"
             leftIcon={'call'}
             onPress={() => navigation.navigate(routes.CONTACT_US)}
           />
-          <TextCard
+          {/* <TextCard
             title="About Us"
             leftIcon={'information'}
             onPress={() => navigation.navigate(routes.ABOUT_US)}
-          />
+          /> */}
           <TextCard
             title="Log Out"
             leftIcon={'log-out'}

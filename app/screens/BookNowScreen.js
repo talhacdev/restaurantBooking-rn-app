@@ -12,6 +12,7 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import SelectionButton from '../components/SelectionButton';
 import AppButton from '../components/Button';
+import AppInput from '../components/Input';
 
 function BookNowScreen(props) {
   const [selectedTable, setSelectedTable] = useState();
@@ -65,7 +66,19 @@ function BookNowScreen(props) {
         <AppHeader title="book now" />
       </View> */}
       <View style={styles.contentViewContainer}>
-        <View style={styles.dividerView}>
+        <View style={styles.lowerViewContainer}>
+          <AppInput title={'date'} onChangeText={text => setEmail(text)} />
+          <AppInput title={'time'} onChangeText={text => setEmail(text)} />
+          <AppInput title={'person'} onChangeText={text => setEmail(text)} />
+          <View style={styles.buttonContainer}>
+            <AppButton
+              disabled={(selectedTable, selectedTimeslot) ? false : true}
+              title="book now"
+              onPress={() => onPressBookNow()}
+            />
+          </View>
+        </View>
+        {/* <View style={styles.dividerView}>
           <Text style={styles.dividerText}>Tables</Text>
         </View>
         <View style={styles.upperViewContainer}>
@@ -82,9 +95,9 @@ function BookNowScreen(props) {
               />
             )}
           />
-        </View>
+        </View> */}
 
-        <View style={styles.dividerView}>
+        {/* <View style={styles.dividerView}>
           <Text style={styles.dividerText}>timeslot</Text>
         </View>
         <View style={styles.upperViewContainer}>
@@ -101,9 +114,9 @@ function BookNowScreen(props) {
               />
             )}
           />
-        </View>
+        </View> */}
 
-        <View style={styles.lowerViewContainer}>
+        {/* <View style={styles.lowerViewContainer}>
           <View style={styles.buttonContainer}>
             <AppButton
               disabled={(selectedTable, selectedTimeslot) ? false : true}
@@ -111,7 +124,7 @@ function BookNowScreen(props) {
               onPress={() => onPressBookNow()}
             />
           </View>
-        </View>
+        </View> */}
       </View>
     </View>
   );

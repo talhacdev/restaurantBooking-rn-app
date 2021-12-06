@@ -166,7 +166,14 @@ function ProfileScreen(props) {
           <View style={{marginTop: hp(5)}}>
             <AppInput
               placeholder="name"
-              title="name"
+              title="first name"
+              defaultValue={user.displayName}
+              onChangeText={val => setDisplayName(val)}
+            />
+
+            <AppInput
+              placeholder="name"
+              title="last name"
               defaultValue={user.displayName}
               onChangeText={val => setDisplayName(val)}
             />

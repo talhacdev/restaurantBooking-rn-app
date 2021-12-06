@@ -76,9 +76,32 @@ function CartScreen(props) {
   };
 
   const onCheckoutPress = () => {
+    // if (products) {
+    //   if (products.length > 0) {
+    //     navigation.navigate(routes.CHECKOUT, {
+    //       products,
+    //       totalPrice,
+    //       totalQuantity,
+    //     });
+    //   } else {
+    //     Alert.alert('OOPS!', 'Cart is currently empty.', [
+    //       {
+    //         text: 'Continue Shopping',
+    //         onPress: () => navigation.navigate(routes.HOME),
+    //       },
+    //     ]);
+    //   }
+    // } else {
+    //   Alert.alert('OOPS!', 'Cart is currently empty.', [
+    //     {
+    //       text: 'Continue Shopping',
+    //       onPress: () => navigation.navigate(routes.HOME),
+    //     },
+    //   ]);
+    // }
     if (products) {
       if (products.length > 0) {
-        navigation.navigate(routes.CHECKOUT, {
+        navigation.navigate(routes.PAYMENT_METHOD, {
           products,
           totalPrice,
           totalQuantity,
