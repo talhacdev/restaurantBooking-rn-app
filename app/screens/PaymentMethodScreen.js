@@ -14,6 +14,7 @@ import navigation from '../navigation/rootNavigation';
 import Button from '../components/Button';
 import moment from 'moment';
 import AppInput from '../components/Input';
+import axios from 'axios';
 
 function PaymentMethodScreen(props) {
   const onPressPlaceOrder = () => {
@@ -146,6 +147,30 @@ function PaymentMethodScreen(props) {
   //       alert(err);
   //     });
   // };
+
+  useEffect(() => {
+    let restId = '61956881a675b200167ff63f';
+    let token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzg4OTQwNzl9.G8c00HAcbvZre7nuqEi6XnXiTDtw2DUVh-lYVMFo8fk';
+
+    let obj = {
+      firstName: 'Muhammad',
+      lastName: 'Talha',
+      email: 'thecorruptmob1@gmail.com',
+      password: '123456',
+      contact: '+923331049859',
+      role: 'customer',
+    };
+
+    axios
+      .get(`http://magicmeal.herokuapp.com/user/post-order/${restId}`, obj)
+      .then(response => {
+        console.log('DEBUG registerScreen: ', response);
+      })
+      .catch(error => {
+        console.log('DEBUG registerScreen ERROR: ', error);
+      });
+  }, []);
 
   return (
     <View style={styles.container}>

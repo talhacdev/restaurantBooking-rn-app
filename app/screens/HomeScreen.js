@@ -23,6 +23,7 @@ import navigation from '../navigation/rootNavigation';
 import RestaurantVerticalCard from '../components/RestaurantVerticalCard';
 import hardcodeCart from '../hardcode/hardcodeCart';
 import SearchInput from '../components/SearchInput';
+import axios from 'axios';
 
 function HomeScreen(props) {
   const [loading, setLoading] = useState();
@@ -37,13 +38,13 @@ function HomeScreen(props) {
     setModalVisible(!isModalVisible);
   };
 
-  useEffect(() => {
-    toggleModal();
-    setLoading(true);
-    fetchCategories();
-    fetchRestaurants();
-    fetchProducts();
-  }, []);
+  // useEffect(() => {
+  //   toggleModal();
+  //   setLoading(true);
+  //   fetchCategories();
+  //   fetchRestaurants();
+  //   fetchProducts();
+  // }, []);
 
   const fetchCategories = async () => {
     await firestore()
@@ -102,6 +103,34 @@ function HomeScreen(props) {
   const onAddToCart = item => {
     console.log('item: ', item);
     hardcodeCart.checkAlreadyAdded(item);
+  };
+
+  useEffect(() => {
+    // getRestaurants();
+    // getMenu();
+  }, []);
+
+  const getRestaurants = async () => {
+    axios
+      .get('http://magicmeal.herokuapp.com/user/get-restaurants')
+      .then(response => {
+        console.log('DEBUG getRestaurants: ', response);
+      })
+      .catch(error => {
+        console.log('DEBUG getRestaurants ERROR: ', error);
+      });
+  };
+
+  const getMenu = async () => {
+    let restId = '61956881a675b200167ff63f';
+    axios
+      .get(`http://magicmeal.herokuapp.com/user/get-restaurant-menu/${restId}`)
+      .then(response => {
+        console.log('DEBUG getMenu: ', response);
+      })
+      .catch(error => {
+        console.log('DEBUG getMenu ERROR: ', error);
+      });
   };
 
   return (

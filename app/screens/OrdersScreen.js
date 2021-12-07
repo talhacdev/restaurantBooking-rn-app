@@ -8,6 +8,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
+import axios from 'axios';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -24,11 +25,29 @@ function OrdersScreen(props) {
     setModalVisible(!isModalVisible);
   };
 
+  // useEffect(() => {
+  //   toggleModal();
+  //   setLoading(true);
+  //   fetchOrders();
+  // }, []);
+
   useEffect(() => {
-    toggleModal();
-    setLoading(true);
-    fetchOrders();
+    getOrders();
   }, []);
+
+  const getOrders = async () => {
+    let customerId = '6195663783972436008dd0e9';
+    axios
+      .get(
+        `http://magicmeal.herokuapp.com/user/get-updated-order/${customerId}`,
+      )
+      .then(response => {
+        console.log('DEBUG getOrders: ', response);
+      })
+      .catch(error => {
+        console.log('DEBUG getOrders ERROR: ', error);
+      });
+  };
 
   const fetchOrders = () => {
     firestore()

@@ -7,6 +7,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
+import axios from 'axios';
 
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
@@ -25,29 +26,45 @@ function LoginScreen(props) {
     setModalVisible(!isModalVisible);
   };
 
-  onPressLoginButton = () => {
-    Keyboard.dismiss();
-    console.log(email, password);
-    if (email == undefined || password == undefined) {
-      alert('Credentials are mandatory.');
-    } else {
-      toggleModal();
-      setLoading(true);
-      auth()
-        .signInWithEmailAndPassword(email, password)
-        .then(() => {
-          setLoading(false);
-          toggleModal();
-          console.log('User signed in!');
-          // alert('User signed in!');
-        })
-        .catch(error => {
-          console.error(error);
-          setLoading(false);
-          toggleModal();
-          alert(error);
-        });
-    }
+  // const onPressLoginButton = () => {
+  //   Keyboard.dismiss();
+  //   console.log(email, password);
+  //   if (email == undefined || password == undefined) {
+  //     alert('Credentials are mandatory.');
+  //   } else {
+  //     toggleModal();
+  //     setLoading(true);
+  //     auth()
+  //       .signInWithEmailAndPassword(email, password)
+  //       .then(() => {
+  //         setLoading(false);
+  //         toggleModal();
+  //         console.log('User signed in!');
+  //         // alert('User signed in!');
+  //       })
+  //       .catch(error => {
+  //         console.error(error);
+  //         setLoading(false);
+  //         toggleModal();
+  //         alert(error);
+  //       });
+  //   }
+  // };
+
+  const onPressLogin = async () => {
+    let obj = {
+      email: 'nob786@gmail.com',
+      password: 'pakistan',
+    };
+
+    axios
+      .post('http://magicmeal.herokuapp.com/auth/login', obj)
+      .then(response => {
+        console.log('DEBUG loginScreen: ', response);
+      })
+      .catch(error => {
+        console.log('DEBUG loginScreen ERROR: ', error);
+      });
   };
 
   return (
@@ -78,7 +95,11 @@ function LoginScreen(props) {
         <AppInput title={'password'} onChangeText={text => setPassword(text)} />
 
         <View style={styles.buttonContainer}>
-          <AppButton title="login" onPress={() => onPressLoginButton()} />
+          <AppButton
+            title="login"
+            //  onPress={() => onPressLoginButton()}
+            onPress={() => onPressLogin()}
+          />
         </View>
       </View>
 

@@ -8,6 +8,7 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
+import axios from 'axios';
 
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
@@ -23,53 +24,85 @@ function RegisterScreen(props) {
     setModalVisible(!isModalVisible);
   };
 
-  onPressRegisterButton = (email, password) => {
-    Keyboard.dismiss();
+  // const onPressRegisterButton = (email, password) => {
+  //   Keyboard.dismiss();
 
-    if (email == undefined || password == undefined) {
-      alert('Credentials are mandatory.');
-    } else {
-      toggleModal();
-      setLoading(true);
-      auth()
-        .createUserWithEmailAndPassword(email, password)
-        .then(res => {
-          console.log('User account created & signed in!');
-          CreateUserRecord(res);
-        })
-        .catch(error => {
-          console.error(error);
-          setLoading(false);
-          toggleModal();
-          alert(error);
-        });
-    }
-  };
+  //   if (email == undefined || password == undefined) {
+  //     alert('Credentials are mandatory.');
+  //   } else {
+  //     toggleModal();
+  //     setLoading(true);
+  //     auth()
+  //       .createUserWithEmailAndPassword(email, password)
+  //       .then(res => {
+  //         console.log('User account created & signed in!');
+  //         CreateUserRecord(res);
+  //       })
+  //       .catch(error => {
+  //         console.error(error);
+  //         setLoading(false);
+  //         toggleModal();
+  //         alert(error);
+  //       });
+  //   }
+  // };
 
-  const CreateUserRecord = res => {
+  // const CreateUserRecord = res => {
+  //   let obj = {
+  //     email: res.user._user.email,
+  //     uid: res.user._user.uid,
+  //     displayName: res.user._user.displayName,
+  //     photoURL: res.user._user.photoURL,
+  //     phoneNumber: res.user._user.phoneNumber,
+  //   };
+  //   firestore()
+  //     .collection('UserRecords')
+  //     .doc(obj.uid)
+  //     .set(obj)
+  //     .then(() => {
+  //       setLoading(false);
+  //       toggleModal();
+  //       console.log('UserRecords updated!');
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //       setLoading(false);
+  //       toggleModal();
+  //       alert(error);
+  //     });
+  // };
+
+  const onPressRegister = async () => {
     let obj = {
-      email: res.user._user.email,
-      uid: res.user._user.uid,
-      displayName: res.user._user.displayName,
-      photoURL: res.user._user.photoURL,
-      phoneNumber: res.user._user.phoneNumber,
+      firstName: 'Muhammad',
+      lastName: 'Talha',
+      email: 'thecorruptmob1@gmail.com',
+      password: '123456',
+      contact: '+923331049859',
+      role: 'customer',
     };
-    firestore()
-      .collection('UserRecords')
-      .doc(obj.uid)
-      .set(obj)
-      .then(() => {
-        setLoading(false);
-        toggleModal();
-        console.log('UserRecords updated!');
+
+    axios
+      .post('http://magicmeal.herokuapp.com/auth/signup-customer', obj)
+      .then(response => {
+        console.log('DEBUG registerScreen: ', response);
       })
       .catch(error => {
-        console.log(error);
-        setLoading(false);
-        toggleModal();
-        alert(error);
+        console.log('DEBUG registerScreen ERROR: ', error);
       });
   };
+
+  // const onPressRegister = async () => {
+  //   console.log('DEBUG HELLO');
+  //   axios
+  //     .get('http://magicmeal.herokuapp.com/user/get-restaurants')
+  //     .then(response => {
+  //       console.log('DEBUG registerScreen: ', response);
+  //     })
+  //     .catch(error => {
+  //       console.log('DEBUG registerScreen ERROR: ', error);
+  //     });
+  // };
 
   return (
     <View style={styles.container}>
@@ -103,7 +136,8 @@ function RegisterScreen(props) {
         <View style={styles.buttonContainer}>
           <AppButton
             title="register"
-            onPress={() => onPressRegisterButton(email, password)}
+            // onPress={() => onPressRegisterButton(email, password)}
+            onPress={() => onPressRegister()}
           />
         </View>
       </View>
