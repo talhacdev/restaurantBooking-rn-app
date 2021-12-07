@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -13,6 +13,7 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import Button from '../components/Button';
 import moment from 'moment';
+import hardcodeCart from '../hardcode/hardcodeCart';
 
 function PaymentMethodScreen(props) {
   const onPressPlaceOrder = () => {
@@ -42,7 +43,9 @@ function PaymentMethodScreen(props) {
       .add(orderObject)
       .then(() => {
         console.log('Order Placed!');
-        navigation.navigate(routes.ORDER_SUCCESS);
+        // navigation.navigate(routes.ORDER_SUCCESS);
+        hardcodeCart.removeItem(); // edit
+        navigation.navigate(routes.ORDERS);
       })
       .catch(err => {
         alert(err);
@@ -152,7 +155,14 @@ function PaymentMethodScreen(props) {
         <AppHeader title={'payment method'} />
       </View> */}
       <View style={styles.contentViewContainer}>
-        <View style={styles.upperViewContainer}></View>
+        <View style={styles.upperViewContainer}>
+          <Text style={{fontWeight: 'bold', fontSize: 22}}>
+            Cash On Delivery
+          </Text>
+          <Text>
+            Kindly pay the delivery professional upon recieving your order.
+          </Text>
+        </View>
       </View>
       <View style={styles.buttonContainer}>
         <Button
@@ -175,6 +185,12 @@ const styles = StyleSheet.create({
   //   position: 'absolute',
   //   top: hp(0),
   // },
+  upperViewContainer: {
+    flex: 1,
+    padding: wp(10),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   bottomViewContainer: {
     flex: 0.1,
     position: 'absolute',

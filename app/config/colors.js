@@ -27,4 +27,14 @@ export default {
   dividerColor: '#f0a050',
   cardColor: '#ee8b95',
   cardTextColor: '#FFFFFF', // tertiary
+
+  buttonColor: '#ff0266',
+  buttonTextColor: '#FFFFFF',
+  hyperlinkTextColor: '#ff0266',
+  backgroundColor: '#ffffff',
+  dividerColor: '#ff0266',
+  cardColor: '#EEEEEE',
+  cardTextColor: '#FFFFFF', // tertiary
+  selection: '#ff0266',
+  nonSelection: '#EEEEEE', // non-selection color
 };

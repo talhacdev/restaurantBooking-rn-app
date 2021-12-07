@@ -6,7 +6,6 @@ import {
 } from 'react-native-responsive-screen';
 import firestore from '@react-native-firebase/firestore';
 
-import AppHeader from '../components/Header';
 import colors from '../config/colors';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
