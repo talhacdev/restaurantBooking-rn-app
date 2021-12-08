@@ -61,9 +61,9 @@ function VerticalProductCard({
           <Text numberOfLines={1} style={styles.priceText}>
             ${price}
           </Text>
-          <Text numberOfLines={1} style={styles.discountedPriceText}>
+          {/* <Text numberOfLines={1} style={styles.discountedPriceText}>
             ${discountedPrice}
-          </Text>
+          </Text> */}
         </View>
       </View>
       <View>

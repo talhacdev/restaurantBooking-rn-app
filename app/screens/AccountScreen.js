@@ -5,6 +5,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -14,10 +15,13 @@ import navigation from '../navigation/rootNavigation';
 import TextCard from '../components/TextCard';
 
 function AccountScreen(props) {
-  onPressLogOutButton = () => {
-    auth()
-      .signOut()
-      .then(() => console.log('User signed out!'));
+  const onPressLogOutButton = async () => {
+    try {
+      await AsyncStorage.removeItem('@LoginResponse');
+      return true;
+    } catch (exception) {
+      console.log('Error: ' + exception);
+    }
   };
 
   return (

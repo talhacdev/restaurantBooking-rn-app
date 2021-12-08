@@ -8,6 +8,7 @@ import auth from '@react-native-firebase/auth';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
@@ -26,45 +27,43 @@ function LoginScreen(props) {
     setModalVisible(!isModalVisible);
   };
 
-  // const onPressLoginButton = () => {
-  //   Keyboard.dismiss();
-  //   console.log(email, password);
-  //   if (email == undefined || password == undefined) {
-  //     alert('Credentials are mandatory.');
-  //   } else {
-  //     toggleModal();
-  //     setLoading(true);
-  //     auth()
-  //       .signInWithEmailAndPassword(email, password)
-  //       .then(() => {
-  //         setLoading(false);
-  //         toggleModal();
-  //         console.log('User signed in!');
-  //         // alert('User signed in!');
-  //       })
-  //       .catch(error => {
-  //         console.error(error);
-  //         setLoading(false);
-  //         toggleModal();
-  //         alert(error);
-  //       });
-  //   }
-  // };
-
   const onPressLogin = async () => {
+    // let obj = {
+    //   email: 'nob786@gmail.com',
+    //   password: 'pakistan',
+    // };
+
+    toggleModal();
+    setLoading(true);
+
     let obj = {
-      email: 'nob786@gmail.com',
-      password: 'pakistan',
+      email,
+      password,
     };
 
     axios
       .post('http://magicmeal.herokuapp.com/auth/login', obj)
       .then(response => {
+        setLoading(false);
+        toggleModal();
         console.log('DEBUG loginScreen: ', response);
+        storeData(response.data);
       })
       .catch(error => {
+        setLoading(false);
+        toggleModal();
         console.log('DEBUG loginScreen ERROR: ', error);
+        alert(error);
       });
+  };
+
+  const storeData = async value => {
+    console.log('DEBUG loginScreen @LoginResponse: ', value);
+    try {
+      await AsyncStorage.setItem('@LoginResponse', JSON.stringify(value));
+    } catch (e) {
+      console.log('\nError Storing Data\n', e);
+    }
   };
 
   return (

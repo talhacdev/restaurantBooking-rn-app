@@ -35,18 +35,16 @@ function RestaurantVerticalCard({
       <View style={styles.detailContainer}>
         <View style={styles.ratingContainer}>
           <View>
-            <Image
+            {/* <Image
               style={{
                 width: wp(5),
                 height: wp(5),
                 padding: wp(1),
               }}
               source={require('../assets/star.png')}
-            />
+            /> */}
           </View>
-          <View>
-            <Text style={styles.ratingText}>{rating}</Text>
-          </View>
+          <View>{/* <Text style={styles.ratingText}>{rating}</Text> */}</View>
         </View>
         <Text numberOfLines={1} style={styles.detailMainText}>
           {restaurantName}

@@ -105,6 +105,7 @@ function ProductDetailScreen(props) {
   const onAddToCart = item => {
     hardcodeCart.checkAlreadyAdded(item);
   };
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -143,12 +144,12 @@ function ProductDetailScreen(props) {
           </View>
           <View style={styles.lowerViewContainer}>
             <Text style={styles.productNameText}>{listing.itemName}</Text>
-            <Text style={styles.companyNameText}>{listing.restaurantName}</Text>
+            {/* <Text style={styles.companyNameText}>{listing.restaurantName}</Text> */}
             <View style={{marginVertical: wp(2)}}>
               <Text style={styles.unitText}>{listing.category}</Text>
             </View>
             <View style={styles.ratingContainer}>
-              <View>
+              {/* <View>
                 <Image
                   style={{
                     width: wp(7),
@@ -157,19 +158,19 @@ function ProductDetailScreen(props) {
                   }}
                   source={require('../assets/star.png')}
                 />
-              </View>
+              </View> */}
               <View>
-                <Text style={styles.ratingText}>{listing.rating}</Text>
+                {/* <Text style={styles.ratingText}>{listing.rating}</Text> */}
               </View>
             </View>
             <Text style={styles.priceText}>{listing.price}</Text>
-            <Text style={styles.discountedText}>{listing.discountedPrice}</Text>
-            <View style={{marginVertical: wp(2), height: wp(19)}}>
-              <Text numberOfLines={3} style={styles.descriptionText}>
+            {/* <Text style={styles.discountedText}>{listing.discountedPrice}</Text> */}
+            <View style={{marginVertical: wp(2), height: wp(12)}}>
+              <Text numberOfLines={2} style={styles.descriptionText}>
                 {listing.description}
               </Text>
             </View>
-            <View>
+            {/* <View>
               <FlatList
                 // inverted
                 showsVerticalScrollIndicator={false}
@@ -189,10 +190,10 @@ function ProductDetailScreen(props) {
                   </View>
                 )}
               />
-            </View>
+            </View> */}
           </View>
           <View style={styles.buttonViewContainer}>
-            <View style={styles.commentContainer}>
+            {/* <View style={styles.commentContainer}>
               <AppInput
                 multiline
                 maxLength={256}
@@ -200,7 +201,7 @@ function ProductDetailScreen(props) {
                 onChangeText={val => setComment(val)}
               />
               <AppButton onPress={() => onPressPostButton()} title={'post'} />
-            </View>
+            </View> */}
             <AppButton
               title={'add to cart'}
               onPress={() => onAddToCart(listing)}

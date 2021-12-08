@@ -37,6 +37,7 @@ function OrdersScreen(props) {
 
   const getOrders = async () => {
     let customerId = '6195663783972436008dd0e9';
+
     axios
       .get(
         `http://magicmeal.herokuapp.com/user/get-updated-order/${customerId}`,

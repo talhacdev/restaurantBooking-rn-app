@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
+import axios from 'axios';
 
 import AppInput from '../components/Input';
 import AppHeader from '../components/Header';
@@ -24,12 +25,14 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 
 import colors from '../config/colors';
+import VerticalProductCard from '../components/VerticalProductCard';
 
 function RestaurantDetailScreen(props) {
   const [loading, setLoading] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [comment, setComment] = useState();
   const [listing, setListing] = useState(props.route.params);
+  const [menu, setMenu] = useState([]);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -102,6 +105,25 @@ function RestaurantDetailScreen(props) {
       .catch(error => alert(error));
   };
 
+  useEffect(() => {
+    getMenu();
+  }, []);
+
+  const getMenu = async () => {
+    console.log('DEBUG item.id: ', listing.account);
+    let restId = listing.id;
+
+    axios
+      .get(`http://magicmeal.herokuapp.com/user/get-restaurant-menu/${restId}`)
+      .then(response => {
+        console.log('DEBUG getMenu: ', response);
+        setMenu(response.data.data.items);
+      })
+      .catch(error => {
+        console.log('DEBUG getMenu ERROR: ', error);
+      });
+  };
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -142,7 +164,7 @@ function RestaurantDetailScreen(props) {
 
           <View style={styles.lowerViewContainer}>
             <Text style={styles.productNameText}>{listing.restaurantName}</Text>
-            <Text style={styles.companyNameText}>{listing.location}</Text>
+            <Text style={styles.companyNameText}>{listing.address}</Text>
             <View style={{marginVertical: wp(2)}}>
               <Text style={styles.unitText}>{listing.category}</Text>
             </View>
@@ -151,7 +173,7 @@ function RestaurantDetailScreen(props) {
             </View>
 
             <View style={styles.ratingContainer}>
-              <View>
+              {/* <View>
                 <Image
                   style={{
                     width: wp(7),
@@ -160,10 +182,10 @@ function RestaurantDetailScreen(props) {
                   }}
                   source={require('../assets/star.png')}
                 />
-              </View>
-              <View>
+              </View> */}
+              {/* <View>
                 <Text style={styles.ratingText}>{listing.rating}</Text>
-              </View>
+              </View> */}
             </View>
           </View>
           {/* <View style={styles.commentsContainer}>
@@ -201,6 +223,31 @@ function RestaurantDetailScreen(props) {
               />
               <AppButton onPress={() => onPressPostButton()} title={'post'} />
             </View> */}
+          </View>
+          <View>
+            <View style={styles.dividerView}>
+              <Text style={styles.dividerText}>sponsored products</Text>
+            </View>
+            <FlatList
+              horizontal
+              showsVerticalScrollIndicator={false}
+              data={menu}
+              keyExtractor={menu => menu.id}
+              renderItem={({item}) => (
+                <VerticalProductCard
+                  itemName={item?.itemName}
+                  discountedPrice={item?.discountedPrice}
+                  rating={item?.rating}
+                  restaurantName={item?.restaurantName}
+                  price={item?.price}
+                  imageUrl={item?.imageUrl}
+                  onPress={() =>
+                    navigation.navigate(routes.PRODUCT_DETAIL, item)
+                  }
+                  onBottomButtonPress={() => onAddToCart(item)}
+                />
+              )}
+            />
           </View>
         </ScrollView>
       </View>
@@ -283,6 +330,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: hp(2),
+  },
+  dividerView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.dividerColor,
+    width: wp('100%'),
+    height: hp('5%'),
+    elevation: wp(1),
+  },
+  dividerText: {
+    fontWeight: 'bold',
+    color: colors.buttonTextColor,
+    fontSize: wp(4.5),
+    textTransform: 'uppercase',
   },
 });
 

@@ -106,30 +106,18 @@ function HomeScreen(props) {
   };
 
   useEffect(() => {
-    // getRestaurants();
-    // getMenu();
+    getRestaurants();
   }, []);
 
   const getRestaurants = async () => {
     axios
       .get('http://magicmeal.herokuapp.com/user/get-restaurants')
       .then(response => {
-        console.log('DEBUG getRestaurants: ', response);
+        console.log('DEBUG getRestaurants: ', response.data.data);
+        setRestaurants(response.data.data);
       })
       .catch(error => {
         console.log('DEBUG getRestaurants ERROR: ', error);
-      });
-  };
-
-  const getMenu = async () => {
-    let restId = '61956881a675b200167ff63f';
-    axios
-      .get(`http://magicmeal.herokuapp.com/user/get-restaurant-menu/${restId}`)
-      .then(response => {
-        console.log('DEBUG getMenu: ', response);
-      })
-      .catch(error => {
-        console.log('DEBUG getMenu ERROR: ', error);
       });
   };
 
@@ -181,9 +169,9 @@ function HomeScreen(props) {
               />
             </View> */}
 
-            <View style={styles.dividerView}>
+            {/* <View style={styles.dividerView}>
               <Text style={styles.dividerText}>Top Rated restaurants</Text>
-            </View>
+            </View> */}
             <View style={styles.lowerViewContainer}>
               <FlatList
                 horizontal
@@ -192,16 +180,16 @@ function HomeScreen(props) {
                 keyExtractor={filteredRestaurants => filteredRestaurants.id}
                 renderItem={({item}) => (
                   <RestaurantVerticalCard
-                    restaurantName={item._data.restaurantName}
-                    location={item._data.location}
-                    rating={item._data.rating}
-                    category={item._data.category}
-                    tables={item._data.tables}
-                    reviews={item._data.reviews}
-                    contact={item._data.contact}
-                    imageUrl={item._data.imageUrl}
+                    restaurantName={item?.restaurantName}
+                    location={item?.address}
+                    rating={item?.rating}
+                    category={item?.category}
+                    tables={item?.tables}
+                    reviews={item?.reviews}
+                    contact={item?.contact}
+                    imageUrl={item?.imageUrl}
                     onPress={() =>
-                      navigation.navigate(routes.RESTAURANT_DETAIL, item._data)
+                      navigation.navigate(routes.RESTAURANT_DETAIL, item)
                     }
                   />
                 )}
@@ -246,16 +234,16 @@ function HomeScreen(props) {
                 keyExtractor={restaurants => restaurants.id.toString()}
                 renderItem={({item}) => (
                   <RestaurantVerticalCard
-                    restaurantName={item._data.restaurantName}
-                    location={item._data.location}
-                    rating={item._data.rating}
-                    category={item._data.category}
-                    tables={item._data.tables}
-                    reviews={item._data.reviews}
-                    contact={item._data.contact}
-                    imageUrl={item._data.imageUrl}
+                    restaurantName={item?.restaurantName}
+                    location={item?.address}
+                    rating={item?.rating}
+                    category={item?.category}
+                    tables={item?.tables}
+                    reviews={item?.reviews}
+                    contact={item?.contact}
+                    imageUrl={item?.imageUrl}
                     onPress={() =>
-                      navigation.navigate(routes.RESTAURANT_DETAIL, item._data)
+                      navigation.navigate(routes.RESTAURANT_DETAIL, item)
                     }
                   />
                 )}

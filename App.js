@@ -2,6 +2,7 @@ import 'react-native-gesture-handler';
 import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AuthNavigator from './app/navigation/AuthNavigator';
 import {navigationRef} from './app/navigation/rootNavigation';
@@ -9,22 +10,21 @@ import navigationTheme from './app/navigation/navigationTheme';
 import AppNavigator from './app/navigation/AppNavigator';
 
 export default function App() {
-  // Set an initializing state whilst Firebase connects
-  const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState();
 
-  // Handle user state changes
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (initializing) setInitializing(false);
-  }
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@LoginResponse');
+      return jsonValue != null ? setUser(JSON.parse(jsonValue)) : null;
+    } catch (e) {
+      console.log('\nError Getting Data\n', e);
+    }
+  };
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
-
-  if (initializing) return null;
+    getData();
+    console.log('USER: ', user);
+  });
 
   if (!user) {
     return (

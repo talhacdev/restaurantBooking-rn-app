@@ -15,8 +15,11 @@ import AppInput from '../components/Input';
 import colors from '../config/colors';
 
 function RegisterScreen(props) {
+  const [firstname, setFirstname] = useState();
+  const [lastname, setLastname] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const [phone, setPhone] = useState();
   const [loading, setLoading] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -24,85 +27,35 @@ function RegisterScreen(props) {
     setModalVisible(!isModalVisible);
   };
 
-  // const onPressRegisterButton = (email, password) => {
-  //   Keyboard.dismiss();
-
-  //   if (email == undefined || password == undefined) {
-  //     alert('Credentials are mandatory.');
-  //   } else {
-  //     toggleModal();
-  //     setLoading(true);
-  //     auth()
-  //       .createUserWithEmailAndPassword(email, password)
-  //       .then(res => {
-  //         console.log('User account created & signed in!');
-  //         CreateUserRecord(res);
-  //       })
-  //       .catch(error => {
-  //         console.error(error);
-  //         setLoading(false);
-  //         toggleModal();
-  //         alert(error);
-  //       });
-  //   }
-  // };
-
-  // const CreateUserRecord = res => {
-  //   let obj = {
-  //     email: res.user._user.email,
-  //     uid: res.user._user.uid,
-  //     displayName: res.user._user.displayName,
-  //     photoURL: res.user._user.photoURL,
-  //     phoneNumber: res.user._user.phoneNumber,
-  //   };
-  //   firestore()
-  //     .collection('UserRecords')
-  //     .doc(obj.uid)
-  //     .set(obj)
-  //     .then(() => {
-  //       setLoading(false);
-  //       toggleModal();
-  //       console.log('UserRecords updated!');
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //       setLoading(false);
-  //       toggleModal();
-  //       alert(error);
-  //     });
-  // };
-
   const onPressRegister = async () => {
+    toggleModal();
+    setLoading(true);
+
     let obj = {
-      firstName: 'Muhammad',
-      lastName: 'Talha',
-      email: 'thecorruptmob1@gmail.com',
-      password: '123456',
-      contact: '+923331049859',
+      firstname,
+      lastname,
+      email,
+      password,
+      contact: phone,
       role: 'customer',
     };
+
+    console.log('DEBUG registerScreen obj: ', obj);
 
     axios
       .post('http://magicmeal.herokuapp.com/auth/signup-customer', obj)
       .then(response => {
+        setLoading(false);
+        toggleModal();
         console.log('DEBUG registerScreen: ', response);
       })
       .catch(error => {
+        setLoading(false);
+        toggleModal();
         console.log('DEBUG registerScreen ERROR: ', error);
+        alert(error);
       });
   };
-
-  // const onPressRegister = async () => {
-  //   console.log('DEBUG HELLO');
-  //   axios
-  //     .get('http://magicmeal.herokuapp.com/user/get-restaurants')
-  //     .then(response => {
-  //       console.log('DEBUG registerScreen: ', response);
-  //     })
-  //     .catch(error => {
-  //       console.log('DEBUG registerScreen ERROR: ', error);
-  //     });
-  // };
 
   return (
     <View style={styles.container}>
@@ -128,17 +81,19 @@ function RegisterScreen(props) {
         />
       </View>
       <View style={styles.lowerViewContainer}>
-        <AppInput title={'first name'} onChangeText={text => setEmail(text)} />
-        <AppInput title={'last name'} onChangeText={text => setEmail(text)} />
+        <AppInput
+          title={'first name'}
+          onChangeText={text => setFirstname(text)}
+        />
+        <AppInput
+          title={'last name'}
+          onChangeText={text => setLastname(text)}
+        />
         <AppInput title={'email'} onChangeText={text => setEmail(text)} />
         <AppInput title={'password'} onChangeText={text => setPassword(text)} />
-        <AppInput title={'phone'} onChangeText={text => setEmail(text)} />
+        <AppInput title={'phone'} onChangeText={text => setPhone(text)} />
         <View style={styles.buttonContainer}>
-          <AppButton
-            title="register"
-            // onPress={() => onPressRegisterButton(email, password)}
-            onPress={() => onPressRegister()}
-          />
+          <AppButton title="register" onPress={() => onPressRegister()} />
         </View>
       </View>
     </View>

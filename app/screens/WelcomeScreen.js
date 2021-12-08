@@ -202,9 +202,9 @@ function WelcomeScreen(props) {
           />
         </View>
 
-        <View style={styles.buttonContainer}>
+        {/* <View style={styles.buttonContainer}>
           <AppButton title="demo" onPress={() => onPressDemoButton()} />
-        </View>
+        </View> */}
       </View>
 
       <View style={styles.bottomViewContainer}>
