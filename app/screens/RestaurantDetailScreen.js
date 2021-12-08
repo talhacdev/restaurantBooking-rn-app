@@ -26,6 +26,7 @@ import navigation from '../navigation/rootNavigation';
 
 import colors from '../config/colors';
 import VerticalProductCard from '../components/VerticalProductCard';
+import hardcodeCart from '../hardcode/hardcodeCart';
 
 function RestaurantDetailScreen(props) {
   const [loading, setLoading] = useState();
@@ -124,6 +125,16 @@ function RestaurantDetailScreen(props) {
       });
   };
 
+  const onAddToCart = item => {
+    console.log('DEBUG item: ', item);
+    let obj = {
+      ...item,
+      quantity: 1,
+    };
+    console.log('DEBUG obj: ', obj);
+    hardcodeCart.checkAlreadyAdded(obj);
+  };
+
   return (
     <View style={styles.container}>
       {loading ? (
@@ -157,7 +168,7 @@ function RestaurantDetailScreen(props) {
                 height: wp(100),
               }}
               source={{
-                uri: listing.imageUrl,
+                uri: listing?.imageUrl,
               }}
             />
           </View>
@@ -238,7 +249,7 @@ function RestaurantDetailScreen(props) {
                   itemName={item?.itemName}
                   discountedPrice={item?.discountedPrice}
                   rating={item?.rating}
-                  restaurantName={item?.restaurantName}
+                  description={item?.description}
                   price={item?.price}
                   imageUrl={item?.imageUrl}
                   onPress={() =>

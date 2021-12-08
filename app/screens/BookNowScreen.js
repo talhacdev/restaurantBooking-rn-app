@@ -20,6 +20,10 @@ function BookNowScreen(props) {
   const tables = props?.route?.params.tables;
   const timeslot = props?.route?.params.timeslot;
 
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
+  const [person, setPerson] = useState();
+
   const onPressBookNow = () => {
     const bookingObject = {
       restaurantId: props?.route?.params?.id,
@@ -67,9 +71,9 @@ function BookNowScreen(props) {
       </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.lowerViewContainer}>
-          <AppInput title={'date'} onChangeText={text => setEmail(text)} />
-          <AppInput title={'time'} onChangeText={text => setEmail(text)} />
-          <AppInput title={'person'} onChangeText={text => setEmail(text)} />
+          <AppInput title={'date'} onChangeText={text => setDate(text)} />
+          <AppInput title={'time'} onChangeText={text => setTime(text)} />
+          <AppInput title={'person'} onChangeText={text => setPerson(text)} />
           <View style={styles.buttonContainer}>
             <AppButton
               disabled={(selectedTable, selectedTimeslot) ? false : true}
@@ -172,7 +176,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: hp(1),
     marginVertical: hp(1),
-    justifyContent: 'center',
+    // justifyContent: 'center',
     alignItems: 'center',
   },
 });

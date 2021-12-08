@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -17,25 +17,20 @@ import AppInput from '../components/Input';
 import axios from 'axios';
 
 function PaymentMethodScreen(props) {
+  const [address, setAddress] = useState();
+  const [notes, setNotes] = useState();
+
   const onPressPlaceOrder = () => {
-    const orderObject = {
-      status: 'in-progress',
-      products: props?.route?.params?.products,
-      totalPrice: props?.route?.params?.totalPrice,
-      totalQuantity: props?.route?.params?.totalQuantity,
-      uid: auth().currentUser._user.uid,
-      orderTime: moment().format('hh:mm:ss A'),
-    };
-
-    console.log('orderObject', orderObject);
-
-    createOrder(orderObject);
-
-    // createRestaurants();
-
-    // createProducts();
-
-    // createCategories();
+    // const orderObject = {
+    //   status: 'in-progress',
+    //   products: props?.route?.params?.products,
+    //   totalPrice: props?.route?.params?.totalPrice,
+    //   totalQuantity: props?.route?.params?.totalQuantity,
+    //   uid: auth().currentUser._user.uid,
+    //   orderTime: moment().format('hh:mm:ss A'),
+    // };
+    // console.log('orderObject', orderObject);
+    // createOrder(orderObject);
   };
 
   const createOrder = async orderObject => {
@@ -149,27 +144,25 @@ function PaymentMethodScreen(props) {
   // };
 
   useEffect(() => {
-    let restId = '61956881a675b200167ff63f';
-    let token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzg4OTQwNzl9.G8c00HAcbvZre7nuqEi6XnXiTDtw2DUVh-lYVMFo8fk';
-
-    let obj = {
-      firstName: 'Muhammad',
-      lastName: 'Talha',
-      email: 'thecorruptmob1@gmail.com',
-      password: '123456',
-      contact: '+923331049859',
-      role: 'customer',
-    };
-
-    axios
-      .get(`http://magicmeal.herokuapp.com/user/post-order/${restId}`, obj)
-      .then(response => {
-        console.log('DEBUG registerScreen: ', response);
-      })
-      .catch(error => {
-        console.log('DEBUG registerScreen ERROR: ', error);
-      });
+    // let restId = '61956881a675b200167ff63f';
+    // let token =
+    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzg4OTQwNzl9.G8c00HAcbvZre7nuqEi6XnXiTDtw2DUVh-lYVMFo8fk';
+    // let obj = {
+    //   firstName: 'Muhammad',
+    //   lastName: 'Talha',
+    //   email: 'thecorruptmob1@gmail.com',
+    //   password: '123456',
+    //   contact: '+923331049859',
+    //   role: 'customer',
+    // };
+    // axios
+    //   .get(`http://magicmeal.herokuapp.com/user/post-order/${restId}`, obj)
+    //   .then(response => {
+    //     console.log('DEBUG registerScreen: ', response);
+    //   })
+    //   .catch(error => {
+    //     console.log('DEBUG registerScreen ERROR: ', error);
+    //   });
   }, []);
 
   return (
@@ -179,7 +172,8 @@ function PaymentMethodScreen(props) {
       </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
-          <AppInput title={'address'} onChangeText={text => setEmail(text)} />
+          <AppInput title={'address'} onChangeText={text => setAddress(text)} />
+          <AppInput title={'notes'} onChangeText={text => setNotes(text)} />
         </View>
       </View>
       <View style={styles.buttonContainer}>
@@ -217,6 +211,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.primary,
+  },
+  upperViewContainer: {
+    alignItems: 'center',
   },
 });
 

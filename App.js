@@ -24,7 +24,7 @@ export default function App() {
   useEffect(() => {
     getData();
     console.log('USER: ', user);
-  });
+  }, []);
 
   if (!user) {
     return (

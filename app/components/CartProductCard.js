@@ -12,7 +12,7 @@ import colors from '../config/colors';
 
 function CartProductCard({
   productName,
-  restaurantName,
+  description,
   price,
   discountedPrice,
   quantity,
@@ -24,6 +24,7 @@ function CartProductCard({
 }) {
   return (
     <TouchableOpacity
+      activeOpacity={1}
       style={styles.cardContainer}
       onPress={onPress ? onPress : () => console.log('Card pressed.')}>
       <View>
@@ -43,15 +44,15 @@ function CartProductCard({
           {productName}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {restaurantName}
+          {description}
         </Text>
         <View style={styles.priceContainer}>
           <Text numberOfLines={1} style={styles.priceText}>
             ${price}
           </Text>
-          <Text numberOfLines={1} style={styles.discountedPriceText}>
+          {/* <Text numberOfLines={1} style={styles.discountedPriceText}>
             ${discountedPrice}
-          </Text>
+          </Text> */}
         </View>
         <View style={styles.allIconsContainer}>
           <View style={styles.deleteContainer}>

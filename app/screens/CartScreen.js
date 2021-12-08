@@ -38,7 +38,8 @@ function CartScreen(props) {
     });
 
     products.forEach(item => {
-      totalPrice += item.quantity * item.discountedPrice;
+      // totalPrice += item.quantity * item.discountedPrice;
+      totalPrice += item.quantity * item.price;
     });
   }
 
@@ -139,7 +140,7 @@ function CartScreen(props) {
             renderItem={({item}) => (
               <CartProductCard
                 productName={item.itemName}
-                restaurantName={item.restaurantName}
+                description={item.description}
                 price={item.price}
                 discountedPrice={item.discountedPrice}
                 quantity={item.quantity}
@@ -147,9 +148,9 @@ function CartScreen(props) {
                 onDel={() => onDel(item)}
                 onAdd={() => onAdd(item)}
                 onSub={() => onSub(item)}
-                onPress={() =>
-                  navigation.navigate(routes.CART_PRODUCT_DETAIL, item)
-                }
+                // onPress={() =>
+                //   navigation.navigate(routes.CART_PRODUCT_DETAIL, item)
+                // }
               />
             )}
           />

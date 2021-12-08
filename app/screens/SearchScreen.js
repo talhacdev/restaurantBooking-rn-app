@@ -7,6 +7,7 @@ import {
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 import firestore from '@react-native-firebase/firestore';
+import axios from 'axios';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -28,11 +29,25 @@ function SearchScreen(props) {
   const [searchedRestaurants, setSearchedRestaurants] = useState();
 
   useEffect(() => {
-    toggleModal();
-    setLoading(true);
-    fetchRestaurants();
-    fetchProducts();
+    // toggleModal();
+    // setLoading(true);
+    // fetchRestaurants();
+    // fetchProducts();
+
+    getRestaurants();
   }, []);
+
+  const getRestaurants = async () => {
+    axios
+      .get('http://magicmeal.herokuapp.com/user/get-restaurants')
+      .then(response => {
+        console.log('DEBUG searchScreen getRestaurants: ', response.data.data);
+        setRestaurants(response.data.data);
+      })
+      .catch(error => {
+        console.log('DEBUG getRestaurants ERROR: ', error);
+      });
+  };
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -63,18 +78,28 @@ function SearchScreen(props) {
   const submitHandler = val => {
     console.log(val);
     // Keyboard.dismiss();
+    // if (val) {
+    //   let searchFilterProducts = products.filter(m =>
+    //     m._data.itemName.toLowerCase().includes(val.toLowerCase()),
+    //   );
+    //   let searchFilterRestaurants = restaurants.filter(m =>
+    //     m._data.restaurantName.toLowerCase().includes(val.toLowerCase()),
+    //   );
+
+    //   setSearchedProducts(searchFilterProducts);
+    //   setSearchedRestaurants(searchFilterRestaurants);
+    // } else {
+    //   setSearchedProducts(products);
+    //   setSearchedRestaurants(restaurants);
+    // }
+
     if (val) {
-      let searchFilterProducts = products.filter(m =>
-        m._data.itemName.toLowerCase().includes(val.toLowerCase()),
-      );
       let searchFilterRestaurants = restaurants.filter(m =>
-        m._data.restaurantName.toLowerCase().includes(val.toLowerCase()),
+        m.restaurantName.toLowerCase().includes(val.toLowerCase()),
       );
 
-      setSearchedProducts(searchFilterProducts);
       setSearchedRestaurants(searchFilterRestaurants);
     } else {
-      setSearchedProducts(products);
       setSearchedRestaurants(restaurants);
     }
   };
@@ -109,14 +134,15 @@ function SearchScreen(props) {
           <View style={styles.contentViewContainer}>
             <View style={styles.searchViewContainer}>
               <AppInput
-                placeholder="product name"
+                placeholder="restaurant name"
                 title="search"
                 returnKeyType="search"
                 style={styles.textInput}
                 onChangeText={val => submitHandler(val)}
               />
             </View>
-            <View style={styles.buttonViewContainer}>
+
+            {/* <View style={styles.buttonViewContainer}>
               <AppButton
                 onPress={() => setToggle(false)}
                 widthContainer={wp(50)}
@@ -139,7 +165,7 @@ function SearchScreen(props) {
                 }
                 title={'product'}
               />
-            </View>
+            </View> */}
 
             {!toggle ? (
               <View style={styles.upperViewContainer}>
@@ -149,22 +175,27 @@ function SearchScreen(props) {
                   data={searchedRestaurants || restaurants}
                   keyExtractor={restaurants => restaurants.id}
                   renderItem={({item}) => (
-                    <RestaurantCard
-                      restaurantName={item._data.restaurantName}
-                      location={item._data.location}
-                      rating={item._data.rating}
-                      category={item._data.category}
-                      tables={item._data.tables}
-                      reviews={item._data.reviews}
-                      contact={item._data.contact}
-                      imageUrl={item._data.imageUrl}
-                      onPress={() =>
-                        navigation.navigate(
-                          routes.RESTAURANT_DETAIL,
-                          item._data,
-                        )
-                      }
-                    />
+                    <View
+                      style={{
+                        padding: wp(2),
+                        elevation: wp(2),
+
+                        // backgroundColor: 'purple',
+                      }}>
+                      <RestaurantCard
+                        restaurantName={item?.restaurantName}
+                        location={item?.address}
+                        rating={item?.rating}
+                        category={item?.category}
+                        tables={item?.tables}
+                        reviews={item?.reviews}
+                        contact={item?.contact}
+                        imageUrl={item?.imageUrl}
+                        onPress={() =>
+                          navigation.navigate(routes.RESTAURANT_DETAIL, item)
+                        }
+                      />
+                    </View>
                   )}
                 />
               </View>
@@ -215,7 +246,11 @@ const styles = StyleSheet.create({
     flex: 1,
     top: hp(0),
   },
-  upperViewContainer: {},
+  upperViewContainer: {
+    // backgroundColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   dividerView: {
     justifyContent: 'center',
     alignItems: 'center',

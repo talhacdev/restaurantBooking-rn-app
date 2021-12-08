@@ -67,7 +67,7 @@ const AppNavigator = () => {
       />
 
       <Tab.Screen
-        name="Camera"
+        name="QR Code"
         component={CameraNavigator}
         options={{
           tabBarIcon: ({color, size}) => (

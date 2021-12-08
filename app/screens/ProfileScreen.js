@@ -34,88 +34,92 @@ function ProfileScreen(props) {
   const [address, setAddress] = useState();
   const [image, setImage] = useState();
 
+  const [firstname, setFirstname] = useState();
+  const [lastname, setLastname] = useState();
+  const [email, setEmail] = useState();
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
-  useEffect(() => {
-    fetchUserRecords();
-  }, []);
+  // useEffect(() => {
+  //   fetchUserRecords();
+  // }, []);
 
-  const fetchUserRecords = async () => {
-    await firestore()
-      .collection('UserRecords')
-      .doc(auth()._user.uid)
-      .get()
-      .then(res => {
-        console.log(res._data);
-        setUser(res._data);
-        setDisplayName(res._data.displayName);
-        setPhoneNumber(res._data.phoneNumber);
-        setAddress(res._data.address);
-        setPhotoURL(res._data.photoURL);
-      })
-      .catch(error => alert(error));
-  };
+  // const fetchUserRecords = async () => {
+  //   await firestore()
+  //     .collection('UserRecords')
+  //     .doc(auth()._user.uid)
+  //     .get()
+  //     .then(res => {
+  //       console.log(res._data);
+  //       setUser(res._data);
+  //       setDisplayName(res._data.displayName);
+  //       setPhoneNumber(res._data.phoneNumber);
+  //       setAddress(res._data.address);
+  //       setPhotoURL(res._data.photoURL);
+  //     })
+  //     .catch(error => alert(error));
+  // };
 
-  const onPressUpdateButton = () => {
-    displayName && phoneNumber && address && photoURL
-      ? uploadImage()
-      : console.log(displayName, phoneNumber, address, photoURL);
-  };
+  // const onPressUpdateButton = () => {
+  //   displayName && phoneNumber && address && photoURL
+  //     ? uploadImage()
+  //     : console.log(displayName, phoneNumber, address, photoURL);
+  // };
 
-  const onPressImage = () => {
-    let options = {
-      mediaType: 'photo',
-      // cameraType: 'front',
-      // saveToPhotos: true,
-    };
-    launchImageLibrary(options, response => {
-      console.log(response);
-      const source = response.assets[0].uri;
-      setImage(source.toString());
-    });
-  };
+  // const onPressImage = () => {
+  //   let options = {
+  //     mediaType: 'photo',
+  //     // cameraType: 'front',
+  //     // saveToPhotos: true,
+  //   };
+  //   launchImageLibrary(options, response => {
+  //     console.log(response);
+  //     const source = response.assets[0].uri;
+  //     setImage(source.toString());
+  //   });
+  // };
 
-  const uploadImage = async () => {
-    toggleModal();
-    setLoading(true);
+  // const uploadImage = async () => {
+  //   toggleModal();
+  //   setLoading(true);
 
-    const uploadUri = image;
-    let fileName = auth()._user.uid;
+  //   const uploadUri = image;
+  //   let fileName = auth()._user.uid;
 
-    try {
-      await storage().ref(fileName).putFile(uploadUri);
-      const url = await storage().ref(fileName).getDownloadURL();
-      updateUserRecords(url);
-    } catch (e) {
-      alert(e);
-    }
-  };
+  //   try {
+  //     await storage().ref(fileName).putFile(uploadUri);
+  //     const url = await storage().ref(fileName).getDownloadURL();
+  //     updateUserRecords(url);
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  // };
 
-  const updateUserRecords = async url => {
-    let obj = {
-      displayName,
-      phoneNumber,
-      address,
-      email: user.email,
-      photoURL: url,
-    };
-    console.log('UserRecords: ', obj);
-    firestore()
-      .collection('UserRecords')
-      .doc(user.uid)
-      .update(obj)
-      .then(() => {
-        alert('Profile updated!');
-        setLoading(false);
-        toggleModal();
-        navigation.navigate(routes.ACCOUNT);
-      })
-      .catch(err => {
-        alert(err);
-      });
-  };
+  // const updateUserRecords = async url => {
+  //   let obj = {
+  //     displayName,
+  //     phoneNumber,
+  //     address,
+  //     email: user?.email,
+  //     photoURL: url,
+  //   };
+  //   console.log('UserRecords: ', obj);
+  //   firestore()
+  //     .collection('UserRecords')
+  //     .doc(user.uid)
+  //     .update(obj)
+  //     .then(() => {
+  //       alert('Profile updated!');
+  //       setLoading(false);
+  //       toggleModal();
+  //       navigation.navigate(routes.ACCOUNT);
+  //     })
+  //     .catch(err => {
+  //       alert(err);
+  //     });
+  // };
   return (
     <View style={styles.container}>
       {loading ? (
@@ -138,7 +142,9 @@ function ProfileScreen(props) {
       </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
-          <TouchableOpacity onPress={() => onPressImage()}>
+          <TouchableOpacity
+          // onPress={() => onPressImage()}
+          >
             {photoURL ? (
               <Image
                 style={{
@@ -165,42 +171,46 @@ function ProfileScreen(props) {
           </TouchableOpacity>
           <View style={{marginTop: hp(5)}}>
             <AppInput
-              placeholder="name"
+              placeholder="first name"
               title="first name"
-              defaultValue={user.displayName}
-              onChangeText={val => setDisplayName(val)}
+              defaultValue={user?.displayName}
+              onChangeText={val => setFirstname(val)}
             />
 
             <AppInput
-              placeholder="name"
+              placeholder="last name"
               title="last name"
-              defaultValue={user.displayName}
-              onChangeText={val => setDisplayName(val)}
+              defaultValue={user?.displayName}
+              onChangeText={val => setLastname(val)}
             />
 
             <AppInput
               placeholder="email"
               title="email"
               keyboardType={'email-address'}
-              value={user.email}
+              value={user?.email}
+              onChangeText={val => setEmail(val)}
             />
             <AppInput
               placeholder="phone"
               title="phone"
               keyboardType={'phone-pad'}
-              defaultValue={user.phoneNumber}
+              defaultValue={user?.phoneNumber}
               onChangeText={val => setPhoneNumber(val)}
             />
             <AppInput
               placeholder="address"
               title="address"
-              defaultValue={user.address}
+              defaultValue={user?.address}
               onChangeText={val => setAddress(val)}
             />
           </View>
 
           <View style={{margin: hp(1)}}>
-            <AppButton onPress={() => onPressUpdateButton()} title={'update'} />
+            <AppButton
+              // onPress={() => onPressUpdateButton()}
+              title={'update'}
+            />
           </View>
         </View>
       </View>

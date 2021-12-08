@@ -8,6 +8,7 @@ import {
 import colors from '../config/colors';
 
 function RestaurantCard({
+  width,
   restaurantName,
   location,
   category,
@@ -33,7 +34,7 @@ function RestaurantCard({
       </View>
       <View style={styles.detailContainer}>
         <View style={styles.ratingContainer}>
-          <View>
+          {/* <View>
             <Image
               style={{
                 width: wp(5),
@@ -45,7 +46,7 @@ function RestaurantCard({
           </View>
           <View>
             <Text style={styles.ratingText}>{rating}</Text>
-          </View>
+          </View> */}
         </View>
         <Text numberOfLines={1} style={styles.detailMainText}>
           {restaurantName}
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.cardColor,
     // backgroundColor: 'pink',
-    width: wp('50'),
+    width: wp('45'),
     height: hp('30'),
     elevation: wp(1),
     padding: wp(4),

@@ -10,7 +10,7 @@ import colors from '../config/colors';
 
 function VerticalProductCard({
   itemName,
-  restaurantName,
+  description,
   discountedPrice,
   price,
   onPress,
@@ -55,7 +55,7 @@ function VerticalProductCard({
           {itemName}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {restaurantName}
+          {description}
         </Text>
         <View style={styles.priceContainer}>
           <Text numberOfLines={1} style={styles.priceText}>

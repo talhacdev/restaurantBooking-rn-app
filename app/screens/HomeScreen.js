@@ -14,6 +14,7 @@ import {
 import firestore from '@react-native-firebase/firestore';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
+import Carousel from 'react-native-snap-carousel';
 
 import colors from '../config/colors';
 import CategoryCard from '../components/CategoryCard';
@@ -33,7 +34,47 @@ function HomeScreen(props) {
   const [restaurants, setRestaurants] = useState();
   const [filteredProducts, setFilteredProducts] = useState();
   const [filteredRestaurants, setFilteredRestaurants] = useState();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [carouselItems, setCarouselItems] = useState([
+    {
+      title: 'Item 1',
+      text: 'Text 1',
+    },
+    {
+      title: 'Item 2',
+      text: 'Text 2',
+    },
+    {
+      title: 'Item 3',
+      text: 'Text 3',
+    },
+    {
+      title: 'Item 4',
+      text: 'Text 4',
+    },
+    {
+      title: 'Item 5',
+      text: 'Text 5',
+    },
+  ]);
 
+  _renderItem = ({item, index}) => {
+    return (
+      <View
+        style={{
+          // justifyContent: 'center',
+          // alignItems: 'center',
+          backgroundColor: 'floralwhite',
+          borderRadius: 5,
+          height: 200,
+          padding: 50,
+          width: wp(95),
+        }}>
+        <Text style={{fontSize: 30}}>{item.title}</Text>
+        <Text>{item.text}</Text>
+      </View>
+    );
+  };
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -222,30 +263,53 @@ function HomeScreen(props) {
                 )}
               />
             </View> */}
-
+            <View
+              style={{
+                backgroundColor: colors.cardColor,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <Carousel
+                layout={'default'}
+                // ref={ref => (carousel = ref)}
+                data={carouselItems}
+                sliderWidth={300}
+                itemWidth={300}
+                renderItem={_renderItem}
+                onSnapToItem={index => setActiveIndex(index)}
+              />
+            </View>
             <View style={styles.dividerView}>
               <Text style={styles.dividerText}>restaurants</Text>
             </View>
             <View style={styles.lowerViewContainer}>
               <FlatList
-                horizontal
+                // horizontal
+                numColumns={2}
                 showsVerticalScrollIndicator={false}
                 data={restaurants}
                 keyExtractor={restaurants => restaurants.id.toString()}
                 renderItem={({item}) => (
-                  <RestaurantVerticalCard
-                    restaurantName={item?.restaurantName}
-                    location={item?.address}
-                    rating={item?.rating}
-                    category={item?.category}
-                    tables={item?.tables}
-                    reviews={item?.reviews}
-                    contact={item?.contact}
-                    imageUrl={item?.imageUrl}
-                    onPress={() =>
-                      navigation.navigate(routes.RESTAURANT_DETAIL, item)
-                    }
-                  />
+                  <View
+                    style={{
+                      margin: wp(5),
+                      elevation: wp(2),
+                      // backgroundColor: 'purple',
+                    }}>
+                    <RestaurantVerticalCard
+                      restaurantName={item?.restaurantName}
+                      location={item?.address}
+                      rating={item?.rating}
+                      category={item?.category}
+                      tables={item?.tables}
+                      reviews={item?.reviews}
+                      contact={item?.contact}
+                      imageUrl={item?.imageUrl}
+                      onPress={() =>
+                        navigation.navigate(routes.RESTAURANT_DETAIL, item)
+                      }
+                    />
+                  </View>
                 )}
               />
             </View>
@@ -305,7 +369,11 @@ const styles = StyleSheet.create({
     fontSize: wp(4.5),
     textTransform: 'uppercase',
   },
-  lowerViewContainer: {},
+  lowerViewContainer: {
+    // backgroundColor: 'black',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   bottomViewContainer: {
     flex: 0.1,
     justifyContent: 'center',
