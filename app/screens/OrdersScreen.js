@@ -37,10 +37,17 @@ function OrdersScreen(props) {
 
   const getOrders = async () => {
     let customerId = '6195663783972436008dd0e9';
+    // to-do async token
+    let config = {
+      headers: {
+        authorization: token,
+      },
+    };
 
     axios
       .get(
         `http://magicmeal.herokuapp.com/user/get-updated-order/${customerId}`,
+        config,
       )
       .then(response => {
         console.log('DEBUG getOrders: ', response);
@@ -50,20 +57,21 @@ function OrdersScreen(props) {
       });
   };
 
-  const fetchOrders = () => {
-    firestore()
-      .collection('Orders')
-      // Filter results
-      .where('uid', '==', auth().currentUser._user.uid)
-      .get()
-      .then(querySnapshot => {
-        setData(querySnapshot._docs);
-        setLoading(false);
-        toggleModal();
-        console.log('data: ', data);
-      })
-      .catch(err => alert(err));
-  };
+  // complete or cancelled go in past otherwise active
+
+  // useEffect(async () => {
+  //     .then(res => {
+  //       //if (res) console.log("Response", res);
+  //       const updatedOrders = res.data.updatedOrder;
+  //       //console.log("orderss", updatedOrders);
+  //       setOrders(updatedOrders);
+  //       setLoading(true);
+  //       //window.alert("Orders Imported");
+  //     })
+  //     .catch(err => {
+  //       console.log('Error in FE', err);
+  //     });
+  // }, []);
 
   return (
     <View style={styles.container}>

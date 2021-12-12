@@ -6,6 +6,7 @@ import {
 } from 'react-native-responsive-screen';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -15,155 +16,114 @@ import Button from '../components/Button';
 import moment from 'moment';
 import AppInput from '../components/Input';
 import axios from 'axios';
+import hardcodeCart from '../hardcode/hardcodeCart';
 
 function PaymentMethodScreen(props) {
   const [address, setAddress] = useState();
   const [notes, setNotes] = useState();
-
-  const onPressPlaceOrder = () => {
-    // const orderObject = {
-    //   status: 'in-progress',
-    //   products: props?.route?.params?.products,
-    //   totalPrice: props?.route?.params?.totalPrice,
-    //   totalQuantity: props?.route?.params?.totalQuantity,
-    //   uid: auth().currentUser._user.uid,
-    //   orderTime: moment().format('hh:mm:ss A'),
-    // };
-    // console.log('orderObject', orderObject);
-    // createOrder(orderObject);
-  };
-
-  const createOrder = async orderObject => {
-    firestore()
-      .collection('Orders')
-      .add(orderObject)
-      .then(() => {
-        console.log('Order Placed!');
-        navigation.navigate(routes.ORDER_SUCCESS);
-      })
-      .catch(err => {
-        alert(err);
-      });
-  };
-
-  // const createRestaurants = async () => {
-  //   let obj = {
-  //     id: Date.now().toString(),
-  //     category: ['fast-food'],
-  //     contact: '042-111-116-787',
-  //     imageUrl:
-  //       'https://pbs.twimg.com/profile_images/1397098771394215936/W72q-pDv_400x400.jpg',
-  //     location:
-  //       '39-C Abul Hassan Isfashani Rd, Block C Faisal Town, Lahore, Punjab',
-  //     rating: '5',
-  //     restaurantName: 'OPTP',
-  //     reviews: [
-  //       {
-  //         id: Math.random().toString(),
-  //         comment: 'OPTP sucks!',
-  //         displayName: 'Fawad Khan',
-  //         imageUrl:
-  //           'https://i.pinimg.com/222x/80/d2/50/80d25096a32c10afb9d39acdd051e45e.jpg',
-  //       },
-  //     ],
-  //     sponsored: 'true',
-  //     tables: [
-  //       {id: 1, title: 'Table 1'},
-  //       {id: 2, title: 'Table 2'},
-  //       {id: 3, title: 'Table 3'},
-  //       {id: 4, title: 'Table 4'},
-  //     ],
-  //     timeslot: [
-  //       {id: 0, slot: '9am to 12pm'},
-  //       {id: 1, slot: '12pm to 3pm'},
-  //       {id: 2, slot: '3pm to 6pm'},
-  //       {id: 4, slot: '6pm to 9pm'},
-  //       // {id: 5, slot: '9pm to 12am'},
-  //     ],
-  //   };
-  //   console.log('createRestaurants');
-  //   firestore()
-  //     .collection('Restaurants')
-  //     .doc(obj.id)
-  //     .set(obj)
-  //     .then(() => {
-  //       console.log('Restaurants added!');
-  //     })
-  //     .catch(err => {
-  //       alert(err);
-  //     });
-  // };
-
-  // const createProducts = async () => {
-  //   let obj = {
-  //     id: Date.now().toString(),
-  //     category: ['fries'],
-  //     description: "this is OPTP's finest flagship fries.",
-  //     discountedPrice: '100',
-  //     imageUrl:
-  //       'https://www.optp.biz:3000/3000d9b0-a80f-11eb-8176-598fa979e369-Regular-Plain-Fries_variant_0-2021-04-28104754.jpg',
-  //     itemName: 'Loaded Fries',
-  //     price: '200',
-  //     rating: '5',
-  //     restaurantName: 'OPTP',
-
-  //     quantity: 1,
-  //     sponsored: false,
-  //   };
-  //   console.log('createProducts');
-  //   firestore()
-  //     .collection('Products')
-  //     .doc(obj.id)
-  //     .set(obj)
-  //     .then(() => {
-  //       console.log('Products added!');
-  //     })
-  //     .catch(err => {
-  //       alert(err);
-  //     });
-  // };
-
-  // const createCategories = async () => {
-  //   let obj = {
-  //     id: Date.now().toString(),
-  //     title: 'Drinks',
-  //     imageUrl:
-  //       'https://listimg.pinclipart.com/picdir/s/546-5460117_boba-pixel-art-clipart.png',
-  //   };
-  //   console.log('createCategories');
-  //   firestore()
-  //     .collection('Categories')
-  //     .doc(obj.id)
-  //     .set(obj)
-  //     .then(() => {
-  //       console.log('Categories added!');
-  //     })
-  //     .catch(err => {
-  //       alert(err);
-  //     });
-  // };
+  const [customer, setCustomer] = useState();
+  const [restaurants, setRestaurants] = useState();
 
   useEffect(() => {
-    // let restId = '61956881a675b200167ff63f';
-    // let token =
-    //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzg4OTQwNzl9.G8c00HAcbvZre7nuqEi6XnXiTDtw2DUVh-lYVMFo8fk';
-    // let obj = {
-    //   firstName: 'Muhammad',
-    //   lastName: 'Talha',
-    //   email: 'thecorruptmob1@gmail.com',
-    //   password: '123456',
-    //   contact: '+923331049859',
-    //   role: 'customer',
-    // };
-    // axios
-    //   .get(`http://magicmeal.herokuapp.com/user/post-order/${restId}`, obj)
-    //   .then(response => {
-    //     console.log('DEBUG registerScreen: ', response);
-    //   })
-    //   .catch(error => {
-    //     console.log('DEBUG registerScreen ERROR: ', error);
-    //   });
+    getCustomer()
+      .then(json => {
+        setCustomer(json);
+      })
+      .catch(error => alert(error));
+    getRestaurants()
+      .then(json => {
+        setRestaurants(json);
+      })
+      .catch(error => alert(error));
   }, []);
+
+  const getCustomer = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@LoginResponse');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.log('\nError Getting Data\n', e);
+    }
+  };
+
+  const getRestaurants = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@Restaurants');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.log('\nError Getting Data\n', e);
+    }
+  };
+
+  const onPressPlaceOrder = () => {
+    // console.log('orderObject', orderObject);
+    // console.log('DEBUG all restaurants', restaurants);
+    const filteredRestaurant = restaurants.filter(
+      i => i.id === props?.route?.params?.products[0].restaurant,
+    );
+
+    // console.log('DEBUG customer', customer);
+    // console.log('DEBUG restaurant', filteredRestaurant);
+    const orderObject = {
+      customerData: {
+        name: customer.customer.firstName + ' ' + customer.customer.lastName,
+        contact: customer.customer.contact,
+        customerId: customer.customer.id,
+        customerAddress: address,
+      },
+      restaurantData: {
+        restaurantName: filteredRestaurant[0].restaurantName,
+        contact: filteredRestaurant[0].contact,
+        restaurantId: filteredRestaurant[0].id,
+      },
+      items: props?.route?.params?.products,
+      // items: {
+      //   category: props?.route?.params?.products[0].category,
+      //   itemDescription: props?.route?.params?.products[0].description,
+      //   itemName: props?.route?.params?.products[0].itemName,
+      //   price: props?.route?.params?.products[0].price,
+      //   quantity: props?.route?.params?.products[0].quantity,
+      //   restaurant: props?.route?.params?.products[0].restaurant,
+      //   _id: props?.route?.params?.products[0].category,
+      // },
+      grandTotal: props?.route?.params?.totalPrice,
+      orderDate: new Date(),
+      orderType: 'pickup',
+      // orderType: "dinein",
+      // tableNumber: "14",
+    };
+
+    console.log('DEBUG orderObject: ', orderObject);
+
+    postOrder(orderObject);
+  };
+
+  const postOrder = orderObject => {
+    let restId = orderObject.restaurantData.restaurantId;
+    // to-do async login token
+    let token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzg4OTQwNzl9.G8c00HAcbvZre7nuqEi6XnXiTDtw2DUVh-lYVMFo8fk';
+    let config = {
+      headers: {
+        authorization: token,
+      },
+    };
+
+    axios
+      .post(
+        `http://magicmeal.herokuapp.com/user/post-order/${restId}`,
+        orderObject,
+        config,
+      )
+      .then(response => {
+        console.log('DEBUG postOrder response: ', response);
+        // navigation.navigate(routes.ORDER_SUCCESS);
+      })
+      .catch(error => {
+        console.log('DEBUG postOrder ', error);
+        alert(error);
+      });
+  };
 
   return (
     <View style={styles.container}>

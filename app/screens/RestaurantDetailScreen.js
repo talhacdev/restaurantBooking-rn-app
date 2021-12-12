@@ -237,7 +237,7 @@ function RestaurantDetailScreen(props) {
           </View>
           <View>
             <View style={styles.dividerView}>
-              <Text style={styles.dividerText}>sponsored products</Text>
+              <Text style={styles.dividerText}>products</Text>
             </View>
             <FlatList
               horizontal

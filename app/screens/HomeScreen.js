@@ -15,6 +15,7 @@ import firestore from '@react-native-firebase/firestore';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 import Carousel from 'react-native-snap-carousel';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import colors from '../config/colors';
 import CategoryCard from '../components/CategoryCard';
@@ -148,18 +149,28 @@ function HomeScreen(props) {
 
   useEffect(() => {
     getRestaurants();
-  }, []);
+  });
 
   const getRestaurants = async () => {
     axios
       .get('http://magicmeal.herokuapp.com/user/get-restaurants')
       .then(response => {
         console.log('DEBUG getRestaurants: ', response.data.data);
+        storeData(response.data.data);
         setRestaurants(response.data.data);
       })
       .catch(error => {
         console.log('DEBUG getRestaurants ERROR: ', error);
       });
+  };
+
+  const storeData = async value => {
+    console.log('DEBUG homeScreen @Restaurants: ', value);
+    try {
+      await AsyncStorage.setItem('@Restaurants', JSON.stringify(value));
+    } catch (e) {
+      console.log('\nError Storing Data\n', e);
+    }
   };
 
   return (

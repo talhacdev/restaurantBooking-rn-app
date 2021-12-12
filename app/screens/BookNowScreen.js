@@ -5,6 +5,8 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import firestore from '@react-native-firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 import AppHeader from '../components/Header';
 import colors from '../config/colors';
@@ -19,48 +21,89 @@ function BookNowScreen(props) {
   const [selectedTimeslot, setSelectedTimeslot] = useState();
   const tables = props?.route?.params.tables;
   const timeslot = props?.route?.params.timeslot;
+  const [customer, setCustomer] = useState();
+  const [restaurants, setRestaurants] = useState();
 
   const [date, setDate] = useState();
   const [time, setTime] = useState();
   const [person, setPerson] = useState();
 
+  useEffect(() => {
+    getCustomer()
+      .then(json => {
+        setCustomer(json);
+      })
+      .catch(error => alert(error));
+    getRestaurants()
+      .then(json => {
+        setRestaurants(json);
+      })
+      .catch(error => alert(error));
+  }, []);
+
+  const getCustomer = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@LoginResponse');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.log('\nError Getting Data\n', e);
+    }
+  };
+
+  const getRestaurants = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@Restaurants');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.log('\nError Getting Data\n', e);
+    }
+  };
+
   const onPressBookNow = () => {
-    const bookingObject = {
-      restaurantId: props?.route?.params?.id,
-      selectedTable,
-      selectedTimeslot,
+    // restaurant.activeStatus == true ? booking button enabled : disabled
+    // alert("restaurant has disabled booking")
+
+    let reservationData = {
+      numberOfPersons: person,
+      reservationDate: date,
+      reservationTime: time,
+      customer: {
+        customerName:
+          customer.customer.firstName + ' ' + customer.customer.lastName,
+        customerId: customer.customer.id,
+      },
+      restaurant: {
+        restaurantName: filteredRestaurant[0].restaurantName,
+        restaurantId: filteredRestaurant[0].id,
+      },
     };
 
-    bookingStatus(bookingObject);
+    postOrder(reservationData);
   };
 
-  const bookingStatus = async bookingObject => {
-    firestore()
-      .collection('Booking')
-      .where('restaurantId', '==', props?.route?.params?.id)
-      .where('selectedTable', '==', selectedTable)
-      .where('selectedTimeslot', '==', selectedTimeslot)
-      .get()
-      .then(querySnapshot => {
-        querySnapshot._docs.length != 0
-          ? alert('Booking already exists!\nTry a different combination.')
-          : createBooking(bookingObject);
-      })
-      .catch(err => {
-        alert(err);
-      });
-  };
+  const postOrder = reservationData => {
+    let token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzg4OTQwNzl9.G8c00HAcbvZre7nuqEi6XnXiTDtw2DUVh-lYVMFo8fk';
+    let config = {
+      headers: {
+        authorization: token,
+      },
+    };
 
-  const createBooking = async bookingObject => {
-    firestore()
-      .collection('Booking')
-      .add(bookingObject)
-      .then(() => {
-        console.log('Booking Reserved!');
-        navigation.navigate(routes.BOOKING_SUCCESS);
+    axios
+      .post(
+        `http://magicmeal.herokuapp.com/user/book-table`,
+        reservationData,
+        config,
+      )
+      .then(response => {
+        console.log('Reservation Request Placed', response);
+        alert('Reservation Request Placed');
+        // navigation.navigate(routes.ORDER_SUCCESS);
       })
-      .catch(err => {
-        alert(err);
+      .catch(error => {
+        console.log('DEBUG booking: ', error);
+        alert(error);
       });
   };
 
