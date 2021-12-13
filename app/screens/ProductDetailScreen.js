@@ -132,7 +132,7 @@ function ProductDetailScreen(props) {
           showsVerticalScrollIndicator={false}
           style={styles.contentViewContainer}>
           <View style={styles.upperViewContainer}>
-            <Image
+            {/* <Image
               style={{
                 width: wp(100),
                 height: wp(100),
@@ -140,6 +140,14 @@ function ProductDetailScreen(props) {
               source={{
                 uri: listing.imageUrl,
               }}
+            /> */}
+            <Image
+              style={{
+                width: wp(100),
+                height: wp(100),
+                padding: wp(1),
+              }}
+              source={require('../assets/restaurant.jpg')}
             />
           </View>
           <View style={styles.lowerViewContainer}>

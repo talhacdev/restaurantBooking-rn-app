@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -29,6 +29,7 @@ function BookNowScreen(props) {
   const [person, setPerson] = useState();
 
   useEffect(() => {
+    console.log('BOOKNOW props: ', props?.route?.params);
     getCustomer()
       .then(json => {
         setCustomer(json);
@@ -60,12 +61,9 @@ function BookNowScreen(props) {
   };
 
   const onPressBookNow = () => {
-    // restaurant.activeStatus == true ? booking button enabled : disabled
-    // alert("restaurant has disabled booking")
-
     let reservationData = {
       numberOfPersons: person,
-      reservationDate: date,
+      reservationDate: new Date(),
       reservationTime: time,
       customer: {
         customerName:
@@ -73,10 +71,12 @@ function BookNowScreen(props) {
         customerId: customer.customer.id,
       },
       restaurant: {
-        restaurantName: filteredRestaurant[0].restaurantName,
-        restaurantId: filteredRestaurant[0].id,
+        restaurantName: props?.route?.params.restaurantName,
+        restaurantId: props?.route?.params.id,
       },
     };
+
+    console.log('bookingnowscreen: ', reservationData);
 
     postOrder(reservationData);
   };
@@ -99,7 +99,7 @@ function BookNowScreen(props) {
       .then(response => {
         console.log('Reservation Request Placed', response);
         alert('Reservation Request Placed');
-        // navigation.navigate(routes.ORDER_SUCCESS);
+        navigation.navigate(routes.HOME);
       })
       .catch(error => {
         console.log('DEBUG booking: ', error);
@@ -109,17 +109,26 @@ function BookNowScreen(props) {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.headerViewContainer}>
-        <AppHeader title="book now" />
-      </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.lowerViewContainer}>
-          <AppInput title={'date'} onChangeText={text => setDate(text)} />
-          <AppInput title={'time'} onChangeText={text => setTime(text)} />
-          <AppInput title={'person'} onChangeText={text => setPerson(text)} />
+          <AppInput
+            title={'date'}
+            placeholder={'30-12-21'}
+            onChangeText={text => setDate(text)}
+          />
+          <AppInput
+            title={'time'}
+            placeholder={'13:00'}
+            onChangeText={text => setTime(text)}
+          />
+          <AppInput
+            title={'person'}
+            placeholder={'4'}
+            onChangeText={text => setPerson(text)}
+          />
           <View style={styles.buttonContainer}>
             <AppButton
-              disabled={(selectedTable, selectedTimeslot) ? false : true}
+              disabled={(date, time, person) ? false : true}
               title="book now"
               onPress={() => onPressBookNow()}
             />

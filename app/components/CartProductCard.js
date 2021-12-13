@@ -28,7 +28,7 @@ function CartProductCard({
       style={styles.cardContainer}
       onPress={onPress ? onPress : () => console.log('Card pressed.')}>
       <View>
-        <Image
+        {/* <Image
           style={{
             width: wp(25),
             height: wp(25),
@@ -37,6 +37,14 @@ function CartProductCard({
           source={{
             uri: imageUrl,
           }}
+        /> */}
+        <Image
+          style={{
+            width: wp(30),
+            height: wp(30),
+            padding: wp(1),
+          }}
+          source={require('../assets/restaurant.jpg')}
         />
       </View>
       <View style={styles.detailContainer}>

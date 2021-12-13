@@ -11,15 +11,10 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 import axios from 'axios';
 
-import AppInput from '../components/Input';
-import AppHeader from '../components/Header';
-import ReviewCard from '../components/ReviewCard';
 import AppButton from '../components/Button';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
@@ -37,73 +32,6 @@ function RestaurantDetailScreen(props) {
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
-  };
-
-  const onPressPostButton = () => {
-    toggleModal();
-    setLoading(true);
-    console.log(comment);
-    fetchUserRecords();
-  };
-
-  const fetchUserRecords = async () => {
-    await firestore()
-      .collection('UserRecords')
-      .doc(auth()._user.uid)
-      .get()
-      .then(res => {
-        updateComments(res._data);
-      })
-      .catch(error => alert(error));
-  };
-
-  const updateComments = async user => {
-    let comments = [];
-    if (listing.reviews) {
-      comments = [
-        ...listing.reviews,
-        {
-          comment,
-          user,
-          id: Date.now(),
-        },
-      ];
-    } else {
-      comments = [
-        {
-          comment,
-          user,
-          id: Date.now(),
-        },
-      ];
-    }
-    let obj = {
-      reviews: comments,
-    };
-    console.log('obj: ', obj);
-    firestore()
-      .collection('Restaurants')
-      .doc(listing.id)
-      .update(obj)
-      .then(() => {
-        fetchRestaurants();
-      })
-      .catch(err => {
-        alert(err);
-      });
-  };
-
-  const fetchRestaurants = async () => {
-    await firestore()
-      .collection('Restaurants')
-      .doc(listing.id)
-      .get()
-      .then(res => {
-        setListing(res._data);
-        setLoading(false);
-        toggleModal();
-      })
-      .catch(error => alert(error));
   };
 
   useEffect(() => {
@@ -153,16 +81,12 @@ function RestaurantDetailScreen(props) {
         </Modal>
       ) : null}
 
-      {/* <View style={styles.headerViewContainer}>
-        <AppHeader title="detail" />
-      </View> */}
-
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.contentViewContainer}>
           <View style={styles.upperViewContainer}>
-            <Image
+            {/* <Image
               style={{
                 width: wp(100),
                 height: wp(100),
@@ -170,6 +94,14 @@ function RestaurantDetailScreen(props) {
               source={{
                 uri: listing?.imageUrl,
               }}
+            /> */}
+            <Image
+              style={{
+                width: wp(100),
+                height: wp(100),
+                padding: wp(1),
+              }}
+              source={require('../assets/restaurant.jpg')}
             />
           </View>
 
@@ -182,84 +114,41 @@ function RestaurantDetailScreen(props) {
             <View>
               <Text style={styles.unitText}>{listing.contact}</Text>
             </View>
-
-            <View style={styles.ratingContainer}>
-              {/* <View>
-                <Image
-                  style={{
-                    width: wp(7),
-                    height: wp(7),
-                    padding: wp(1),
-                  }}
-                  source={require('../assets/star.png')}
-                />
-              </View> */}
-              {/* <View>
-                <Text style={styles.ratingText}>{listing.rating}</Text>
-              </View> */}
-            </View>
           </View>
-          {/* <View style={styles.commentsContainer}>
-            <FlatList
-              // inverted
-              showsVerticalScrollIndicator={false}
-              data={listing.reviews}
-              keyExtractor={data => data.id.toString()}
-              renderItem={({item}) => (
-                <View>
-                  <ReviewCard
-                    disabled={auth()._user.uid === item.user.uid}
-                    user={item?.user?.displayName}
-                    comment={item?.comment}
-                    imageUrl={item?.user.photoURL}
-                    onPressImage={() => {
-                      navigation.navigate(routes.CHAT, item);
-                    }}
-                  />
-                </View>
-              )}
-            />
-          </View> */}
+
           <View style={styles.buttonViewContainer}>
             <AppButton
               onPress={() => navigation.navigate(routes.BOOK_NOW, listing)}
               title={'book'}
             />
-            {/* <View style={styles.commentContainer}>
-              <AppInput
-                multiline
-                maxLength={256}
-                title={'comment'}
-                onChangeText={val => setComment(val)}
+          </View>
+          {menu.length >= 1 ? (
+            <View>
+              <View style={styles.dividerView}>
+                <Text style={styles.dividerText}>products</Text>
+              </View>
+              <FlatList
+                horizontal
+                showsVerticalScrollIndicator={false}
+                data={menu}
+                keyExtractor={menu => menu.id}
+                renderItem={({item}) => (
+                  <VerticalProductCard
+                    itemName={item?.itemName}
+                    discountedPrice={item?.discountedPrice}
+                    rating={item?.rating}
+                    description={item?.description}
+                    price={item?.price}
+                    imageUrl={item?.imageUrl}
+                    onPress={() =>
+                      navigation.navigate(routes.PRODUCT_DETAIL, item)
+                    }
+                    onBottomButtonPress={() => onAddToCart(item)}
+                  />
+                )}
               />
-              <AppButton onPress={() => onPressPostButton()} title={'post'} />
-            </View> */}
-          </View>
-          <View>
-            <View style={styles.dividerView}>
-              <Text style={styles.dividerText}>products</Text>
             </View>
-            <FlatList
-              horizontal
-              showsVerticalScrollIndicator={false}
-              data={menu}
-              keyExtractor={menu => menu.id}
-              renderItem={({item}) => (
-                <VerticalProductCard
-                  itemName={item?.itemName}
-                  discountedPrice={item?.discountedPrice}
-                  rating={item?.rating}
-                  description={item?.description}
-                  price={item?.price}
-                  imageUrl={item?.imageUrl}
-                  onPress={() =>
-                    navigation.navigate(routes.PRODUCT_DETAIL, item)
-                  }
-                  onBottomButtonPress={() => onAddToCart(item)}
-                />
-              )}
-            />
-          </View>
+          ) : null}
         </ScrollView>
       </View>
     </View>

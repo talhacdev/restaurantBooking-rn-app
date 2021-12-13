@@ -82,15 +82,17 @@ function PaymentMethodScreen(props) {
       //   itemDescription: props?.route?.params?.products[0].description,
       //   itemName: props?.route?.params?.products[0].itemName,
       //   price: props?.route?.params?.products[0].price,
-      //   quantity: props?.route?.params?.products[0].quantity,
+      //   // quantity: props?.route?.params?.products[0].quantity,
+      //   quantity: 1,
       //   restaurant: props?.route?.params?.products[0].restaurant,
       //   _id: props?.route?.params?.products[0].category,
       // },
       grandTotal: props?.route?.params?.totalPrice,
+      // grandTotal: 23000,
       orderDate: new Date(),
       orderType: 'pickup',
       // orderType: "dinein",
-      // tableNumber: "14",
+      tableNumber: '14',
     };
 
     console.log('DEBUG orderObject: ', orderObject);
@@ -108,6 +110,9 @@ function PaymentMethodScreen(props) {
         authorization: token,
       },
     };
+
+    console.log('restId: ', restId);
+    console.log('token: ', token);
 
     axios
       .post(

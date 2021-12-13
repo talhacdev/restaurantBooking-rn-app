@@ -23,7 +23,7 @@ function VerticalProductCard({
       style={styles.cardContainer}
       onPress={onPress ? onPress : () => console.log('Card pressed.')}>
       <View style={styles.imageContainer}>
-        <Image
+        {/* <Image
           style={{
             width: wp(30),
             height: wp(30),
@@ -32,6 +32,14 @@ function VerticalProductCard({
           source={{
             uri: imageUrl,
           }}
+        /> */}
+        <Image
+          style={{
+            width: wp(30),
+            height: wp(30),
+            padding: wp(1),
+          }}
+          source={require('../assets/restaurant.jpg')}
         />
       </View>
 

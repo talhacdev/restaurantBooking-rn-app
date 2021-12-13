@@ -36,6 +36,9 @@ function OrdersScreen(props) {
   }, []);
 
   const getOrders = async () => {
+    console.log('DEBUG GET ORDERS');
+    let token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzk0MTIzOTB9.nb7njul59_DAUtFRAowEhtdHXx9n1VraZXp12HUQhSk';
     let customerId = '6195663783972436008dd0e9';
     // to-do async token
     let config = {

@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from 'react-native';
 import {
   widthPercentageToDP as wp,
@@ -63,16 +64,23 @@ function HomeScreen(props) {
     return (
       <View
         style={{
-          // justifyContent: 'center',
-          // alignItems: 'center',
+          justifyContent: 'center',
+          alignItems: 'center',
           backgroundColor: 'floralwhite',
           borderRadius: 5,
-          height: 200,
-          padding: 50,
-          width: wp(95),
+          height: 250,
+          // padding: 50,
+          width: wp(100),
         }}>
-        <Text style={{fontSize: 30}}>{item.title}</Text>
-        <Text>{item.text}</Text>
+        {/* <Text style={{fontSize: 30}}>{item.title}</Text>
+        <Text>{item.text}</Text> */}
+        <Image
+          style={{
+            width: wp(100),
+            height: wp(50),
+          }}
+          source={require('../assets/restaurant.jpg')}
+        />
       </View>
     );
   };
@@ -80,76 +88,9 @@ function HomeScreen(props) {
     setModalVisible(!isModalVisible);
   };
 
-  // useEffect(() => {
-  //   toggleModal();
-  //   setLoading(true);
-  //   fetchCategories();
-  //   fetchRestaurants();
-  //   fetchProducts();
-  // }, []);
-
-  const fetchCategories = async () => {
-    await firestore()
-      .collection('Categories')
-      .get()
-      .then(res => {
-        setCategories(res._docs);
-      })
-      .catch(error => alert(error));
-  };
-
-  const fetchRestaurants = async () => {
-    await firestore()
-      .collection('Restaurants')
-      .get()
-      .then(res => {
-        setRestaurants(res._docs);
-        filterSuggestedRestaurants(res._docs);
-      })
-      .catch(error => alert(error));
-  };
-
-  const filterSuggestedRestaurants = restaurants => {
-    let filteredList = restaurants.filter(m => m._data.sponsored == true);
-    setFilteredRestaurants(filteredList);
-  };
-
-  const fetchProducts = async () => {
-    await firestore()
-      .collection('Products')
-      .get()
-      .then(res => {
-        setProducts(res._docs);
-        filterSuggestedProducts(res._docs);
-      })
-      .catch(error => alert(error));
-  };
-
-  const filterSuggestedProducts = products => {
-    let filteredList = products.filter(m => m._data.sponsored == true);
-    setFilteredProducts(filteredList);
-    setLoading(false);
-    toggleModal();
-  };
-
-  const onPressCategoryCard = item => {
-    console.log('onPress item: ', item.title.toLowerCase());
-    let filteredList = products.filter(
-      m => m._data.category == item.title.toLowerCase(),
-    );
-    console.log('filteredList: ', filteredList);
-
-    navigation.navigate(routes.PRODUCT, {item, filteredList});
-  };
-
-  const onAddToCart = item => {
-    console.log('item: ', item);
-    hardcodeCart.checkAlreadyAdded(item);
-  };
-
   useEffect(() => {
     getRestaurants();
-  });
+  }, []);
 
   const getRestaurants = async () => {
     axios
@@ -205,25 +146,6 @@ function HomeScreen(props) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.contentViewContainer}>
-            {/* <View style={styles.upperViewContainer}>
-              <FlatList
-                numColumns={2}
-                showsVerticalScrollIndicator={false}
-                data={categories}
-                keyExtractor={categories => categories.id}
-                renderItem={({item}) => (
-                  <CategoryCard
-                    title={item._data.title}
-                    imageUrl={item._data.imageUrl}
-                    onPress={() => onPressCategoryCard(item._data)}
-                  />
-                )}
-              />
-            </View> */}
-
-            {/* <View style={styles.dividerView}>
-              <Text style={styles.dividerText}>Top Rated restaurants</Text>
-            </View> */}
             <View style={styles.lowerViewContainer}>
               <FlatList
                 horizontal
@@ -248,32 +170,6 @@ function HomeScreen(props) {
               />
             </View>
 
-            {/* <View style={styles.dividerView}>
-              <Text style={styles.dividerText}>sponsored products</Text>
-            </View>
-
-            <View style={styles.lowerViewContainer}>
-              <FlatList
-                horizontal
-                showsVerticalScrollIndicator={false}
-                data={filteredProducts}
-                keyExtractor={filteredProducts => filteredProducts.id}
-                renderItem={({item}) => (
-                  <VerticalProductCard
-                    itemName={item._data.itemName}
-                    discountedPrice={item._data.discountedPrice}
-                    rating={item._data.rating}
-                    restaurantName={item._data.restaurantName}
-                    price={item._data.price}
-                    imageUrl={item._data.imageUrl}
-                    onPress={() =>
-                      navigation.navigate(routes.PRODUCT_DETAIL, item._data)
-                    }
-                    onBottomButtonPress={() => onAddToCart(item._data)}
-                  />
-                )}
-              />
-            </View> */}
             <View
               style={{
                 backgroundColor: colors.cardColor,
@@ -324,33 +220,6 @@ function HomeScreen(props) {
                 )}
               />
             </View>
-
-            {/* <View style={styles.dividerView}>
-              <Text style={styles.dividerText}>products</Text>
-            </View>
-
-            <View style={styles.lowerViewContainer}>
-              <FlatList
-                horizontal
-                showsVerticalScrollIndicator={false}
-                data={products}
-                keyExtractor={products => products.id}
-                renderItem={({item}) => (
-                  <VerticalProductCard
-                    itemName={item._data.itemName}
-                    discountedPrice={item._data.discountedPrice}
-                    rating={item._data.rating}
-                    restaurantName={item._data.restaurantName}
-                    price={item._data.price}
-                    imageUrl={item._data.imageUrl}
-                    onPress={() =>
-                      navigation.navigate(routes.PRODUCT_DETAIL, item._data)
-                    }
-                    onBottomButtonPress={() => onAddToCart(item._data)}
-                  />
-                )}
-              />
-            </View> */}
           </ScrollView>
         </View>
       ) : null}

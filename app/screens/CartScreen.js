@@ -77,29 +77,6 @@ function CartScreen(props) {
   };
 
   const onCheckoutPress = () => {
-    // if (products) {
-    //   if (products.length > 0) {
-    //     navigation.navigate(routes.CHECKOUT, {
-    //       products,
-    //       totalPrice,
-    //       totalQuantity,
-    //     });
-    //   } else {
-    //     Alert.alert('OOPS!', 'Cart is currently empty.', [
-    //       {
-    //         text: 'Continue Shopping',
-    //         onPress: () => navigation.navigate(routes.HOME),
-    //       },
-    //     ]);
-    //   }
-    // } else {
-    //   Alert.alert('OOPS!', 'Cart is currently empty.', [
-    //     {
-    //       text: 'Continue Shopping',
-    //       onPress: () => navigation.navigate(routes.HOME),
-    //     },
-    //   ]);
-    // }
     if (products) {
       if (products.length > 0) {
         navigation.navigate(routes.PAYMENT_METHOD, {
@@ -127,9 +104,6 @@ function CartScreen(props) {
 
   return (
     <View style={styles.container}>
-      {/* <View style={styles.headerViewContainer}>
-        <AppHeader title={'cart'} />
-      </View> */}
       <View style={styles.contentViewContainer}>
         <View style={styles.upperViewContainer}>
           <FlatList
