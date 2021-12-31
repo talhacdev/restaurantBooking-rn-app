@@ -43,7 +43,7 @@ function RestaurantDetailScreen(props) {
     let restId = listing.id;
 
     axios
-      .get(`http://magicmeal.herokuapp.com/user/get-restaurant-menu/${restId}`)
+      .get(`http://192.168.18.203:3001/user/get-restaurant-menu/${restId}`)
       .then(response => {
         console.log('DEBUG getMenu: ', response);
         setMenu(response.data.data.items);
@@ -54,12 +54,10 @@ function RestaurantDetailScreen(props) {
   };
 
   const onAddToCart = item => {
-    console.log('DEBUG item: ', item);
     let obj = {
       ...item,
       quantity: 1,
     };
-    console.log('DEBUG obj: ', obj);
     hardcodeCart.checkAlreadyAdded(obj);
   };
 

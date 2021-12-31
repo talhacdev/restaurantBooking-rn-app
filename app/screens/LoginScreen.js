@@ -18,8 +18,8 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 
 function LoginScreen(props) {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState('nob786@gmail.com');
+  const [password, setPassword] = useState('pakistan');
   const [loading, setLoading] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
 
@@ -33,6 +33,8 @@ function LoginScreen(props) {
     //   password: 'pakistan',
     // };
 
+    console.log('loginscreen onPressLogin');
+
     toggleModal();
     setLoading(true);
 
@@ -41,8 +43,8 @@ function LoginScreen(props) {
       password,
     };
 
-    axios
-      .post('http://magicmeal.herokuapp.com/auth/login', obj)
+    await axios
+      .post('http://192.168.18.203:3001/auth/login', obj)
       .then(response => {
         setLoading(false);
         toggleModal();
@@ -52,7 +54,7 @@ function LoginScreen(props) {
       .catch(error => {
         setLoading(false);
         toggleModal();
-        console.log('DEBUG loginScreen ERROR: ', error);
+        console.log('DEBUG catch: ', error);
         alert(error);
       });
   };
@@ -90,13 +92,21 @@ function LoginScreen(props) {
         />
       </View>
       <View style={styles.lowerViewContainer}>
-        <AppInput title={'email'} onChangeText={text => setEmail(text)} />
-        <AppInput title={'password'} onChangeText={text => setPassword(text)} />
+        <AppInput
+          value={email}
+          title={'email'}
+          onChangeText={text => setEmail(text)}
+        />
+        <AppInput
+          value={password}
+          title={'password'}
+          onChangeText={text => setPassword(text)}
+        />
 
         <View style={styles.buttonContainer}>
           <AppButton
             title="login"
-            //  onPress={() => onPressLoginButton()}
+            // onPress={() => onPressLoginButton()}
             onPress={() => onPressLogin()}
           />
         </View>

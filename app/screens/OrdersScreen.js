@@ -38,8 +38,8 @@ function OrdersScreen(props) {
   const getOrders = async () => {
     console.log('DEBUG GET ORDERS');
     let token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzk0MTIzOTB9.nb7njul59_DAUtFRAowEhtdHXx9n1VraZXp12HUQhSk';
-    let customerId = '6195663783972436008dd0e9';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1ZTFhMzcwNzE4NzAwMTY1ZGMwYzgiLCJpYXQiOjE2Mzk0Mjk2MTJ9.BTOv1nuyDmnPhvIAlVw8v2hSi57bmDnmT9aHwvz_wik';
+    let customerId = '6195e1a370718700165dc0c8';
     // to-do async token
     let config = {
       headers: {
@@ -49,7 +49,7 @@ function OrdersScreen(props) {
 
     axios
       .get(
-        `http://magicmeal.herokuapp.com/user/get-updated-order/${customerId}`,
+        `http://192.168.18.203:3001/user/get-updated-order/${customerId}`,
         config,
       )
       .then(response => {

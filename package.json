@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint ."
   },
-  "proxy": "https://magicmeal.herokuapp.com/",
+  "proxy": "http://localhost:3001/",
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.8",
     "@react-native-community/masked-view": "^0.1.11",

@@ -94,7 +94,7 @@ function HomeScreen(props) {
 
   const getRestaurants = async () => {
     axios
-      .get('http://magicmeal.herokuapp.com/user/get-restaurants')
+      .get('http://192.168.18.203:3001/user/get-restaurants')
       .then(response => {
         console.log('DEBUG getRestaurants: ', response.data.data);
         storeData(response.data.data);

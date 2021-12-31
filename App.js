@@ -8,6 +8,7 @@ import AuthNavigator from './app/navigation/AuthNavigator';
 import {navigationRef} from './app/navigation/rootNavigation';
 import navigationTheme from './app/navigation/navigationTheme';
 import AppNavigator from './app/navigation/AppNavigator';
+import HomeScreen from './app/screens/HomeScreen';
 
 export default function App() {
   const [user, setUser] = useState();
@@ -19,6 +20,11 @@ export default function App() {
     } catch (e) {
       console.log('\nError Getting Data\n', e);
     }
+  };
+
+  const restoreUser = async () => {
+    const user = await getData();
+    if (user) setUser(JSON.parse(user));
   };
 
   useEffect(() => {

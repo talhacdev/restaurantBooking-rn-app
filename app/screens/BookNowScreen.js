@@ -83,7 +83,7 @@ function BookNowScreen(props) {
 
   const postOrder = reservationData => {
     let token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzg4OTQwNzl9.G8c00HAcbvZre7nuqEi6XnXiTDtw2DUVh-lYVMFo8fk';
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzk0MTIzOTB9.nb7njul59_DAUtFRAowEhtdHXx9n1VraZXp12HUQhSk';
     let config = {
       headers: {
         authorization: token,
@@ -92,7 +92,7 @@ function BookNowScreen(props) {
 
     axios
       .post(
-        `http://magicmeal.herokuapp.com/user/book-table`,
+        `http://192.168.18.203:3001/user/book-table`,
         reservationData,
         config,
       )

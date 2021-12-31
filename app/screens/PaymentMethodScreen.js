@@ -77,18 +77,20 @@ function PaymentMethodScreen(props) {
         restaurantId: filteredRestaurant[0].id,
       },
       items: props?.route?.params?.products,
-      // items: {
-      //   category: props?.route?.params?.products[0].category,
-      //   itemDescription: props?.route?.params?.products[0].description,
-      //   itemName: props?.route?.params?.products[0].itemName,
-      //   price: props?.route?.params?.products[0].price,
-      //   // quantity: props?.route?.params?.products[0].quantity,
-      //   quantity: 1,
-      //   restaurant: props?.route?.params?.products[0].restaurant,
-      //   _id: props?.route?.params?.products[0].category,
-      // },
+      // items: [
+      //   {
+      //     category: props?.route?.params?.products[0].category,
+      //     itemDescription: props?.route?.params?.products[0].description,
+      //     itemName: props?.route?.params?.products[0].itemName,
+      //     price: props?.route?.params?.products[0].price,
+      //     // quantity: props?.route?.params?.products[0].quantity,
+      //     quantity: 1,
+      //     restaurant: props?.route?.params?.products[0].restaurant,
+      //     _id: props?.route?.params?.products[0].category,
+      //   },
+      // ],
       grandTotal: props?.route?.params?.totalPrice,
-      // grandTotal: 23000,
+      // total: props?.route?.params?.totalPrice,
       orderDate: new Date(),
       orderType: 'pickup',
       // orderType: "dinein",
@@ -116,13 +118,14 @@ function PaymentMethodScreen(props) {
 
     axios
       .post(
-        `http://magicmeal.herokuapp.com/user/post-order/${restId}`,
+        `http://192.168.18.203:3001/user/post-order/${restId}`,
         orderObject,
         config,
       )
       .then(response => {
         console.log('DEBUG postOrder response: ', response);
-        // navigation.navigate(routes.ORDER_SUCCESS);
+        alert(response.data.message);
+        navigation.navigate(routes.HOME);
       })
       .catch(error => {
         console.log('DEBUG postOrder ', error);

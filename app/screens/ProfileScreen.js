@@ -209,6 +209,7 @@ function ProfileScreen(props) {
           <View style={{margin: hp(1)}}>
             <AppButton
               // onPress={() => onPressUpdateButton()}
+              disabled={true}
               title={'update'}
             />
           </View>

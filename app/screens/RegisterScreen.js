@@ -43,7 +43,7 @@ function RegisterScreen(props) {
     console.log('DEBUG registerScreen obj: ', obj);
 
     axios
-      .post('http://magicmeal.herokuapp.com/auth/signup-customer', obj)
+      .post('http://192.168.18.203:3001/auth/signup-customer', obj)
       .then(response => {
         setLoading(false);
         toggleModal();

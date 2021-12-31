@@ -103,7 +103,11 @@ function ProductDetailScreen(props) {
   };
 
   const onAddToCart = item => {
-    hardcodeCart.checkAlreadyAdded(item);
+    let obj = {
+      ...item,
+      quantity: 1,
+    };
+    hardcodeCart.checkAlreadyAdded(obj);
   };
 
   return (
