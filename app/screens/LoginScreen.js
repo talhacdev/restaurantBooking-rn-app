@@ -19,7 +19,7 @@ import navigation from '../navigation/rootNavigation';
 
 function LoginScreen(props) {
   const [email, setEmail] = useState('nob786@gmail.com');
-  const [password, setPassword] = useState('pakistan');
+  const [password, setPassword] = useState('5b2e3bf858');
   const [loading, setLoading] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
 

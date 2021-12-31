@@ -36,11 +36,16 @@ function AccountScreen(props) {
             leftIcon={'person-circle'}
             onPress={() => navigation.navigate(routes.PROFILE)}
           />
-          {/* <TextCard
+          <TextCard
+            title="My Bookings"
+            leftIcon={'list'}
+            onPress={() => navigation.navigate(routes.BOOKINGS)}
+          />
+          <TextCard
             title="My Orders"
             leftIcon={'list'}
             onPress={() => navigation.navigate(routes.ORDERS)}
-          /> */}
+          />
           {/* <TextCard
             title="Promo Alerts"
             leftIcon={'notifications'}

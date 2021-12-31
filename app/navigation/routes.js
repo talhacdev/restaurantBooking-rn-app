@@ -28,4 +28,5 @@ export default Object.freeze({
   CAMERA: 'Camera',
   CHAT: 'Chat',
   MESSAGES: 'Messages',
+  BOOKINGS: 'MyBookings',
 });

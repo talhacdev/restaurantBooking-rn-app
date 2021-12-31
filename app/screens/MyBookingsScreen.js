@@ -16,7 +16,9 @@ import OrderCard from '../components/OrderCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 
-function OrdersScreen(props) {
+// "pending", "cancelled", "reserved", "free"
+
+function MyBookingsScreen(props) {
   const [loading, setLoading] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
   const [data, setData] = useState();
@@ -24,12 +26,6 @@ function OrdersScreen(props) {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  // useEffect(() => {
-  //   toggleModal();
-  //   setLoading(true);
-  //   fetchOrders();
-  // }, []);
 
   useEffect(() => {
     getOrders();
@@ -39,7 +35,8 @@ function OrdersScreen(props) {
     console.log('DEBUG GET ORDERS');
     let token =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWJlZWFiOWMzNjBjNjM5MzgwMzE2MjEiLCJpYXQiOjE2NDA5NzUzMTR9.n-kcWny5bSG7vIQMM-jGWELZcL5dJCYAEq6B-vJvo2A';
-    let customerId = '61beeab9c360c63938031621'; // to-do async token
+    let customerId = '61beeab9c360c63938031621';
+    // to-do async token
     let config = {
       headers: {
         authorization: token,
@@ -48,14 +45,14 @@ function OrdersScreen(props) {
 
     axios
       .get(
-        `http://192.168.18.203:3001/user/get-updated-order/${customerId}`,
+        `http://192.168.18.203:3001/user/get-my-reservations/${customerId}`,
         config,
       )
       .then(response => {
-        console.log('DEBUG getOrders: ', response);
+        console.log('DEBUG getBookings: ', response);
       })
       .catch(error => {
-        console.log('DEBUG getOrders ERROR: ', error);
+        console.log('DEBUG getBookings ERROR: ', error);
       });
   };
 
@@ -135,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrdersScreen;
+export default MyBookingsScreen;

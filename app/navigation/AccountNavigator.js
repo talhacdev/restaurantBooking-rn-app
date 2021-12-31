@@ -9,6 +9,7 @@ import OrderProductDetailScreen from '../screens/OrderProductDetailScreen';
 import PromoAlertScreen from '../screens/PromoAlertScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
 import AboutUsScreen from '../screens/AboutUsScreen';
+import MyBookingsScreen from '../screens/MyBookingsScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,11 @@ const AccountNavigator = () => (
     <Stack.Screen
       name="Profile"
       component={ProfileScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="MyBookings"
+      component={MyBookingsScreen}
       options={{headerShown: false}}
     />
     <Stack.Screen
