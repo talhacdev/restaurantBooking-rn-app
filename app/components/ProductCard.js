@@ -26,7 +26,7 @@ function ProductCard({
       <View>
         <Image
           style={{
-            width: wp(30),
+            width: wp(50),
             height: wp(30),
             padding: wp(1),
           }}

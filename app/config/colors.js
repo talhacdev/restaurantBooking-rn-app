@@ -20,11 +20,14 @@ export default {
   ratingText: '#FAB523',
   selectionButton: 'grey',
 
-  buttonColor: '#ff0266',
+  // buttonColor: '#ff0266',
+  buttonColor: '#C4504A',
   buttonTextColor: '#FFFFFF',
-  hyperlinkTextColor: '#ff0266',
+  // hyperlinkTextColor: '#ff0266',
+  hyperlinkTextColor: '#C4504A',
   backgroundColor: '#ffffff',
-  dividerColor: '#ff0266',
+  // dividerColor: '#ff0266',
+  dividerColor: '#C4504A',
   cardColor: '#EEEEEE',
   cardTextColor: '#FFFFFF', // tertiary
   selection: '#ff0266',

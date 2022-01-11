@@ -36,7 +36,7 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-          {loggedIn ? <AppNavigator /> : <AuthNavigator />}
+          {loggedIn ? <AppNavigator /> : <AppNavigator />}
         </NavigationContainer>
       </PersistGate>
     </Provider>

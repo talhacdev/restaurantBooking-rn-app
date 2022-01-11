@@ -105,20 +105,22 @@ function CartScreen(props) {
             data={products}
             keyExtractor={products => products.id}
             renderItem={({item}) => (
-              <CartProductCard
-                productName={item.itemName}
-                description={item.description}
-                price={item.price}
-                discountedPrice={item.discountedPrice}
-                quantity={item.quantity}
-                imageUrl={item.imageUrl}
-                onDel={() => onDel(item)}
-                onAdd={() => onAdd(item)}
-                onSub={() => onSub(item)}
-                // onPress={() =>
-                //   navigation.navigate(routes.CART_PRODUCT_DETAIL, item)
-                // }
-              />
+              <View style={{margin: wp(1), elevation: hp(1)}}>
+                <CartProductCard
+                  productName={item.itemName}
+                  description={item.description}
+                  price={item.price}
+                  discountedPrice={item.discountedPrice}
+                  quantity={item.quantity}
+                  imageUrl={item.imageUrl}
+                  onDel={() => onDel(item)}
+                  onAdd={() => onAdd(item)}
+                  onSub={() => onSub(item)}
+                  // onPress={() =>
+                  //   navigation.navigate(routes.CART_PRODUCT_DETAIL, item)
+                  // }
+                />
+              </View>
             )}
           />
         </View>

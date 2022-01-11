@@ -42,6 +42,7 @@ function LoginScreen(props) {
         console.log('RESPONSE: login: ', response);
         updateLoggedIn('true');
         onPressLoginRedux(response.data);
+        alert('User successfully logged in.');
       })
       .catch(error => {
         setLoading(false);

@@ -40,7 +40,7 @@ function CartProductCard({
         /> */}
         <Image
           style={{
-            width: wp(30),
+            width: wp('50'),
             height: wp(30),
             padding: wp(1),
           }}
@@ -96,19 +96,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.cardColor,
-    width: wp('50'),
-    height: hp('35'),
-
+    width: wp('48'),
+    height: hp('32'),
     elevation: wp(1),
-    padding: wp(4),
+    padding: wp(1),
     borderColor: colors.primary,
     borderWidth: wp(0.05),
   },
   detailContainer: {
-    margin: wp(1),
+    marginVertical: wp(1),
     justifyContent: 'center',
     paddingHorizontal: wp(1),
-    width: '100%',
+    width: wp('50'),
   },
   priceContainer: {
     margin: wp(1),
@@ -153,18 +152,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iconsContainer: {
-    padding: wp(1),
     marginHorizontal: wp(2),
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
   allIconsContainer: {
-    padding: wp(1),
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: 'pink',
   },
-  icon: {},
   priceContainer: {
     margin: wp(1),
     justifyContent: 'center',

@@ -23,11 +23,20 @@ function SearchInput({
   onChangeText,
   stylesTitleText,
   stylesInputText,
+  bookingScreen,
   value = {},
 }) {
   return (
     <View style={styles.inputContainer}>
-      <View style={styles.titleContainer}>
+      <View
+        style={{
+          width: bookingScreen ? wp(33) : wp(30),
+          height: hp(5),
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+          paddingHorizontal: wp(5),
+          backgroundColor: colors.buttonColor,
+        }}>
         <Text
           numberOfLines={1}
           style={
@@ -59,14 +68,7 @@ const styles = StyleSheet.create({
     borderRadius: wp(1),
     margin: wp(1),
   },
-  titleContainer: {
-    width: wp(30),
-    height: hp(5),
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    paddingHorizontal: wp(5),
-    backgroundColor: colors.buttonColor,
-  },
+
   textInputContainer: {
     width: wp(55),
     height: hp(5),

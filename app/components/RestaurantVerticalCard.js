@@ -14,15 +14,28 @@ function RestaurantVerticalCard({
   onPress,
   rating,
   imageUrl,
+  totalRating,
+  horizontal,
 }) {
   return (
     <TouchableOpacity
-      style={styles.cardContainer}
+      style={{
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.cardColor,
+        // backgroundColor: 'purple',
+        width: horizontal ? wp(45) : wp(48),
+        height: hp('30'),
+        elevation: wp(1),
+        padding: wp(1),
+        borderColor: colors.primary,
+        borderWidth: wp(0.05),
+      }}
       onPress={onPress ? onPress : () => console.log('Card pressed.')}>
       <View style={styles.imageContainer}>
         <Image
           style={{
-            width: wp(35),
+            width: horizontal ? wp(45) : wp(48),
             height: wp(35),
             padding: wp(1),
           }}
@@ -43,16 +56,23 @@ function RestaurantVerticalCard({
       <View style={styles.detailContainer}>
         <View style={styles.ratingContainer}>
           <View>
-            {/* <Image
+            <Image
               style={{
                 width: wp(5),
                 height: wp(5),
                 padding: wp(1),
               }}
               source={require('../assets/star.png')}
-            /> */}
+            />
           </View>
-          <View>{/* <Text style={styles.ratingText}>{rating}</Text> */}</View>
+          <View>
+            <Text style={styles.ratingText}>
+              {/* {rating != 0 && totalRating != 0
+                ? parseFloat(rating / totalRating)
+                : rating} */}
+              {rating}
+            </Text>
+          </View>
         </View>
         <Text numberOfLines={1} style={styles.detailMainText}>
           {restaurantName}
@@ -74,10 +94,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.cardColor,
     // backgroundColor: 'purple',
-    width: wp('40'),
-    height: hp('28'),
+    width: wp('48'),
+    height: hp('30'),
     elevation: wp(1),
-    padding: wp(4),
+    padding: wp(1),
     borderColor: colors.primary,
     borderWidth: wp(0.05),
   },
@@ -111,6 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    // backgroundColor: 'red',
   },
   ratingText: {
     color: colors.ratingText,

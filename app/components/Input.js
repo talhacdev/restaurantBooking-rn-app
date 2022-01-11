@@ -24,11 +24,20 @@ function Input({
   stylesTitleText,
   stylesInputText,
   disable,
+  tablenumber,
   value = {},
 }) {
   return (
     <View style={styles.inputContainer}>
-      <View style={styles.titleContainer}>
+      <View
+        style={{
+          width: tablenumber ? wp(35) : wp(30),
+          height: hp(5),
+          alignItems: 'flex-start',
+          justifyContent: 'center',
+          paddingHorizontal: wp(5),
+          backgroundColor: colors.buttonColor,
+        }}>
         <Text
           numberOfLines={1}
           style={
@@ -91,7 +100,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: colors.secondary,
-    width: wp(85),
+    width: wp(95),
     height: hp(5),
     elevation: wp(1),
     borderRadius: wp(1),
@@ -106,9 +115,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.buttonColor,
   },
   textInputContainer: {
-    width: wp(55),
+    width: wp(90),
     height: hp(5),
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
     justifyContent: 'center',
     paddingHorizontal: wp(1.5),
   },

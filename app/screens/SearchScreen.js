@@ -139,7 +139,7 @@ function SearchScreen(props) {
                   renderItem={({item}) => (
                     <View
                       style={{
-                        padding: wp(2),
+                        margin: wp(1),
                         elevation: wp(2),
 
                         // backgroundColor: 'purple',
@@ -227,17 +227,13 @@ const styles = StyleSheet.create({
     fontSize: wp(4.5),
     textTransform: 'uppercase',
   },
-  lowerViewContainer: {},
+
   bottomViewContainer: {
     flex: 0.1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  searchViewContainer: {
-    margin: wp(5),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+
   buttonViewContainer: {
     flexDirection: 'row',
     justifyContent: 'center',

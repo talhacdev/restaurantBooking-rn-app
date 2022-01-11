@@ -15,6 +15,9 @@ import SelectionButton from '../components/SelectionButton';
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
 
+import {connect} from 'react-redux';
+import {Login} from '../redux/actions/AuthActions';
+
 function BookNowScreen(props) {
   const [selectedTable, setSelectedTable] = useState();
   const [selectedTimeslot, setSelectedTimeslot] = useState();
@@ -60,24 +63,29 @@ function BookNowScreen(props) {
   };
 
   const onPressBookNow = () => {
-    let reservationData = {
-      numberOfPersons: person,
-      reservationDate: new Date(),
-      reservationTime: time,
-      customer: {
-        customerName:
-          customer.customer.firstName + ' ' + customer.customer.lastName,
-        customerId: customer.customer.id,
-      },
-      restaurant: {
-        restaurantName: props?.route?.params.restaurantName,
-        restaurantId: props?.route?.params.id,
-      },
-    };
+    if (props.user.length == 0) {
+      alert('No User found.');
+      navigation.navigate(routes.LOGIN);
+    } else {
+      let reservationData = {
+        numberOfPersons: person,
+        reservationDate: new Date(),
+        reservationTime: time,
+        customer: {
+          customerName:
+            customer.customer.firstName + ' ' + customer.customer.lastName,
+          customerId: customer.customer.id,
+        },
+        restaurant: {
+          restaurantName: props?.route?.params.restaurantName,
+          restaurantId: props?.route?.params.id,
+        },
+      };
 
-    console.log('bookingnowscreen: ', reservationData);
+      console.log('bookingnowscreen: ', reservationData);
 
-    postOrder(reservationData);
+      postOrder(reservationData);
+    }
   };
 
   const postOrder = reservationData => {
@@ -111,6 +119,11 @@ function BookNowScreen(props) {
       <View style={styles.contentViewContainer}>
         <View style={styles.lowerViewContainer}>
           <AppInput
+            title={'person'}
+            placeholder={'4'}
+            onChangeText={text => setPerson(text)}
+          />
+          <AppInput
             title={'date'}
             placeholder={'30-12-21'}
             onChangeText={text => setDate(text)}
@@ -119,11 +132,6 @@ function BookNowScreen(props) {
             title={'time'}
             placeholder={'13:00'}
             onChangeText={text => setTime(text)}
-          />
-          <AppInput
-            title={'person'}
-            placeholder={'4'}
-            onChangeText={text => setPerson(text)}
           />
           <View style={styles.buttonContainer}>
             <AppButton
@@ -232,4 +240,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BookNowScreen;
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    login: payload => dispatch(Login(payload)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BookNowScreen);

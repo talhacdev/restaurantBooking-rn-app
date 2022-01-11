@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -17,9 +17,12 @@ import AppInput from '../components/Input';
 import axios from 'axios';
 import hardcodeCart from '../hardcode/hardcodeCart';
 
+import {connect} from 'react-redux';
+import {Login} from '../redux/actions/AuthActions';
+
 function PaymentMethodScreen(props) {
   const [address, setAddress] = useState();
-  const [notes, setNotes] = useState();
+  const [orderType, setOrderType] = useState();
   const [customer, setCustomer] = useState();
   const [restaurants, setRestaurants] = useState();
 
@@ -55,50 +58,55 @@ function PaymentMethodScreen(props) {
   };
 
   const onPressPlaceOrder = () => {
-    // console.log('orderObject', orderObject);
-    // console.log('DEBUG all restaurants', restaurants);
-    const filteredRestaurant = restaurants.filter(
-      i => i.id === props?.route?.params?.products[0].restaurant,
-    );
+    if (props.user.length == 0) {
+      alert('No User found.');
+      navigation.navigate(routes.LOGIN);
+    } else {
+      // console.log('orderObject', orderObject);
+      // console.log('DEBUG all restaurants', restaurants);
+      const filteredRestaurant = restaurants.filter(
+        i => i.id === props?.route?.params?.products[0].restaurant,
+      );
 
-    // console.log('DEBUG customer', customer);
-    // console.log('DEBUG restaurant', filteredRestaurant);
-    const orderObject = {
-      customerData: {
-        name: customer.customer.firstName + ' ' + customer.customer.lastName,
-        contact: customer.customer.contact,
-        customerId: customer.customer.id,
-        customerAddress: address,
-      },
-      restaurantData: {
-        restaurantName: filteredRestaurant[0].restaurantName,
-        contact: filteredRestaurant[0].contact,
-        restaurantId: filteredRestaurant[0].id,
-      },
-      items: props?.route?.params?.products,
-      // items: [
-      //   {
-      //     category: props?.route?.params?.products[0].category,
-      //     itemDescription: props?.route?.params?.products[0].description,
-      //     itemName: props?.route?.params?.products[0].itemName,
-      //     price: props?.route?.params?.products[0].price,
-      //     // quantity: props?.route?.params?.products[0].quantity,
-      //     quantity: 1,
-      //     restaurant: props?.route?.params?.products[0].restaurant,
-      //     _id: props?.route?.params?.products[0].category,
-      //   },
-      // ],
-      grandTotal: props?.route?.params?.totalPrice,
-      // total: props?.route?.params?.totalPrice,
-      orderDate: new Date(),
-      orderType: 'pickup',
-      // orderType: "dinein",
-      tableNumber: '14',
-    };
+      // console.log('DEBUG customer', customer);
+      // console.log('DEBUG restaurant', filteredRestaurant);
+      const orderObject = {
+        customerData: {
+          name: customer.customer.firstName + ' ' + customer.customer.lastName,
+          contact: customer.customer.contact,
+          customerId: customer.customer.id,
+          customerAddress: address,
+        },
+        restaurantData: {
+          restaurantName: filteredRestaurant[0].restaurantName,
+          contact: filteredRestaurant[0].contact,
+          restaurantId: filteredRestaurant[0].id,
+        },
+        items: props?.route?.params?.products,
+        // items: [
+        //   {
+        //     category: props?.route?.params?.products[0].category,
+        //     itemDescription: props?.route?.params?.products[0].description,
+        //     itemName: props?.route?.params?.products[0].itemName,
+        //     price: props?.route?.params?.products[0].price,
+        //     // quantity: props?.route?.params?.products[0].quantity,
+        //     quantity: 1,
+        //     restaurant: props?.route?.params?.products[0].restaurant,
+        //     _id: props?.route?.params?.products[0].category,
+        //   },
+        // ],
+        grandTotal: props?.route?.params?.totalPrice,
+        // total: props?.route?.params?.totalPrice,
+        orderDate: new Date(),
+        orderType: 'pickup',
+        // orderType: "dinein",
+        tableNumber: '14',
+      };
 
-    console.log('DEBUG orderObject: ', orderObject);
+      console.log('DEBUG orderObject: ', orderObject);
 
-    postOrder(orderObject);
+      postOrder(orderObject);
+    }
   };
 
   const postOrder = orderObject => {
@@ -138,16 +146,33 @@ function PaymentMethodScreen(props) {
         <AppHeader title={'payment method'} />
       </View> */}
       <View style={styles.contentViewContainer}>
-        <View style={styles.upperViewContainer}>
-          <AppInput title={'address'} onChangeText={text => setAddress(text)} />
-          <AppInput title={'notes'} onChangeText={text => setNotes(text)} />
+        <View style={styles.dividerView}>
+          <TouchableOpacity
+            onPress={() => setOrderType(1)}
+            style={styles.dividerButton}>
+            <Text style={styles.dividerText}>Pick Up</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => setOrderType(2)}
+            style={styles.dividerButton}>
+            <Text style={styles.dividerText}>Dine In</Text>
+          </TouchableOpacity>
         </View>
+        {orderType != 1 ? (
+          <View style={styles.upperViewContainer}>
+            <AppInput
+              tablenumber
+              title={'table number'}
+              onChangeText={text => setNotes(text)}
+            />
+          </View>
+        ) : null}
       </View>
       <View style={styles.buttonContainer}>
         <Button
           noElevation
           widthContainer={wp(100)}
-          title={'place order'}
+          title={orderType == 1 ? 'place pick up order' : 'place dine in order'}
           onPress={() => onPressPlaceOrder()}
         />
       </View>
@@ -182,6 +207,43 @@ const styles = StyleSheet.create({
   upperViewContainer: {
     alignItems: 'center',
   },
+  dividerView: {
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: wp('100%'),
+    height: hp('5%'),
+    elevation: wp(1),
+    flexDirection: 'row',
+  },
+  dividerButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 0.5,
+    margin: wp(1),
+    padding: hp(1),
+    backgroundColor: colors.dividerColor,
+  },
+  dividerText: {
+    fontWeight: 'bold',
+    color: colors.buttonTextColor,
+    fontSize: wp(3.5),
+    textTransform: 'uppercase',
+  },
 });
 
-export default PaymentMethodScreen;
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    login: payload => dispatch(Login(payload)),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PaymentMethodScreen);

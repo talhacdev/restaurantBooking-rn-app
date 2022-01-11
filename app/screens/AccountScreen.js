@@ -38,44 +38,38 @@ function AccountScreen(props) {
         <AppHeader title={'Account'} />
       </View> */}
       <View style={styles.contentViewContainer}>
-        <View style={styles.upperViewContainer}>
-          <TextCard
-            title="My Profile"
-            leftIcon={'person-circle'}
-            onPress={() => navigation.navigate(routes.PROFILE)}
-          />
-          <TextCard
-            title="My Bookings"
-            leftIcon={'list'}
-            onPress={() => navigation.navigate(routes.BOOKINGS)}
-          />
-          <TextCard
-            title="My Orders"
-            leftIcon={'list'}
-            onPress={() => navigation.navigate(routes.ORDERS)}
-          />
-          {/* <TextCard
-            title="Promo Alerts"
-            leftIcon={'notifications'}
-            onPress={() => navigation.navigate(routes.PROMO_ALERT)}
-          /> */}
-          {/* <TextCard title="Rate Us" leftIcon={'star'} /> */}
-          {/* <TextCard
-            title="Contact Us"
-            leftIcon={'call'}
-            onPress={() => navigation.navigate(routes.CONTACT_US)}
-          /> */}
-          {/* <TextCard
-            title="About Us"
-            leftIcon={'information'}
-            onPress={() => navigation.navigate(routes.ABOUT_US)}
-          /> */}
-          <TextCard
-            title="Log Out"
-            leftIcon={'log-out'}
-            onPress={() => onPressLogOutButton()}
-          />
-        </View>
+        {props.user.length == 0 ? (
+          <View style={styles.upperViewContainer}>
+            <TextCard
+              title="Log In"
+              leftIcon={'log-in'}
+              onPress={() => navigation.navigate(routes.WELCOME)}
+            />
+          </View>
+        ) : (
+          <View style={styles.upperViewContainer}>
+            <TextCard
+              title="My Profile"
+              leftIcon={'person-circle'}
+              onPress={() => navigation.navigate(routes.PROFILE)}
+            />
+            <TextCard
+              title="My Bookings"
+              leftIcon={'list'}
+              onPress={() => navigation.navigate(routes.BOOKINGS)}
+            />
+            <TextCard
+              title="My Orders"
+              leftIcon={'list'}
+              onPress={() => navigation.navigate(routes.ORDERS)}
+            />
+            <TextCard
+              title="Log Out"
+              leftIcon={'log-out'}
+              onPress={() => onPressLogOutButton()}
+            />
+          </View>
+        )}
       </View>
     </View>
   );

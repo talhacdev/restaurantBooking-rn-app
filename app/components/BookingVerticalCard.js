@@ -5,18 +5,16 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import VerticalProductCardButton from '../components/VerticalProductCardButton';
 import colors from '../config/colors';
 
-function VerticalProductCard({
-  itemName,
-  description,
-  discountedPrice,
-  price,
+function BookingVerticalCard({
+  restaurantName,
+  location,
+  category,
   onPress,
   rating,
   imageUrl,
-  onBottomButtonPress,
+  totalRating,
 }) {
   return (
     <TouchableOpacity
@@ -25,7 +23,7 @@ function VerticalProductCard({
       <View style={styles.imageContainer}>
         <Image
           style={{
-            width: wp(38),
+            width: wp(50),
             height: wp(30),
             padding: wp(1),
           }}
@@ -35,8 +33,8 @@ function VerticalProductCard({
         />
         {/* <Image
           style={{
-            width: wp(35),
-            height: wp(35),
+            width: wp(30),
+            height: wp(30),
             padding: wp(1),
           }}
           source={require('../assets/restaurant.jpg')}
@@ -44,41 +42,24 @@ function VerticalProductCard({
       </View>
 
       <View style={styles.detailContainer}>
-        <View style={styles.ratingContainer}>
-          {/* <View>
-            <Image
-              style={{
-                width: wp(5),
-                height: wp(5),
-                padding: wp(1),
-              }}
-              source={require('../assets/star.png')}
-            />
-          </View>
-          <View>
-            <Text style={styles.ratingText}>{rating}</Text>
-          </View> */}
-        </View>
         <Text numberOfLines={1} style={styles.detailMainText}>
-          {itemName}
+          {restaurantName}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {description}
+          {'ID: ' + restaurantName}
         </Text>
-        <View style={styles.priceContainer}>
-          <Text numberOfLines={1} style={styles.priceText}>
-            ${price}
-          </Text>
-          {/* <Text numberOfLines={1} style={styles.discountedPriceText}>
-            ${discountedPrice}
-          </Text> */}
-        </View>
-      </View>
-      <View>
-        <VerticalProductCardButton
-          title={'add to cart'}
-          onPress={onBottomButtonPress}
-        />
+        <Text numberOfLines={1} style={styles.detailSubText}>
+          {'Restaurant: ' + restaurantName}
+        </Text>
+        <Text numberOfLines={1} style={styles.detailSubText}>
+          {'Number of Persons: ' + restaurantName}
+        </Text>
+        <Text numberOfLines={1} style={styles.detailSubText}>
+          {'Requested Date: ' + restaurantName}
+        </Text>
+        <Text numberOfLines={1} style={styles.detailSubText}>
+          {'Requested Time: ' + restaurantName}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -89,40 +70,32 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.cardColor,
-    // backgroundColor: 'pink',
-    width: wp('40%'),
-    height: hp('35%'),
+    // backgroundColor: 'purple',
+    width: wp('48'),
+    height: hp('30'),
     elevation: wp(1),
-    padding: wp(4),
+    padding: wp(1),
     borderColor: colors.primary,
     borderWidth: wp(0.05),
   },
   detailContainer: {
     marginVertical: wp(1),
-    justifyContent: 'center',
-    width: wp(38),
-    // paddingHorizontal: wp(1),
-    // backgroundColor: 'pink',
-  },
-  priceContainer: {
-    flexDirection: 'row',
-    // backgroundColor: 'orange',
-    marginVertical: wp(1),
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    width: '100%',
   },
   detailMainText: {
     color: colors.tertiary,
-    fontSize: wp(3.3),
+    fontSize: wp(3.4),
     fontWeight: 'bold',
   },
   detailSubText: {
     color: colors.tertiary,
     fontSize: wp(3),
+    // fontWeight: 'bold',
   },
   discountedPriceText: {
     color: colors.discountedPriceText,
     fontSize: wp(3.8),
+    fontWeight: 'bold',
   },
   priceText: {
     color: colors.priceText,
@@ -132,6 +105,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
+    // backgroundColor: 'red',
   },
   ratingText: {
     color: colors.ratingText,
@@ -140,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VerticalProductCard;
+export default BookingVerticalCard;

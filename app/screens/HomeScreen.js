@@ -68,6 +68,7 @@ function HomeScreen(props) {
       .then(response => {
         toggleModal();
         setLoading(false);
+
         console.log('RESPONSE: getRestaurants: ', response.data.data);
         setRestaurants(response.data.data);
       })
@@ -118,6 +119,7 @@ function HomeScreen(props) {
                 keyExtractor={filteredRestaurants => filteredRestaurants.id}
                 renderItem={({item}) => (
                   <RestaurantVerticalCard
+                    horizontal
                     restaurantName={item?.restaurantName}
                     location={item?.address}
                     rating={item?.rating}
@@ -126,6 +128,7 @@ function HomeScreen(props) {
                     reviews={item?.reviews}
                     contact={item?.contact}
                     imageUrl={item?.imageUrl}
+                    totalRating={item?.totalRating}
                     onPress={() =>
                       navigation.navigate(routes.RESTAURANT_DETAIL, item)
                     }
@@ -144,22 +147,16 @@ function HomeScreen(props) {
                 layout={'default'}
                 // ref={ref => (carousel = ref)}
                 data={carouselItems}
-                sliderWidth={300}
-                itemWidth={300}
+                sliderWidth={wp(100)}
+                itemWidth={wp(100)}
                 renderItem={({item, index}) => {
                   return (
                     <View
                       style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
                         backgroundColor: 'floralwhite',
                         borderRadius: 5,
-                        height: 250,
-                        // padding: 50,
                         width: wp(100),
                       }}>
-                      {/* <Text style={{fontSize: 30}}>{item.title}</Text>
-                      <Text>{item.text}</Text> */}
                       <Image
                         style={{
                           width: wp(100),
@@ -171,6 +168,40 @@ function HomeScreen(props) {
                   );
                 }}
                 onSnapToItem={index => setActiveIndex(index)}
+              />
+            </View>
+            <View style={styles.dividerView}>
+              <Text style={styles.dividerText}>recommended</Text>
+            </View>
+            <View style={styles.lowerViewContainer}>
+              <FlatList
+                horizontal
+                // numColumns={2}
+                showsVerticalScrollIndicator={false}
+                data={restaurants}
+                keyExtractor={restaurants => restaurants.id.toString()}
+                renderItem={({item}) => (
+                  <View
+                    style={{
+                      margin: wp(1),
+                      elevation: wp(2),
+                      // backgroundColor: 'purple',
+                    }}>
+                    <RestaurantVerticalCard
+                      restaurantName={item?.restaurantName}
+                      location={item?.address}
+                      rating={item?.rating}
+                      category={item?.category}
+                      tables={item?.tables}
+                      reviews={item?.reviews}
+                      contact={item?.contact}
+                      imageUrl={item?.imageUrl}
+                      onPress={() =>
+                        navigation.navigate(routes.RESTAURANT_DETAIL, item)
+                      }
+                    />
+                  </View>
+                )}
               />
             </View>
             <View style={styles.dividerView}>
@@ -186,7 +217,7 @@ function HomeScreen(props) {
                 renderItem={({item}) => (
                   <View
                     style={{
-                      margin: wp(5),
+                      margin: wp(1),
                       elevation: wp(2),
                       // backgroundColor: 'purple',
                     }}>

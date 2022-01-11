@@ -1,11 +1,15 @@
 # commerce
 
-<!-- qr scanner
+<!--
+qr scanner
 order history
 booking history
-review
 filters
 recommendation
 color palette
+demo walkthrough
+
+yet remaining
+review
 one signal
-demo walkthrough -->
+ -->

@@ -10,6 +10,15 @@ import PromoAlertScreen from '../screens/PromoAlertScreen';
 import ContactUsScreen from '../screens/ContactUsScreen';
 import AboutUsScreen from '../screens/AboutUsScreen';
 import MyBookingsScreen from '../screens/MyBookingsScreen';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
+import OnboardingScreen from '../screens/OnboardingScreen';
+import HomeScreen from '../screens/HomeScreen';
+
+import {connect} from 'react-redux';
+import {Login} from '../redux/actions/AuthActions';
 
 const Stack = createStackNavigator();
 
@@ -60,7 +69,44 @@ const AccountNavigator = () => (
       component={AboutUsScreen}
       options={{headerShown: false}}
     />
+    <Stack.Screen
+      name="OnboardingScreen"
+      component={OnboardingScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="Welcome"
+      component={WelcomeScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="Register"
+      component={RegisterScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="Login"
+      component={LoginScreen}
+      options={{headerShown: false}}
+    />
+    <Stack.Screen
+      name="ForgotPassword"
+      component={ForgotPasswordScreen}
+      options={{headerShown: false}}
+    />
   </Stack.Navigator>
 );
 
-export default AccountNavigator;
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    login: payload => dispatch(Login(payload)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountNavigator);
