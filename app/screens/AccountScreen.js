@@ -4,7 +4,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import auth from '@react-native-firebase/auth';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppHeader from '../components/Header';

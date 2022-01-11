@@ -4,7 +4,6 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import auth from '@react-native-firebase/auth';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 
@@ -19,32 +18,6 @@ function ForgotPasswordScreen(props) {
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
-  };
-
-  onPressSendEmailButton = email => {
-    console.log(email);
-    Keyboard.dismiss();
-    if (email == undefined) {
-      alert('Email is mandatory.');
-    } else {
-      toggleModal();
-      setLoading(true);
-      auth()
-        .sendPasswordResetEmail(email)
-        .then(() => {
-          console.log('Password reset email sent!');
-          setLoading(false);
-          toggleModal();
-          alert('Password reset email sent!');
-        })
-        .catch(error => {
-          console.error(error);
-          A;
-          setLoading(false);
-          toggleModal();
-          alert(error);
-        });
-    }
   };
 
   return (

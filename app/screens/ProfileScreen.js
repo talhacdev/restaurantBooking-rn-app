@@ -10,10 +10,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import storage from '@react-native-firebase/storage';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 
@@ -27,7 +25,6 @@ import AppButton from '../components/Button';
 function ProfileScreen(props) {
   const [loading, setLoading] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
-  const [user, setUser] = useState(auth()._user);
   const [photoURL, setPhotoURL] = useState();
   const [displayName, setDisplayName] = useState();
   const [phoneNumber, setPhoneNumber] = useState();
@@ -42,84 +39,6 @@ function ProfileScreen(props) {
     setModalVisible(!isModalVisible);
   };
 
-  // useEffect(() => {
-  //   fetchUserRecords();
-  // }, []);
-
-  // const fetchUserRecords = async () => {
-  //   await firestore()
-  //     .collection('UserRecords')
-  //     .doc(auth()._user.uid)
-  //     .get()
-  //     .then(res => {
-  //       console.log(res._data);
-  //       setUser(res._data);
-  //       setDisplayName(res._data.displayName);
-  //       setPhoneNumber(res._data.phoneNumber);
-  //       setAddress(res._data.address);
-  //       setPhotoURL(res._data.photoURL);
-  //     })
-  //     .catch(error => alert(error));
-  // };
-
-  // const onPressUpdateButton = () => {
-  //   displayName && phoneNumber && address && photoURL
-  //     ? uploadImage()
-  //     : console.log(displayName, phoneNumber, address, photoURL);
-  // };
-
-  // const onPressImage = () => {
-  //   let options = {
-  //     mediaType: 'photo',
-  //     // cameraType: 'front',
-  //     // saveToPhotos: true,
-  //   };
-  //   launchImageLibrary(options, response => {
-  //     console.log(response);
-  //     const source = response.assets[0].uri;
-  //     setImage(source.toString());
-  //   });
-  // };
-
-  // const uploadImage = async () => {
-  //   toggleModal();
-  //   setLoading(true);
-
-  //   const uploadUri = image;
-  //   let fileName = auth()._user.uid;
-
-  //   try {
-  //     await storage().ref(fileName).putFile(uploadUri);
-  //     const url = await storage().ref(fileName).getDownloadURL();
-  //     updateUserRecords(url);
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  // };
-
-  // const updateUserRecords = async url => {
-  //   let obj = {
-  //     displayName,
-  //     phoneNumber,
-  //     address,
-  //     email: user?.email,
-  //     photoURL: url,
-  //   };
-  //   console.log('UserRecords: ', obj);
-  //   firestore()
-  //     .collection('UserRecords')
-  //     .doc(user.uid)
-  //     .update(obj)
-  //     .then(() => {
-  //       alert('Profile updated!');
-  //       setLoading(false);
-  //       toggleModal();
-  //       navigation.navigate(routes.ACCOUNT);
-  //     })
-  //     .catch(err => {
-  //       alert(err);
-  //     });
-  // };
   return (
     <View style={styles.container}>
       {loading ? (

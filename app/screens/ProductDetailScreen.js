@@ -12,8 +12,6 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 // const _ = require('lodash');
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 
@@ -39,67 +37,6 @@ function ProductDetailScreen(props) {
     setLoading(true);
     console.log(comment);
     fetchUserRecords();
-  };
-
-  const fetchUserRecords = async () => {
-    await firestore()
-      .collection('UserRecords')
-      .doc(auth()._user.uid)
-      .get()
-      .then(res => {
-        console.log(res);
-        updateComments(res._data);
-      })
-      .catch(error => alert(error));
-  };
-
-  const updateComments = async user => {
-    let comments = [];
-    if (listing.reviews) {
-      comments = [
-        ...listing.reviews,
-        {
-          comment,
-          user,
-          id: Date.now(),
-        },
-      ];
-    } else {
-      comments = [
-        {
-          comment,
-          user,
-          id: Date.now(),
-        },
-      ];
-    }
-    let obj = {
-      reviews: comments,
-    };
-    console.log('obj: ', obj);
-    firestore()
-      .collection('Products')
-      .doc(listing.id)
-      .update(obj)
-      .then(() => {
-        fetchProducts();
-      })
-      .catch(err => {
-        alert(err);
-      });
-  };
-
-  const fetchProducts = async () => {
-    await firestore()
-      .collection('Products')
-      .doc(listing.id)
-      .get()
-      .then(res => {
-        setListing(res._data);
-        setLoading(false);
-        toggleModal();
-      })
-      .catch(error => alert(error));
   };
 
   const onAddToCart = item => {
@@ -182,38 +119,8 @@ function ProductDetailScreen(props) {
                 {listing.description}
               </Text>
             </View>
-            {/* <View>
-              <FlatList
-                // inverted
-                showsVerticalScrollIndicator={false}
-                data={listing.reviews}
-                keyExtractor={data => data.id}
-                renderItem={({item}) => (
-                  <View>
-                    <ReviewCard
-                      disabled={auth()._user.uid === item.user.uid}
-                      user={item?.user?.displayName}
-                      comment={item?.comment}
-                      imageUrl={item?.user.photoURL}
-                      onPressImage={() => {
-                        navigation.navigate(routes.CHAT, item);
-                      }}
-                    />
-                  </View>
-                )}
-              />
-            </View> */}
           </View>
           <View style={styles.buttonViewContainer}>
-            {/* <View style={styles.commentContainer}>
-              <AppInput
-                multiline
-                maxLength={256}
-                title={'comment'}
-                onChangeText={val => setComment(val)}
-              />
-              <AppButton onPress={() => onPressPostButton()} title={'post'} />
-            </View> */}
             <AppButton
               title={'add to cart'}
               onPress={() => onAddToCart(listing)}

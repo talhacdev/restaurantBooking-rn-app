@@ -1,48 +1,24 @@
 import 'react-native-gesture-handler';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import auth from '@react-native-firebase/auth';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import AuthNavigator from './app/navigation/AuthNavigator';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {persistor, store} from './app/redux/Store';
+
 import {navigationRef} from './app/navigation/rootNavigation';
 import navigationTheme from './app/navigation/navigationTheme';
+import AuthNavigator from './app/navigation/AuthNavigator';
 import AppNavigator from './app/navigation/AppNavigator';
-import HomeScreen from './app/screens/HomeScreen';
 
 export default function App() {
-  const [user, setUser] = useState();
-
-  const getData = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@LoginResponse');
-      return jsonValue != null ? setUser(JSON.parse(jsonValue)) : null;
-    } catch (e) {
-      console.log('\nError Getting Data\n', e);
-    }
-  };
-
-  const restoreUser = async () => {
-    const user = await getData();
-    if (user) setUser(JSON.parse(user));
-  };
-
-  useEffect(() => {
-    getData();
-    console.log('USER: ', user);
-  }, []);
-
-  if (!user) {
-    return (
-      <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-        <AuthNavigator />
-      </NavigationContainer>
-    );
-  }
-
   return (
-    <NavigationContainer ref={navigationRef} theme={navigationTheme}>
-      <AppNavigator />
-    </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <NavigationContainer ref={navigationRef} theme={navigationTheme}>
+          <AuthNavigator />
+        </NavigationContainer>
+      </PersistGate>
+    </Provider>
   );
 }

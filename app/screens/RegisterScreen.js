@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
-import {View, Image, Keyboard, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 import axios from 'axios';
@@ -120,6 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   lowerViewContainer: {
+    flex: 0.8,
     paddingVertical: hp(1),
     marginVertical: hp(1),
     justifyContent: 'center',

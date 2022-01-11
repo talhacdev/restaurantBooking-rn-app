@@ -4,13 +4,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
-
-import {LoginManager, AccessToken} from 'react-native-fbsdk';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
 import AppButton from '../components/Button';
 import AppURLText from '../components/URLText';
@@ -24,112 +20,6 @@ function WelcomeScreen(props) {
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
-  };
-
-  GoogleSignin.configure({
-    webClientId:
-      '816484953382-pr6gfesipg0slt2nh2r93e99rkscvhg7.apps.googleusercontent.com',
-  });
-
-  async function onFacebookButtonPress() {
-    // Attempt login with permissions
-    const result = await LoginManager.logInWithPermissions([
-      'public_profile',
-      'email',
-    ]);
-
-    console.log(result);
-
-    if (result.isCancelled) {
-      throw 'User cancelled the login process';
-    }
-
-    // Once signed in, get the users AccesToken
-    const data = await AccessToken.getCurrentAccessToken();
-
-    if (!data) {
-      throw 'Something went wrong obtaining access token';
-    }
-
-    // Create a Firebase credential with the AccessToken
-    const facebookCredential = auth.FacebookAuthProvider.credential(
-      data.accessToken,
-    );
-
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(facebookCredential);
-  }
-
-  async function onGoogleButtonPress() {
-    // Get the users ID token
-    const {idToken} = await GoogleSignin.signIn();
-
-    // Create a Google credential with the token
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-
-    // Sign-in the user with the credential
-    return auth().signInWithCredential(googleCredential);
-  }
-
-  const ProceedWithSocialUser = res => {
-    firestore()
-      .collection('UserRecords')
-      // Filter results
-      .where('uid', '==', res.user._user.uid)
-      .get()
-      .then(querySnapshot => {
-        if (querySnapshot._docs.length == 0) {
-          CreateUserRecord(res);
-        } else {
-          // login user
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  const CreateUserRecord = res => {
-    let obj = {
-      email: res.user._user.email,
-      uid: res.user._user.uid,
-      displayName: res.user._user.displayName,
-      photoURL: res.user._user.photoURL,
-      phoneNumber: res.user._user.phoneNumber,
-    };
-    firestore()
-      .collection('UserRecords')
-      .doc(obj.uid)
-      .set(obj)
-      .then(() => {
-        console.log('User added!');
-        setLoading(false);
-        toggleModal();
-      })
-      .catch(error => {
-        console.log(error);
-        setLoading(false);
-        toggleModal();
-        alert(error);
-      });
-  };
-
-  onPressDemoButton = () => {
-    toggleModal();
-    setLoading(true);
-    auth()
-      .signInAnonymously()
-      .then(res => {
-        CreateUserRecord(res);
-        console.log('User signed in anonymously');
-        // alert('User signed in anonymously');
-      })
-      .catch(error => {
-        console.error(error);
-        setLoading(false);
-        toggleModal();
-        alert(error);
-      });
   };
 
   return (
@@ -157,16 +47,16 @@ function WelcomeScreen(props) {
         />
       </View>
       <View style={styles.lowerViewContainer}>
-        <View style={styles.buttonContainer}>
+        {/* <View style={styles.buttonContainer}>
           <AppButton
             title="sign up with facebook"
             onPress={() =>
               onFacebookButtonPress().then(res => ProceedWithSocialUser(res))
             }
           />
-        </View>
+        </View> */}
 
-        <View style={styles.buttonContainer}>
+        {/* <View style={styles.buttonContainer}>
           <AppButton
             title="sign up with google"
             onPress={() =>
@@ -177,7 +67,7 @@ function WelcomeScreen(props) {
                 })
             }
           />
-        </View>
+        </View> */}
 
         {/* <AppButton
           title="sign up with twitter"
@@ -233,23 +123,16 @@ const styles = StyleSheet.create({
   upperViewContainer: {
     paddingVertical: hp(1),
     marginVertical: hp(1),
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   lowerViewContainer: {
+    flex: 0.8,
     paddingVertical: hp(1),
     marginVertical: hp(1),
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
   bottomViewContainer: {
     paddingVertical: hp(1),
     marginVertical: hp(1),
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  buttonContainer: {
-    marginBottom: hp(1),
   },
 });
 

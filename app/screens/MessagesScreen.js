@@ -12,10 +12,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import firestore from '@react-native-firebase/firestore';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
-import auth from '@react-native-firebase/auth';
 import moment from 'moment';
 
 import AppHeader from '../components/Header';
@@ -35,85 +33,6 @@ function MessagesScreen(props) {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  useEffect(() => {
-    // toggleModal();
-    // setLoading(true);
-    // setCurrentUser(auth()._user.uid);
-    // fetchMessages();
-    // fetchUserRecords();
-  }, []);
-
-  // const fetchUserRecords = () => {
-  //   firestore()
-  //     .collection('UserRecords')
-  //     .doc(auth()._user.uid)
-  //     .get()
-  //     .then(res => {
-  //       updateUserRecords(res._data.ChatThreads);
-  //     })
-  //     .catch(err => {
-  //       alert(err);
-  //     });
-  // };
-
-  // const updateUserRecords = async chatThreads => {
-  //   firestore()
-  //     .collection('UserRecords')
-  //     .doc(currentUser)
-  //     .update({
-  //       ChatThreads: [...chatThreads, '1234'],
-  //     })
-  //     .then(res => {
-  //       console.log('RES: ', res);
-  //       updateChatThreads();
-  //     })
-  //     .catch(err => {
-  //       alert(err);
-  //     });
-  // };
-
-  // const updateChatThreads = async () => {
-  //   let obj = {
-  //     createdAt: Date.now(),
-  //     createdBy: auth()._user.uid,
-  //     id: Math.random(),
-  //     members: [auth()._user.uid, '123'],
-  //     modifiedAt: moment(),
-  //     recentMessage: [{messageText: 'this is the message Text'}],
-  //   };
-  //   firestore()
-  //     .collection('ChatThreads')
-  //     .doc(currentUser)
-  //     .update({
-  //       ChatThreads: [...chatThreads, '1234'],
-  //     })
-  //     .then(res => {
-  //       console.log('RES: ', res);
-  //       setLoading(false);
-  //       toggleModal();
-  //     })
-  //     .catch(err => {
-  //       alert(err);
-  //     });
-  // };
-
-  // upon messaging the id of the chat thread should be assigned to the user
-
-  // const fetchMessages = async () => {
-  //   await firestore()
-  //     .collection('ChatThreads')
-  //     .where('id', '==', '0' || 'messageTime', '==', '1 day ago')
-  //     .get()
-  //     .then(res => {
-  //       console.log('RESPONSE: ', res);
-  //       setMessages(res.docs);
-  //       setLoading(false);
-  //       toggleModal();
-  //       console.log('MESSAGES: ', messages);
-  //     })
-  //     .catch(error => alert(error));
-  // };
 
   const DATA = [
     {

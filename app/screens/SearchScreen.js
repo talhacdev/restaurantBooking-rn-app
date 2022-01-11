@@ -6,7 +6,6 @@ import {
 } from 'react-native-responsive-screen';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
-import firestore from '@react-native-firebase/firestore';
 import axios from 'axios';
 
 import AppHeader from '../components/Header';
@@ -53,45 +52,8 @@ function SearchScreen(props) {
     setModalVisible(!isModalVisible);
   };
 
-  const fetchRestaurants = async () => {
-    await firestore()
-      .collection('Restaurants')
-      .get()
-      .then(res => {
-        setRestaurants(res._docs);
-      })
-      .catch(error => alert(error));
-  };
-
-  const fetchProducts = async () => {
-    await firestore()
-      .collection('Products')
-      .get()
-      .then(res => {
-        setProducts(res._docs);
-        setLoading(false);
-        toggleModal();
-      })
-      .catch(error => alert(error));
-  };
-
   const submitHandler = val => {
     console.log(val);
-    // Keyboard.dismiss();
-    // if (val) {
-    //   let searchFilterProducts = products.filter(m =>
-    //     m._data.itemName.toLowerCase().includes(val.toLowerCase()),
-    //   );
-    //   let searchFilterRestaurants = restaurants.filter(m =>
-    //     m._data.restaurantName.toLowerCase().includes(val.toLowerCase()),
-    //   );
-
-    //   setSearchedProducts(searchFilterProducts);
-    //   setSearchedRestaurants(searchFilterRestaurants);
-    // } else {
-    //   setSearchedProducts(products);
-    //   setSearchedRestaurants(restaurants);
-    // }
 
     if (val) {
       let searchFilterRestaurants = restaurants.filter(m =>

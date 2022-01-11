@@ -1,21 +1,18 @@
 import React, {useState} from 'react';
-import {View, Image, Keyboard, StyleSheet} from 'react-native';
+import {View, Image, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import auth from '@react-native-firebase/auth';
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
-import AppURLText from '../components/URLText';
 import colors from '../config/colors';
-import routes from '../navigation/routes';
-import navigation from '../navigation/rootNavigation';
+import {connect} from 'react-redux';
+import {Login} from '../redux/actions/AuthActions';
 
 function LoginScreen(props) {
   const [email, setEmail] = useState('nob786@gmail.com');
@@ -28,13 +25,6 @@ function LoginScreen(props) {
   };
 
   const onPressLogin = async () => {
-    // let obj = {
-    //   email: 'nob786@gmail.com',
-    //   password: 'pakistan',
-    // };
-
-    console.log('loginscreen onPressLogin');
-
     toggleModal();
     setLoading(true);
 
@@ -48,23 +38,25 @@ function LoginScreen(props) {
       .then(response => {
         setLoading(false);
         toggleModal();
-        console.log('DEBUG loginScreen: ', response);
-        storeData(response.data);
+        console.log('RESPONSE: login: ', response);
+        onPressLoginRedux(response.data);
       })
       .catch(error => {
         setLoading(false);
         toggleModal();
-        console.log('DEBUG catch: ', error);
+        console.log('ERROR: ', error);
         alert(error);
       });
   };
 
-  const storeData = async value => {
-    console.log('DEBUG loginScreen @LoginResponse: ', value);
-    try {
-      await AsyncStorage.setItem('@LoginResponse', JSON.stringify(value));
-    } catch (e) {
-      console.log('\nError Storing Data\n', e);
+  const onPressLoginRedux = async obj => {
+    if (props.user.length != 0) {
+      alert('ERROR: User already exists');
+      console.log('STORE: props.user: ', props.user);
+    } else {
+      let array = [];
+      array.push(obj);
+      props.login(array);
     }
   };
 
@@ -104,19 +96,8 @@ function LoginScreen(props) {
         />
 
         <View style={styles.buttonContainer}>
-          <AppButton
-            title="login"
-            // onPress={() => onPressLoginButton()}
-            onPress={() => onPressLogin()}
-          />
+          <AppButton title="login" onPress={() => onPressLogin()} />
         </View>
-      </View>
-
-      <View style={styles.bottomViewContainer}>
-        <AppURLText
-          title={'Forgot password?'}
-          onPress={() => navigation.navigate(routes.FORGOT_PASSWORD)}
-        />
       </View>
     </View>
   );
@@ -148,6 +129,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   lowerViewContainer: {
+    flex: 0.8,
     paddingVertical: hp(1),
     marginVertical: hp(1),
     justifyContent: 'center',
@@ -164,4 +146,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginScreen;
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    login: payload => dispatch(Login(payload)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
