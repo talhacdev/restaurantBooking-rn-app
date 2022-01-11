@@ -14,13 +14,21 @@ import navigation from '../navigation/rootNavigation';
 
 import TextCard from '../components/TextCard';
 
+import {connect} from 'react-redux';
+import {Logout} from '../redux/actions/AuthActions';
+
 function AccountScreen(props) {
-  const onPressLogOutButton = async () => {
+  const onPressLogOutButton = () => {
+    updateLoggedIn();
+    props.Logout();
+  };
+
+  const updateLoggedIn = async () => {
     try {
-      await AsyncStorage.removeItem('@LoginResponse');
+      await AsyncStorage.removeItem('@loggedIn');
       return true;
-    } catch (exception) {
-      console.log('Error: ' + exception);
+    } catch (e) {
+      console.log('ERROR: loggedIn: ' + e);
     }
   };
 
@@ -52,11 +60,11 @@ function AccountScreen(props) {
             onPress={() => navigation.navigate(routes.PROMO_ALERT)}
           /> */}
           {/* <TextCard title="Rate Us" leftIcon={'star'} /> */}
-          <TextCard
+          {/* <TextCard
             title="Contact Us"
             leftIcon={'call'}
             onPress={() => navigation.navigate(routes.CONTACT_US)}
-          />
+          /> */}
           {/* <TextCard
             title="About Us"
             leftIcon={'information'}
@@ -89,4 +97,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AccountScreen;
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    Logout: payload => dispatch(Logout(payload)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountScreen);

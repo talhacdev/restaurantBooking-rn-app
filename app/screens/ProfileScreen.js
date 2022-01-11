@@ -21,7 +21,8 @@ import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import AppInput from '../components/Input';
 import AppButton from '../components/Button';
-
+import {connect} from 'react-redux';
+import {UpdateCart} from '../redux/actions/AuthActions';
 function ProfileScreen(props) {
   const [loading, setLoading] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
@@ -34,10 +35,15 @@ function ProfileScreen(props) {
   const [firstname, setFirstname] = useState();
   const [lastname, setLastname] = useState();
   const [email, setEmail] = useState();
+  const [user, setUser] = useState(props.user);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+
+  useEffect(() => {
+    console.log('USER: ', user);
+  });
 
   return (
     <View style={styles.container}>
@@ -90,47 +96,54 @@ function ProfileScreen(props) {
           </TouchableOpacity>
           <View style={{marginTop: hp(5)}}>
             <AppInput
+              disable
+              value={user[0]?.customer?.firstName}
               placeholder="first name"
               title="first name"
-              defaultValue={user?.displayName}
+              defaultValue={user[0]?.customer?.firstName}
               onChangeText={val => setFirstname(val)}
             />
 
             <AppInput
+              disable
+              value={user[0]?.customer?.lastName}
               placeholder="last name"
               title="last name"
-              defaultValue={user?.displayName}
+              defaultValue={user[0]?.customer?.lastName}
               onChangeText={val => setLastname(val)}
             />
 
             <AppInput
+              disable
               placeholder="email"
               title="email"
               keyboardType={'email-address'}
-              value={user?.email}
+              value={user[0]?.email}
               onChangeText={val => setEmail(val)}
             />
             <AppInput
+              disable
+              value={user[0]?.customer?.contact}
               placeholder="phone"
               title="phone"
               keyboardType={'phone-pad'}
-              defaultValue={user?.phoneNumber}
+              defaultValue={user[0]?.customer?.contact}
               onChangeText={val => setPhoneNumber(val)}
             />
-            <AppInput
+            {/* <AppInput
               placeholder="address"
               title="address"
-              defaultValue={user?.address}
+              defaultValue={user[0]?.address}
               onChangeText={val => setAddress(val)}
-            />
+            /> */}
           </View>
 
           <View style={{margin: hp(1)}}>
-            <AppButton
+            {/* <AppButton
               // onPress={() => onPressUpdateButton()}
               disabled={true}
               title={'update'}
-            />
+            /> */}
           </View>
         </View>
       </View>
@@ -158,4 +171,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateCart: payload => dispatch(UpdateCart(payload)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

@@ -98,6 +98,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cardColor,
     width: wp('50'),
     height: hp('35'),
+
     elevation: wp(1),
     padding: wp(4),
     borderColor: colors.primary,
@@ -122,6 +123,7 @@ const styles = StyleSheet.create({
   detailMainText: {
     color: colors.tertiary,
     fontSize: wp(3.3),
+    fontWeight: 'bold',
   },
   detailSubText: {
     color: colors.tertiary,

@@ -13,20 +13,18 @@ import navigation from '../navigation/rootNavigation';
 import BottomTextCard from '../components/BottomTextCard';
 import hardcodeCart from '../hardcode/hardcodeCart';
 
+import {connect} from 'react-redux';
+import {UpdateCart} from '../redux/actions/AuthActions';
+
 function CartScreen(props) {
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     fetchCart();
   }, []);
 
   const fetchCart = () => {
-    hardcodeCart
-      .getData()
-      .then(json => {
-        setProducts(json);
-      })
-      .catch(error => alert(error));
+    setProducts(props.cart);
   };
 
   let totalQuantity = 0;
@@ -48,9 +46,7 @@ function CartScreen(props) {
     var idx = productsNow.indexOf(item);
     productsNow[idx].quantity += 1;
     setProducts(productsNow);
-    const jsonArray = JSON.stringify(productsNow);
-    hardcodeCart.changeInCart(idx, productsNow[idx]);
-    hardcodeCart.storeData(jsonArray);
+    props.updateCart(productsNow);
   };
 
   const onSub = item => {
@@ -62,9 +58,7 @@ function CartScreen(props) {
     } else {
       setProducts(productsNow);
     }
-    const jsonArray = JSON.stringify(productsNow);
-    hardcodeCart.changeInCart(idx, productsNow[idx]);
-    hardcodeCart.storeData(jsonArray);
+    props.updateCart(productsNow);
   };
 
   const onDel = item => {
@@ -72,8 +66,7 @@ function CartScreen(props) {
     var idx = productsNow.indexOf(item);
     productsNow.splice(idx, 1);
     setProducts(productsNow);
-    const jsonArray = JSON.stringify(productsNow);
-    hardcodeCart.deleteCartItem(idx, jsonArray);
+    props.updateCart(productsNow);
   };
 
   const onCheckoutPress = () => {
@@ -132,10 +125,10 @@ function CartScreen(props) {
       </View>
       <View style={styles.bottomViewContainer}>
         <BottomTextCard
-          leftTitle={totalQuantity + ' goods'}
-          title={'CHECK OUT'}
+          leftTitle={products.length != 0 ? totalQuantity + ' goods' : null}
+          title={products.length == 0 ? ':(' : 'CHECK OUT'}
           onPress={() => onCheckoutPress()}
-          rightTitle={'Total $' + totalPrice}
+          rightTitle={products.length != 0 ? 'Total $' + totalPrice : null}
         />
       </View>
     </View>
@@ -163,4 +156,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CartScreen;
+function mapStateToProps(state) {
+  return {
+    cart: state.auth.cart,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateCart: payload => dispatch(UpdateCart(payload)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartScreen);

@@ -21,7 +21,9 @@ import navigation from '../navigation/rootNavigation';
 
 import colors from '../config/colors';
 import VerticalProductCard from '../components/VerticalProductCard';
-import hardcodeCart from '../hardcode/hardcodeCart';
+
+import {connect} from 'react-redux';
+import {UpdateCart} from '../redux/actions/AuthActions';
 
 function RestaurantDetailScreen(props) {
   const [loading, setLoading] = useState();
@@ -39,26 +41,55 @@ function RestaurantDetailScreen(props) {
   }, []);
 
   const getMenu = async () => {
-    console.log('DEBUG item.id: ', listing.account);
+    // setLoading(true);
+    // toggleModal();
     let restId = listing.id;
 
     axios
       .get(`http://192.168.18.203:3001/user/get-restaurant-menu/${restId}`)
       .then(response => {
-        console.log('DEBUG getMenu: ', response);
+        toggleModal();
+        setLoading(false);
+        console.log('RESPONSE: getMenu: ', response);
         setMenu(response.data.data.items);
       })
       .catch(error => {
-        console.log('DEBUG getMenu ERROR: ', error);
+        toggleModal();
+        setLoading(false);
+        console.log('ERROR: getMenu: ', error);
       });
   };
 
   const onAddToCart = item => {
+    console.log('STORE: props.cart: ', props.cart.length);
+
     let obj = {
       ...item,
       quantity: 1,
     };
-    hardcodeCart.checkAlreadyAdded(obj);
+
+    if (props.cart.length != 0) {
+      let verdict = false;
+
+      for (var i = 0; i < props.cart.length; i++) {
+        if (props.cart[i]._id == item._id) {
+          verdict = true;
+          i = props.cart.length;
+        }
+      }
+
+      if (verdict) {
+        alert('Item already added');
+      } else {
+        let array = [...props.cart];
+        array.push(obj);
+        props.updateCart(array);
+      }
+    } else {
+      let array = [];
+      array.push(obj);
+      props.updateCart(array);
+    }
   };
 
   return (
@@ -84,7 +115,7 @@ function RestaurantDetailScreen(props) {
           showsVerticalScrollIndicator={false}
           style={styles.contentViewContainer}>
           <View style={styles.upperViewContainer}>
-            {/* <Image
+            <Image
               style={{
                 width: wp(100),
                 height: wp(100),
@@ -92,15 +123,15 @@ function RestaurantDetailScreen(props) {
               source={{
                 uri: listing?.imageUrl,
               }}
-            /> */}
-            <Image
+            />
+            {/* <Image
               style={{
                 width: wp(100),
                 height: wp(100),
                 padding: wp(1),
               }}
               source={require('../assets/restaurant.jpg')}
-            />
+            /> */}
           </View>
 
           <View style={styles.lowerViewContainer}>
@@ -245,4 +276,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RestaurantDetailScreen;
+function mapStateToProps(state) {
+  return {
+    cart: state.auth.cart,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateCart: payload => dispatch(UpdateCart(payload)),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(RestaurantDetailScreen);

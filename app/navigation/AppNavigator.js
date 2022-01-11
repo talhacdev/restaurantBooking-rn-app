@@ -12,37 +12,12 @@ import routes from './routes';
 import ChatNavigator from './ChatNavigator';
 import colors from '../config/colors';
 
+import {connect} from 'react-redux';
+import {UpdateCart} from '../redux/actions/AuthActions';
+
 const Tab = createBottomTabNavigator();
 
-const AppNavigator = () => {
-  const [products, setProducts] = useState([]);
-
-  let totalQuantity = 0;
-  let totalPrice = 0;
-
-  useEffect(() => {
-    fetchCart();
-  }, [products]);
-
-  const fetchCart = () => {
-    hardcodeCart
-      .getData()
-      .then(json => {
-        setProducts(json);
-      })
-      .catch(error => alert(error));
-  };
-
-  if (products) {
-    products.forEach(item => {
-      totalQuantity += item.quantity;
-    });
-
-    products.forEach(item => {
-      totalPrice += item.quantity * item.discountedPrice;
-    });
-  }
-
+const AppNavigator = props => {
   const getTabBarVisibility = route => {
     const routeName = route.state
       ? route.state.routes[route.state.index].name
@@ -95,7 +70,7 @@ const AppNavigator = () => {
           tabBarIcon: ({color, size}) => (
             <View style={{flexDirection: 'row'}}>
               <Icon name="cart" color={color} size={size} />
-              {totalQuantity > 0 ? (
+              {props.cart.length > 0 ? (
                 <View
                   style={{
                     backgroundColor: colors.buttonColor,
@@ -105,7 +80,7 @@ const AppNavigator = () => {
                     alignItems: 'center',
                   }}>
                   <Text style={{color: colors.buttonTextColor}}>
-                    {totalQuantity}
+                    {props.cart.length}
                   </Text>
                 </View>
               ) : null}
@@ -129,4 +104,16 @@ const AppNavigator = () => {
   );
 };
 
-export default AppNavigator;
+function mapStateToProps(state) {
+  return {
+    cart: state.auth.cart,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateCart: payload => dispatch(UpdateCart(payload)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppNavigator);

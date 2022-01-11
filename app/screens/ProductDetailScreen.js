@@ -1,79 +1,59 @@
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  FlatList,
-  ScrollView,
-  StyleSheet,
-} from 'react-native';
+import {View, Text, Image, ScrollView, StyleSheet} from 'react-native';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-// const _ = require('lodash');
-import {UIActivityIndicator} from 'react-native-indicators';
-import Modal from 'react-native-modal';
 
-import AppInput from '../components/Input';
 import AppButton from '../components/Button';
-import AppHeader from '../components/Header';
-import ReviewCard from '../components/ReviewCard';
 import colors from '../config/colors';
-import hardcodeCart from '../hardcode/hardcodeCart';
+
+import {connect} from 'react-redux';
+import {UpdateCart} from '../redux/actions/AuthActions';
 
 function ProductDetailScreen(props) {
-  const [loading, setLoading] = useState();
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [comment, setComment] = useState();
   const [listing, setListing] = useState(props.route.params);
 
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
-
-  const onPressPostButton = () => {
-    toggleModal();
-    setLoading(true);
-    console.log(comment);
-    fetchUserRecords();
-  };
-
   const onAddToCart = item => {
+    console.log('STORE: props.cart: ', props.cart.length);
+
     let obj = {
       ...item,
       quantity: 1,
     };
-    hardcodeCart.checkAlreadyAdded(obj);
+
+    if (props.cart.length != 0) {
+      let verdict = false;
+
+      for (var i = 0; i < props.cart.length; i++) {
+        if (props.cart[i]._id == item._id) {
+          verdict = true;
+          i = props.cart.length;
+        }
+      }
+
+      if (verdict) {
+        alert('Item already added');
+      } else {
+        let array = [...props.cart];
+        array.push(obj);
+        props.updateCart(array);
+      }
+    } else {
+      let array = [];
+      array.push(obj);
+      props.updateCart(array);
+    }
   };
 
   return (
     <View style={styles.container}>
-      {loading ? (
-        <Modal
-          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
-          isVisible={isModalVisible}>
-          <View
-            style={{
-              position: 'absolute',
-              padding: wp(5),
-              borderRadius: wp(10),
-              backgroundColor: 'black',
-            }}>
-            <UIActivityIndicator color="white" />
-          </View>
-        </Modal>
-      ) : null}
-      {/* <View style={styles.headerViewContainer}>
-        <AppHeader title="detail" />
-      </View> */}
-
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={styles.contentViewContainer}>
           <View style={styles.upperViewContainer}>
-            {/* <Image
+            <Image
               style={{
                 width: wp(100),
                 height: wp(100),
@@ -81,15 +61,15 @@ function ProductDetailScreen(props) {
               source={{
                 uri: listing.imageUrl,
               }}
-            /> */}
-            <Image
+            />
+            {/* <Image
               style={{
                 width: wp(100),
                 height: wp(100),
                 padding: wp(1),
               }}
               source={require('../assets/restaurant.jpg')}
-            />
+            /> */}
           </View>
           <View style={styles.lowerViewContainer}>
             <Text style={styles.productNameText}>{listing.itemName}</Text>
@@ -210,4 +190,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductDetailScreen;
+function mapStateToProps(state) {
+  return {
+    cart: state.auth.cart,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateCart: payload => dispatch(UpdateCart(payload)),
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ProductDetailScreen);

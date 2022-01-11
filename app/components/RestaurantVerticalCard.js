@@ -20,24 +20,24 @@ function RestaurantVerticalCard({
       style={styles.cardContainer}
       onPress={onPress ? onPress : () => console.log('Card pressed.')}>
       <View style={styles.imageContainer}>
+        <Image
+          style={{
+            width: wp(35),
+            height: wp(35),
+            padding: wp(1),
+          }}
+          source={{
+            uri: imageUrl,
+          }}
+        />
         {/* <Image
           style={{
             width: wp(30),
             height: wp(30),
             padding: wp(1),
           }}
-          source={{
-            uri: imageUrl,
-          }}
-        /> */}
-        <Image
-          style={{
-            width: wp(30),
-            height: wp(30),
-            padding: wp(1),
-          }}
           source={require('../assets/restaurant.jpg')}
-        />
+        /> */}
       </View>
 
       <View style={styles.detailContainer}>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cardColor,
     // backgroundColor: 'purple',
     width: wp('40'),
-    height: hp('30'),
+    height: hp('28'),
     elevation: wp(1),
     padding: wp(4),
     borderColor: colors.primary,
@@ -90,15 +90,18 @@ const styles = StyleSheet.create({
   },
   detailMainText: {
     color: colors.tertiary,
-    fontSize: wp(3.3),
+    fontSize: wp(3.4),
+    fontWeight: 'bold',
   },
   detailSubText: {
     color: colors.tertiary,
     fontSize: wp(3),
+    // fontWeight: 'bold',
   },
   discountedPriceText: {
     color: colors.discountedPriceText,
     fontSize: wp(3.8),
+    fontWeight: 'bold',
   },
   priceText: {
     color: colors.priceText,

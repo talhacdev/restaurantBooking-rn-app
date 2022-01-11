@@ -7,6 +7,7 @@ import {
 import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppButton from '../components/Button';
 import AppInput from '../components/Input';
@@ -39,6 +40,7 @@ function LoginScreen(props) {
         setLoading(false);
         toggleModal();
         console.log('RESPONSE: login: ', response);
+        updateLoggedIn('true');
         onPressLoginRedux(response.data);
       })
       .catch(error => {
@@ -49,11 +51,21 @@ function LoginScreen(props) {
       });
   };
 
+  const updateLoggedIn = async value => {
+    try {
+      await AsyncStorage.setItem('@loggedIn', value);
+    } catch (e) {
+      console.log('ERROR: @loggedIn:', e);
+    }
+  };
+
   const onPressLoginRedux = async obj => {
     if (props.user.length != 0) {
       alert('ERROR: User already exists');
       console.log('STORE: props.user: ', props.user);
     } else {
+      // let obj = {user: 'Muhammad Talha', id: '1'};
+      // updateLoggedIn('true');
       let array = [];
       array.push(obj);
       props.login(array);

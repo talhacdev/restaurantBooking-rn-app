@@ -23,6 +23,7 @@ function Input({
   onChangeText,
   stylesTitleText,
   stylesInputText,
+  disable,
   value = {},
 }) {
   return (
@@ -44,30 +45,41 @@ function Input({
         </Text>
       </View>
       <View style={styles.textInputContainer}>
-        <TextInput
-          placeholder={placeholder}
-          value={value}
-          placeholderTextColor={placeholderTextColor}
-          multiline={multiline ? true : false}
-          maxLength={maxLength ? maxLength : 32}
-          numberOfLines={numberOfLines ? numberOfLines : 1}
-          onChangeText={onChangeText}
-          defaultValue={defaultValue}
-          returnKeyType={returnKeyType}
-          secureTextEntry={secureTextEntry}
-          keyboardAppearance={keyboardAppearance}
-          textContentType={textContentType}
-          keyboardType={keyboardType}
-          style={
-            stylesInputText
-              ? stylesInputText
-              : {
-                  width: wp(50),
-                  color: colors.tertiary,
-                  fontSize: wp(3.2),
-                }
-          }
-        />
+        {disable ? (
+          <Text
+            style={{
+              width: wp(50),
+              color: colors.tertiary,
+              fontSize: wp(3.2),
+            }}>
+            {value}
+          </Text>
+        ) : (
+          <TextInput
+            placeholder={placeholder}
+            value={value}
+            placeholderTextColor={placeholderTextColor}
+            multiline={multiline ? true : false}
+            maxLength={maxLength ? maxLength : 32}
+            numberOfLines={numberOfLines ? numberOfLines : 1}
+            onChangeText={onChangeText}
+            defaultValue={defaultValue}
+            returnKeyType={returnKeyType}
+            secureTextEntry={secureTextEntry}
+            keyboardAppearance={keyboardAppearance}
+            textContentType={textContentType}
+            keyboardType={keyboardType}
+            style={
+              stylesInputText
+                ? stylesInputText
+                : {
+                    width: wp(50),
+                    color: colors.tertiary,
+                    fontSize: wp(3.2),
+                  }
+            }
+          />
+        )}
       </View>
     </View>
   );
