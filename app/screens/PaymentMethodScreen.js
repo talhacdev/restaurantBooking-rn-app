@@ -22,7 +22,6 @@ import {Login} from '../redux/actions/AuthActions';
 
 function PaymentMethodScreen(props) {
   const [orderType, setOrderType] = useState(0);
-  const [customer, setCustomer] = useState();
   const [restaurants, setRestaurants] = useState();
   const [user, setUser] = useState(props.user[0]);
   const [notes, setNotes] = useState('');
