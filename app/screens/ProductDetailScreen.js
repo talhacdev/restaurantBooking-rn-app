@@ -14,35 +14,63 @@ import {UpdateCart} from '../redux/actions/AuthActions';
 function ProductDetailScreen(props) {
   const [listing, setListing] = useState(props.route.params);
 
-  const onAddToCart = item => {
-    console.log('STORE: props.cart: ', props.cart.length);
-
+  const checkRestaurantId = item => {
+    let restId;
     let obj = {
       ...item,
       quantity: 1,
     };
-
-    if (props.cart.length != 0) {
-      let verdict = false;
-
-      for (var i = 0; i < props.cart.length; i++) {
-        if (props.cart[i]._id == item._id) {
-          verdict = true;
-          i = props.cart.length;
-        }
-      }
-
-      if (verdict) {
-        alert('Item already added');
-      } else {
-        let array = [...props.cart];
-        array.push(obj);
-        props.updateCart(array);
-      }
-    } else {
+    if (props.cart.length == 0) {
       let array = [];
       array.push(obj);
       props.updateCart(array);
+    } else {
+      restId = props.cart[0].restaurant;
+      if (item.restaurant == restId) {
+        return true;
+      } else {
+        alert('Items should be ordered from the same restaurant!');
+        return false;
+      }
+    }
+    console.log('item: ', item);
+    console.log(props.cart);
+  };
+
+  const onAddToCart = item => {
+    let what = checkRestaurantId(item);
+    console.log('WHAT: ', what);
+
+    if (what) {
+      console.log('STORE: props.cart: ', props.cart.length);
+
+      let obj = {
+        ...item,
+        quantity: 1,
+      };
+
+      if (props.cart.length != 0) {
+        let verdict = false;
+
+        for (var i = 0; i < props.cart.length; i++) {
+          if (props.cart[i]._id == item._id) {
+            verdict = true;
+            i = props.cart.length;
+          }
+        }
+
+        if (verdict) {
+          alert('Item already added');
+        } else {
+          let array = [...props.cart];
+          array.push(obj);
+          props.updateCart(array);
+        }
+      } else {
+        let array = [];
+        array.push(obj);
+        props.updateCart(array);
+      }
     }
   };
 
