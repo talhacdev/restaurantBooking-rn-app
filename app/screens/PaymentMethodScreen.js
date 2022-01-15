@@ -21,66 +21,47 @@ import {connect} from 'react-redux';
 import {Login} from '../redux/actions/AuthActions';
 
 function PaymentMethodScreen(props) {
-  const [address, setAddress] = useState();
   const [orderType, setOrderType] = useState(0);
   const [customer, setCustomer] = useState();
   const [restaurants, setRestaurants] = useState();
   const [user, setUser] = useState(props.user[0]);
+  const [notes, setNotes] = useState('');
 
   const onPressPlaceOrder = () => {
     if (props.user.length == 0) {
       alert('No User found.');
       navigation.navigate(routes.LOGIN);
     } else {
-      // const filteredRestaurant = restaurants.filter(
-      //   i => i.id === props?.route?.params?.products[0].restaurant,
-      // );
+      console.log('restId: ', props?.route?.params?.restId);
+      console.log('USER: ', user);
 
-      console.log('restaurants: ', restaurants);
-      // const orderObject = {
-      //   customerData: {
-      //     name: customer.customer.firstName + ' ' + customer.customer.lastName,
-      //     contact: customer.customer.contact,
-      //     customerId: customer.customer.id,
-      //     customerAddress: address,
-      //   },
-      //   restaurantData: {
-      //     restaurantName: filteredRestaurant[0].restaurantName,
-      //     contact: filteredRestaurant[0].contact,
-      //     restaurantId: filteredRestaurant[0].id,
-      //   },
-      //   items: props?.route?.params?.products,
-      //   // items: [
-      //   //   {
-      //   //     category: props?.route?.params?.products[0].category,
-      //   //     itemDescription: props?.route?.params?.products[0].description,
-      //   //     itemName: props?.route?.params?.products[0].itemName,
-      //   //     price: props?.route?.params?.products[0].price,
-      //   //     // quantity: props?.route?.params?.products[0].quantity,
-      //   //     quantity: 1,
-      //   //     restaurant: props?.route?.params?.products[0].restaurant,
-      //   //     _id: props?.route?.params?.products[0].category,
-      //   //   },
-      //   // ],
-      //   grandTotal: props?.route?.params?.totalPrice,
-      //   // total: props?.route?.params?.totalPrice,
-      //   orderDate: new Date(),
-      //   orderType: 'pickup',
-      //   // orderType: "dinein",
-      //   tableNumber: '14',
-      // };
+      const orderObject = {
+        customerData: {
+          name: user.customer.firstName + ' ' + user.customer.lastName,
+          contact: user.customer.contact,
+          customerId: user.customer.id,
+        },
+        // restaurantData: {
+        //   restaurantName: filteredRestaurant[0].restaurantName,
+        //   contact: filteredRestaurant[0].contact,
+        //   restaurantId: filteredRestaurant[0].id,
+        // },
+        items: props?.route?.params?.products,
+        grandTotal: props?.route?.params?.totalPrice,
+        orderDate: new Date(),
+        orderType: orderType == 0 ? 'pickup' : 'dinein',
+        tableNumber: notes,
+      };
 
-      // console.log('DEBUG orderObject: ', orderObject);
+      console.log('DEBUG orderObject: ', orderObject);
 
       // postOrder(orderObject);
     }
   };
 
   const postOrder = orderObject => {
-    let restId = orderObject.restaurantData.restaurantId;
-    // to-do async login token
-    let token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MTk1NjYzNzgzOTcyNDM2MDA4ZGQwZTkiLCJpYXQiOjE2Mzg4OTQwNzl9.G8c00HAcbvZre7nuqEi6XnXiTDtw2DUVh-lYVMFo8fk';
+    let restId = props?.route?.params?.restId;
+    let token = user.token;
     let config = {
       headers: {
         authorization: token,

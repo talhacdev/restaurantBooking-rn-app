@@ -4,10 +4,8 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-
 import AppButton from '../components/Button';
 import colors from '../config/colors';
-
 import {connect} from 'react-redux';
 import {UpdateCart} from '../redux/actions/AuthActions';
 

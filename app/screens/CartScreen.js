@@ -69,11 +69,13 @@ function CartScreen(props) {
 
   const onCheckoutPress = () => {
     if (products) {
+      let restId = products[0].restaurant;
       if (products.length > 0) {
         navigation.navigate(routes.PAYMENT_METHOD, {
           products,
           totalPrice,
           totalQuantity,
+          restId,
         });
       } else {
         Alert.alert('OOPS!', 'Cart is currently empty.', [
