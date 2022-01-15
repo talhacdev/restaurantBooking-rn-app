@@ -158,37 +158,80 @@ import BookingVerticalCard from '../components/BookingVerticalCard';
 import SearchInput from '../components/SearchInput';
 import axios from 'axios';
 
+import {connect} from 'react-redux';
+import {Login} from '../redux/actions/AuthActions';
+
 function MyBookingsScreen(props) {
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [restaurants, setRestaurants] = useState();
-  const [filteredRestaurants, setFilteredRestaurants] = useState();
+  const [bookings, setBookings] = useState([]);
+  const [pendingBookings, setPendingBookings] = useState([]);
+  const [reservedBookings, setReservedBookings] = useState([]);
+  const [ccBookings, setCCBookings] = useState([]);
   const [tabView, setTabView] = useState(1);
+  const [user, setUser] = useState(props.user[0]);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
   useEffect(() => {
-    getRestaurants();
+    getBookings();
   }, []);
 
-  const getRestaurants = async () => {
+  const getBookings = async () => {
     // setLoading(true);
     // toggleModal();
+
+    let token = user.token;
+    let config = {
+      headers: {
+        authorization: token,
+      },
+    };
+
+    let customerId = user.customer.id;
+
+    console.log('token: ', token);
+    console.log('customerId: ', customerId);
     axios
-      .get('http://192.168.18.203:3001/user/get-restaurants')
+      .get(
+        `http://192.168.18.203:3001/user/get-my-reservations/${customerId}`,
+        config,
+      )
       .then(response => {
         toggleModal();
         setLoading(false);
-
-        console.log('RESPONSE: getRestaurants: ', response.data.data);
-        setRestaurants(response.data.data);
+        console.log('RESPONSE: getBookings: ', response);
+        setBookings(response.data.reservations);
+        filterBookings(response.data.reservations);
       })
       .catch(error => {
         toggleModal();
         setLoading(false);
-        console.log('ERROR: getRestaurants: ', error);
+        console.log('ERROR: getBookings: ', error);
       });
+  };
+
+  const filterBookings = async b => {
+    console.log('Bookings b: ', b);
+
+    let pending = [];
+    b.filter(i => (i.reservationStatus == 'pending' ? pending.push(i) : null));
+    setPendingBookings(pending);
+
+    let ccBookings = [];
+    b.filter(i =>
+      i.reservationStatus == 'cancelled' || 'completed'
+        ? ccBookings.push(i)
+        : null,
+    );
+    setCCBookings(ccBookings);
+
+    let reserved = [];
+    b.filter(i =>
+      i.reservationStatus == 'reserved' ? reserved.push(i) : null,
+    );
+    setReservedBookings(reserved);
   };
 
   return (
@@ -224,31 +267,6 @@ function MyBookingsScreen(props) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.contentViewContainer}>
-            <View style={styles.lowerViewContainer}>
-              <FlatList
-                horizontal
-                showsVerticalScrollIndicator={false}
-                data={filteredRestaurants}
-                keyExtractor={filteredRestaurants => filteredRestaurants.id}
-                renderItem={({item}) => (
-                  <BookingVerticalCard
-                    restaurantName={item?.restaurantName}
-                    location={item?.address}
-                    rating={item?.rating}
-                    category={item?.category}
-                    tables={item?.tables}
-                    reviews={item?.reviews}
-                    contact={item?.contact}
-                    imageUrl={item?.imageUrl}
-                    totalRating={item?.totalRating}
-                    onPress={() =>
-                      navigation.navigate(routes.RESTAURANT_DETAIL, item)
-                    }
-                  />
-                )}
-              />
-            </View>
-
             <View style={styles.dividerView}>
               <TouchableOpacity
                 onPress={() => setTabView(1)}
@@ -271,24 +289,38 @@ function MyBookingsScreen(props) {
                 // horizontal
                 numColumns={2}
                 showsVerticalScrollIndicator={false}
-                data={restaurants}
-                keyExtractor={restaurants => restaurants.id.toString()}
+                data={
+                  tabView == 1
+                    ? pendingBookings
+                    : tabView == 2
+                    ? reservedBookings
+                    : tabView == 3
+                    ? ccBookings
+                    : null
+                }
+                keyExtractor={
+                  tabView == 1
+                    ? pendingBookings => pendingBookings._id
+                    : tabView == 2
+                    ? reservedBookings => reservedBookings._id
+                    : tabView == 3
+                    ? ccBookings => ccBookings._id
+                    : null
+                }
                 renderItem={({item}) => (
                   <View
                     style={{
                       margin: wp(1),
                       elevation: wp(2),
-                      // backgroundColor: 'purple',
                     }}>
                     <BookingVerticalCard
-                      restaurantName={item?.restaurantName}
-                      location={item?.address}
-                      rating={item?.rating}
-                      category={item?.category}
-                      tables={item?.tables}
-                      reviews={item?.reviews}
-                      contact={item?.contact}
-                      imageUrl={item?.imageUrl}
+                      status={item?.reservationStatus}
+                      restID={item?.restaurant?.restaurantId}
+                      restaurantName={item?.restaurant?.restaurantName}
+                      numOfPersons={item?.numberOfPersons}
+                      reqDate={item?.reservationDate}
+                      reqTime={item?.reservationTime}
+                      // imageUrl={item?.imageUrl}
                       // onPress={() =>
                       //   navigation.navigate(routes.RESTAURANT_DETAIL, item)
                       // }
@@ -344,4 +376,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MyBookingsScreen;
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateCart: payload => dispatch(UpdateCart(payload)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyBookingsScreen);

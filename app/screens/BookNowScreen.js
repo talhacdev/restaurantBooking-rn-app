@@ -19,48 +19,10 @@ import {connect} from 'react-redux';
 import {Login} from '../redux/actions/AuthActions';
 
 function BookNowScreen(props) {
-  const [selectedTable, setSelectedTable] = useState();
-  const [selectedTimeslot, setSelectedTimeslot] = useState();
-  const tables = props?.route?.params.tables;
-  const timeslot = props?.route?.params.timeslot;
-  const [customer, setCustomer] = useState();
-  const [restaurants, setRestaurants] = useState();
-
+  const [person, setPerson] = useState();
   const [date, setDate] = useState();
   const [time, setTime] = useState();
-  const [person, setPerson] = useState();
-
-  useEffect(() => {
-    console.log('BOOKNOW props: ', props?.route?.params);
-    getCustomer()
-      .then(json => {
-        setCustomer(json);
-      })
-      .catch(error => alert(error));
-    getRestaurants()
-      .then(json => {
-        setRestaurants(json);
-      })
-      .catch(error => alert(error));
-  }, []);
-
-  const getCustomer = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@LoginResponse');
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-      console.log('\nError Getting Data\n', e);
-    }
-  };
-
-  const getRestaurants = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@Restaurants');
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-      console.log('\nError Getting Data\n', e);
-    }
-  };
+  const [user, setUser] = useState(props.user[0]);
 
   const onPressBookNow = () => {
     if (props.user.length == 0) {
@@ -69,12 +31,11 @@ function BookNowScreen(props) {
     } else {
       let reservationData = {
         numberOfPersons: person,
-        reservationDate: new Date(),
+        reservationDate: date,
         reservationTime: time,
         customer: {
-          customerName:
-            customer.customer.firstName + ' ' + customer.customer.lastName,
-          customerId: customer.customer.id,
+          customerName: user.customer.firstName + ' ' + user.customer.lastName,
+          customerId: user.customer.id,
         },
         restaurant: {
           restaurantName: props?.route?.params.restaurantName,
@@ -84,13 +45,12 @@ function BookNowScreen(props) {
 
       console.log('bookingnowscreen: ', reservationData);
 
-      postOrder(reservationData);
+      requestBooking(reservationData);
     }
   };
 
-  const postOrder = reservationData => {
-    let token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI2MWJlZWFiOWMzNjBjNjM5MzgwMzE2MjEiLCJpYXQiOjE2NDA5NzUzMTR9.n-kcWny5bSG7vIQMM-jGWELZcL5dJCYAEq6B-vJvo2A';
+  const requestBooking = reservationData => {
+    let token = user.token;
     let config = {
       headers: {
         authorization: token,
@@ -104,12 +64,12 @@ function BookNowScreen(props) {
         config,
       )
       .then(response => {
-        console.log('Reservation Request Placed', response);
+        console.log('RESPONSE: booking:', response);
         alert('Reservation Request Placed');
         navigation.navigate(routes.HOME);
       })
       .catch(error => {
-        console.log('DEBUG booking: ', error);
+        console.log('ERROR: booking: ', error);
         alert(error);
       });
   };
@@ -141,53 +101,6 @@ function BookNowScreen(props) {
             />
           </View>
         </View>
-        {/* <View style={styles.dividerView}>
-          <Text style={styles.dividerText}>Tables</Text>
-        </View>
-        <View style={styles.upperViewContainer}>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={tables}
-            keyExtractor={tables => tables.id.toString()}
-            renderItem={({item}) => (
-              <SelectionButton
-                title={item.title}
-                onPress={() => setSelectedTable(item)}
-                selected={selectedTable == item ? true : false}
-              />
-            )}
-          />
-        </View> */}
-
-        {/* <View style={styles.dividerView}>
-          <Text style={styles.dividerText}>timeslot</Text>
-        </View>
-        <View style={styles.upperViewContainer}>
-          <FlatList
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            data={timeslot}
-            keyExtractor={timeslot => timeslot.id.toString()}
-            renderItem={({item}) => (
-              <SelectionButton
-                title={item.slot}
-                onPress={() => setSelectedTimeslot(item)}
-                selected={selectedTimeslot == item ? true : false}
-              />
-            )}
-          />
-        </View> */}
-
-        {/* <View style={styles.lowerViewContainer}>
-          <View style={styles.buttonContainer}>
-            <AppButton
-              disabled={(selectedTable, selectedTimeslot) ? false : true}
-              title="book now"
-              onPress={() => onPressBookNow()}
-            />
-          </View>
-        </View> */}
       </View>
     </View>
   );

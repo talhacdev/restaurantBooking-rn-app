@@ -1,5 +1,5 @@
 ('use strict');
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   AppRegistry,
@@ -15,6 +15,7 @@ import {UIActivityIndicator} from 'react-native-indicators';
 import Modal from 'react-native-modal';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
+import axios from 'axios';
 
 import colors from '../config/colors';
 
@@ -22,22 +23,22 @@ function CameraScreen(props) {
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
 
-  const getRestaurants = async () => {
-    setLoading(true);
-    toggleModal();
+  useEffect(() => {
+    getMenu('61bee86122fa41327f905493');
+  });
+
+  const getMenu = async restId => {
     axios
-      .get('http://192.168.18.203:3001/user/get-restaurants')
+      .get(`http://192.168.18.203:3001/user/get-restaurant-menu/${restId}`)
       .then(response => {
-        toggleModal();
-        setLoading(false);
-        console.log('RESPONSE: getRestaurants: ', response.data.data);
-        // setRestaurants(response.data.data);
-        navigation.navigate(routes.RESTAURANT_DETAIL, item);
+        console.log('RESPONSE: Camera getMenu: ', response.data.data);
+        navigation.navigate(routes.RESTAURANT_DETAIL, response.data.data);
+        // setMenu(response.data.data.items);
       })
       .catch(error => {
         toggleModal();
         setLoading(false);
-        console.log('ERROR: getRestaurants: ', error);
+        console.log('ERROR: getMenu: ', error);
       });
   };
 
@@ -46,7 +47,7 @@ function CameraScreen(props) {
     //   console.error('An error occured', err),
     // );
 
-    getRestaurants();
+    getMenu('61bee86122fa41327f905493');
   };
 
   return (

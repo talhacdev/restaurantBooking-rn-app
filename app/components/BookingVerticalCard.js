@@ -8,20 +8,21 @@ import {
 import colors from '../config/colors';
 
 function BookingVerticalCard({
+  status,
   restaurantName,
-  location,
-  category,
+  restID,
   onPress,
-  rating,
   imageUrl,
-  totalRating,
+  numOfPersons,
+  reqDate,
+  reqTime,
 }) {
   return (
     <TouchableOpacity
       style={styles.cardContainer}
       onPress={onPress ? onPress : () => console.log('Card pressed.')}>
       <View style={styles.imageContainer}>
-        <Image
+        {/* <Image
           style={{
             width: wp(50),
             height: wp(30),
@@ -30,7 +31,7 @@ function BookingVerticalCard({
           source={{
             uri: imageUrl,
           }}
-        />
+        /> */}
         {/* <Image
           style={{
             width: wp(30),
@@ -43,22 +44,22 @@ function BookingVerticalCard({
 
       <View style={styles.detailContainer}>
         <Text numberOfLines={1} style={styles.detailMainText}>
-          {restaurantName}
+          {status}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {'ID: ' + restaurantName}
+          {'ID: ' + restID}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
           {'Restaurant: ' + restaurantName}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {'Number of Persons: ' + restaurantName}
+          {'Number of Persons: ' + numOfPersons}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {'Requested Date: ' + restaurantName}
+          {'Requested Date: ' + reqDate}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {'Requested Time: ' + restaurantName}
+          {'Requested Time: ' + reqTime}
         </Text>
       </View>
     </TouchableOpacity>
@@ -72,7 +73,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cardColor,
     // backgroundColor: 'purple',
     width: wp('48'),
-    height: hp('30'),
+    height: hp('15'),
     elevation: wp(1),
     padding: wp(1),
     borderColor: colors.primary,

@@ -296,37 +296,70 @@ import OrdersVerticalComponent from '../components/OrdersVerticalComponent';
 import SearchInput from '../components/SearchInput';
 import axios from 'axios';
 
+import {connect} from 'react-redux';
+import {Login} from '../redux/actions/AuthActions';
+
 function OrdersScreen(props) {
   const [loading, setLoading] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
-  const [restaurants, setRestaurants] = useState();
-  const [filteredRestaurants, setFilteredRestaurants] = useState();
+  const [orders, setOrders] = useState([]);
+  const [cdOrders, setCdOrders] = useState([]);
+  const [pendingOrders, setPendingOrders] = useState([]);
   const [tabView, setTabView] = useState(1);
+  const [user, setUser] = useState(props.user[0]);
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
   useEffect(() => {
-    getRestaurants();
+    getOrders();
   }, []);
 
-  const getRestaurants = async () => {
+  const getOrders = async () => {
     // setLoading(true);
     // toggleModal();
+
+    let token = user.token;
+    let config = {
+      headers: {
+        authorization: token,
+      },
+    };
+
+    let customerId = user.customer.id;
+
+    console.log('token: ', token);
+    console.log('customerId: ', customerId);
     axios
-      .get('http://192.168.18.203:3001/user/get-restaurants')
+      .get(
+        `http://192.168.18.203:3001/user/get-updated-order/${customerId}`,
+        config,
+      )
       .then(response => {
         toggleModal();
         setLoading(false);
 
-        console.log('RESPONSE: getRestaurants: ', response.data.data);
-        setRestaurants(response.data.data);
+        console.log('RESPONSE: getOrders: ', response);
+        setOrders(response.data.updatedOrder);
+        filterOrders(response.data.updatedOrder);
       })
       .catch(error => {
         toggleModal();
         setLoading(false);
-        console.log('ERROR: getRestaurants: ', error);
+        console.log('ERROR: getOrders: ', error);
       });
+  };
+
+  const filterOrders = async o => {
+    console.log('Bookings b: ', o);
+
+    let pending = [];
+    o.filter(i => (i.status == 'pending' ? pending.push(i) : null));
+    setPendingOrders(pending);
+
+    let cd = [];
+    o.filter(i => (i.status == 'cancelled' || 'delivered' ? cd.push(i) : null));
+    setCdOrders(cd);
   };
 
   return (
@@ -362,31 +395,6 @@ function OrdersScreen(props) {
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={styles.contentViewContainer}>
-            <View style={styles.lowerViewContainer}>
-              <FlatList
-                horizontal
-                showsVerticalScrollIndicator={false}
-                data={filteredRestaurants}
-                keyExtractor={filteredRestaurants => filteredRestaurants.id}
-                renderItem={({item}) => (
-                  <OrdersVerticalComponent
-                    restaurantName={item?.restaurantName}
-                    location={item?.address}
-                    rating={item?.rating}
-                    category={item?.category}
-                    tables={item?.tables}
-                    reviews={item?.reviews}
-                    contact={item?.contact}
-                    imageUrl={item?.imageUrl}
-                    totalRating={item?.totalRating}
-                    onPress={() =>
-                      navigation.navigate(routes.RESTAURANT_DETAIL, item)
-                    }
-                  />
-                )}
-              />
-            </View>
-
             <View style={styles.dividerView}>
               <TouchableOpacity
                 onPress={() => setTabView(1)}
@@ -404,8 +412,17 @@ function OrdersScreen(props) {
                 // horizontal
                 numColumns={2}
                 showsVerticalScrollIndicator={false}
-                data={restaurants}
-                keyExtractor={restaurants => restaurants.id.toString()}
+                data={
+                  tabView == 1 ? pendingOrders : tabView == 2 ? cdOrders : null
+                }
+                keyExtractor={orders => orders._id}
+                keyExtractor={
+                  tabView == 1
+                    ? pendingOrders => pendingOrders._id
+                    : tabView == 2
+                    ? cdOrders => cdOrders._id
+                    : null
+                }
                 renderItem={({item}) => (
                   <View
                     style={{
@@ -414,13 +431,14 @@ function OrdersScreen(props) {
                       // backgroundColor: 'purple',
                     }}>
                     <OrdersVerticalComponent
-                      restaurantName={item?.restaurantName}
-                      location={item?.address}
-                      rating={item?.rating}
-                      category={item?.category}
-                      tables={item?.tables}
-                      reviews={item?.reviews}
-                      contact={item?.contact}
+                      id={item?._id}
+                      status={item?.status}
+                      orderType={item?.orderType}
+                      tableNumber={item?.tableNumber}
+                      estimatedReadyTime={item?.estimatedReadyTime}
+                      orderDate={item?.orderDate}
+                      grandTotal={item?.grandTotal}
+                      restaurantName={item?.restaurant?.restaurantName}
                       imageUrl={item?.imageUrl}
                       dineIn={true}
                       takeaway={true}
@@ -479,4 +497,16 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OrdersScreen;
+function mapStateToProps(state) {
+  return {
+    user: state.auth.user,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    updateCart: payload => dispatch(UpdateCart(payload)),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrdersScreen);

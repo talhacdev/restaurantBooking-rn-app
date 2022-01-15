@@ -8,13 +8,17 @@ import {
 import colors from '../config/colors';
 
 function OrdersVerticalComponent({
+  id,
+  status,
+
+  orderType,
+  tableNumber,
+  estimatedReadyTime,
+  orderDate,
   restaurantName,
-  location,
-  category,
+  grandTotal,
   onPress,
-  rating,
   imageUrl,
-  totalRating,
   dineIn,
   takeaway,
 }) {
@@ -23,7 +27,7 @@ function OrdersVerticalComponent({
       style={styles.cardContainer}
       onPress={onPress ? onPress : () => console.log('Card pressed.')}>
       <View style={styles.imageContainer}>
-        <Image
+        {/* <Image
           style={{
             width: wp(50),
             height: wp(30),
@@ -32,7 +36,7 @@ function OrdersVerticalComponent({
           source={{
             uri: imageUrl,
           }}
-        />
+        /> */}
         {/* <Image
           style={{
             width: wp(30),
@@ -45,35 +49,35 @@ function OrdersVerticalComponent({
 
       <View style={styles.detailContainer}>
         <Text numberOfLines={1} style={styles.detailMainText}>
-          {restaurantName}
+          {id}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {'ID: ' + restaurantName}
+          {'ID: ' + id}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {'Type: ' + restaurantName}
+          {'Type: ' + orderType}
         </Text>
         {dineIn ? (
           <Text numberOfLines={1} style={styles.detailSubText}>
-            {'Table Number: ' + restaurantName}
+            {'Table Number: ' + tableNumber}
           </Text>
         ) : null}
         {takeaway ? (
           <Text numberOfLines={1} style={styles.detailSubText}>
-            {'Estimated Ready Time: ' + restaurantName}
+            {'Estimated Ready Time: ' + estimatedReadyTime}
           </Text>
         ) : null}
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {'Date: ' + restaurantName}
+          {'Date: ' + orderDate}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
           {'Restaurant: ' + restaurantName}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {'Status: ' + restaurantName}
+          {'Status: ' + status}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {'Grand Total: ' + restaurantName}
+          {'Grand Total: ' + grandTotal}
         </Text>
       </View>
     </TouchableOpacity>
@@ -87,7 +91,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cardColor,
     // backgroundColor: 'purple',
     width: wp('48'),
-    height: hp('38'),
+
     elevation: wp(1),
     padding: wp(1),
     borderColor: colors.primary,

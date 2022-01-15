@@ -22,90 +22,57 @@ import {Login} from '../redux/actions/AuthActions';
 
 function PaymentMethodScreen(props) {
   const [address, setAddress] = useState();
-  const [orderType, setOrderType] = useState();
+  const [orderType, setOrderType] = useState(0);
   const [customer, setCustomer] = useState();
   const [restaurants, setRestaurants] = useState();
-
-  useEffect(() => {
-    getCustomer()
-      .then(json => {
-        setCustomer(json);
-      })
-      .catch(error => alert(error));
-    getRestaurants()
-      .then(json => {
-        setRestaurants(json);
-      })
-      .catch(error => alert(error));
-  }, []);
-
-  const getCustomer = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@LoginResponse');
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-      console.log('\nError Getting Data\n', e);
-    }
-  };
-
-  const getRestaurants = async () => {
-    try {
-      const jsonValue = await AsyncStorage.getItem('@Restaurants');
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch (e) {
-      console.log('\nError Getting Data\n', e);
-    }
-  };
+  const [user, setUser] = useState(props.user[0]);
 
   const onPressPlaceOrder = () => {
     if (props.user.length == 0) {
       alert('No User found.');
       navigation.navigate(routes.LOGIN);
     } else {
-      // console.log('orderObject', orderObject);
-      // console.log('DEBUG all restaurants', restaurants);
-      const filteredRestaurant = restaurants.filter(
-        i => i.id === props?.route?.params?.products[0].restaurant,
-      );
+      // const filteredRestaurant = restaurants.filter(
+      //   i => i.id === props?.route?.params?.products[0].restaurant,
+      // );
 
-      // console.log('DEBUG customer', customer);
-      // console.log('DEBUG restaurant', filteredRestaurant);
-      const orderObject = {
-        customerData: {
-          name: customer.customer.firstName + ' ' + customer.customer.lastName,
-          contact: customer.customer.contact,
-          customerId: customer.customer.id,
-          customerAddress: address,
-        },
-        restaurantData: {
-          restaurantName: filteredRestaurant[0].restaurantName,
-          contact: filteredRestaurant[0].contact,
-          restaurantId: filteredRestaurant[0].id,
-        },
-        items: props?.route?.params?.products,
-        // items: [
-        //   {
-        //     category: props?.route?.params?.products[0].category,
-        //     itemDescription: props?.route?.params?.products[0].description,
-        //     itemName: props?.route?.params?.products[0].itemName,
-        //     price: props?.route?.params?.products[0].price,
-        //     // quantity: props?.route?.params?.products[0].quantity,
-        //     quantity: 1,
-        //     restaurant: props?.route?.params?.products[0].restaurant,
-        //     _id: props?.route?.params?.products[0].category,
-        //   },
-        // ],
-        grandTotal: props?.route?.params?.totalPrice,
-        // total: props?.route?.params?.totalPrice,
-        orderDate: new Date(),
-        orderType: 'pickup',
-        // orderType: "dinein",
-        tableNumber: '14',
-      };
+      console.log('restaurants: ', restaurants);
+      // const orderObject = {
+      //   customerData: {
+      //     name: customer.customer.firstName + ' ' + customer.customer.lastName,
+      //     contact: customer.customer.contact,
+      //     customerId: customer.customer.id,
+      //     customerAddress: address,
+      //   },
+      //   restaurantData: {
+      //     restaurantName: filteredRestaurant[0].restaurantName,
+      //     contact: filteredRestaurant[0].contact,
+      //     restaurantId: filteredRestaurant[0].id,
+      //   },
+      //   items: props?.route?.params?.products,
+      //   // items: [
+      //   //   {
+      //   //     category: props?.route?.params?.products[0].category,
+      //   //     itemDescription: props?.route?.params?.products[0].description,
+      //   //     itemName: props?.route?.params?.products[0].itemName,
+      //   //     price: props?.route?.params?.products[0].price,
+      //   //     // quantity: props?.route?.params?.products[0].quantity,
+      //   //     quantity: 1,
+      //   //     restaurant: props?.route?.params?.products[0].restaurant,
+      //   //     _id: props?.route?.params?.products[0].category,
+      //   //   },
+      //   // ],
+      //   grandTotal: props?.route?.params?.totalPrice,
+      //   // total: props?.route?.params?.totalPrice,
+      //   orderDate: new Date(),
+      //   orderType: 'pickup',
+      //   // orderType: "dinein",
+      //   tableNumber: '14',
+      // };
 
-      console.log('DEBUG orderObject: ', orderObject);
+      // console.log('DEBUG orderObject: ', orderObject);
 
-      postOrder(orderObject);
+      // postOrder(orderObject);
     }
   };
 
@@ -184,11 +151,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  // headerViewContainer: {
-  //   flex: 0.1,
-  //   position: 'absolute',
-  //   top: hp(0),
-  // },
+
   bottomViewContainer: {
     flex: 0.1,
     position: 'absolute',

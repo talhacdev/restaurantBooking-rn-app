@@ -5,13 +5,11 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-import AppHeader from '../components/Header';
 import colors from '../config/colors';
 import CartProductCard from '../components/CartProductCard';
 import routes from '../navigation/routes';
 import navigation from '../navigation/rootNavigation';
 import BottomTextCard from '../components/BottomTextCard';
-import hardcodeCart from '../hardcode/hardcodeCart';
 
 import {connect} from 'react-redux';
 import {UpdateCart} from '../redux/actions/AuthActions';
@@ -142,19 +140,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.backgroundColor,
   },
-  // headerViewContainer: {
-  //   flex: 0.1,
-  //   position: 'absolute',
-  //   top: hp(0),
-  // },
+
   bottomViewContainer: {
     position: 'absolute',
     bottom: hp(0),
   },
   contentViewContainer: {
     flex: 0.9,
-    // backgroundColor: 'black',
-    // top: hp(8.5),
   },
 });
 
