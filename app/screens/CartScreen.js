@@ -69,7 +69,7 @@ function CartScreen(props) {
 
   const onCheckoutPress = () => {
     if (products) {
-      let restId = products[0].restaurant;
+      let restId = products[0]?.restaurant;
       if (products.length > 0) {
         navigation.navigate(routes.PAYMENT_METHOD, {
           products,
@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
+    marginTop: hp(5),
   },
 
   bottomViewContainer: {

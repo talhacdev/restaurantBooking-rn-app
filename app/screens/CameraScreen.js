@@ -1,6 +1,10 @@
 ('use strict');
 import React, {useState, useEffect} from 'react';
 import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
+import {
   View,
   AppRegistry,
   StyleSheet,
@@ -29,7 +33,7 @@ function CameraScreen(props) {
 
   const getMenu = async restId => {
     axios
-      .get(`http://192.168.18.203:3001/user/get-restaurant-menu/${restId}`)
+      .get(`http://192.168.18.234:3001/user/get-restaurant-menu/${restId}`)
       .then(response => {
         console.log('RESPONSE: Camera getMenu: ', response.data.data);
         navigation.navigate(routes.RESTAURANT_DETAIL, response.data.data);
@@ -94,6 +98,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
+    marginTop: hp(5),
   },
   centerText: {
     flex: 1,

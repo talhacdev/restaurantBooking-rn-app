@@ -66,7 +66,7 @@ function BottomTextCard({
               : {
                   fontWeight: 'bold',
                   color: colors.buttonTextColor,
-                  fontSize: wp(5),
+                  fontSize: wp(4.5),
                 }
           }>
           {title}

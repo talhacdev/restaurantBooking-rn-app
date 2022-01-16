@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.backgroundColor,
+    marginTop: hp(5),
   },
   image: {
     width: wp(50),

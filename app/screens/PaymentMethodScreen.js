@@ -18,48 +18,66 @@ import axios from 'axios';
 import hardcodeCart from '../hardcode/hardcodeCart';
 
 import {connect} from 'react-redux';
-import {Login} from '../redux/actions/AuthActions';
+import {Login, UpdateCart} from '../redux/actions/AuthActions';
 
 function PaymentMethodScreen(props) {
   const [orderType, setOrderType] = useState(0);
-  const [restaurants, setRestaurants] = useState();
+  const [restaurant, setRestaurant] = useState();
   const [user, setUser] = useState(props.user[0]);
   const [notes, setNotes] = useState('');
+  const restId = props?.route?.params?.restId;
+
+  useEffect(() => {
+    getRestaurantDetail(restId);
+  }, []);
+  const getRestaurantDetail = async restId => {
+    axios
+      .get(`http://192.168.18.234:3001/user/get-restaurant-menu/${restId}`)
+      .then(response => {
+        // console.log('RESPONSE: getRestaurantDetail: ', response.data.data);
+        setRestaurant(response.data.data);
+      })
+      .catch(error => {
+        console.log('ERROR: getRestaurantDetail: ', error);
+      });
+  };
 
   const onPressPlaceOrder = () => {
-    if (props.user.length == 0) {
-      alert('No User found.');
-      navigation.navigate(routes.LOGIN);
-    } else {
-      console.log('restId: ', props?.route?.params?.restId);
-      console.log('USER: ', user);
+    if (restaurant) {
+      if (props.user.length == 0) {
+        alert('No User found.');
+        navigation.navigate(routes.LOGIN);
+      } else {
+        console.log('restId: ', props?.route?.params?.restId);
+        console.log('USER: ', user);
 
-      const orderObject = {
-        customerData: {
-          name: user.customer.firstName + ' ' + user.customer.lastName,
-          contact: user.customer.contact,
-          customerId: user.customer.id,
-        },
-        // restaurantData: {
-        //   restaurantName: filteredRestaurant[0].restaurantName,
-        //   contact: filteredRestaurant[0].contact,
-        //   restaurantId: filteredRestaurant[0].id,
-        // },
-        items: props?.route?.params?.products,
-        grandTotal: props?.route?.params?.totalPrice,
-        orderDate: new Date(),
-        orderType: orderType == 0 ? 'pickup' : 'dinein',
-        tableNumber: notes,
-      };
+        const orderObject = {
+          customerData: {
+            name: user.customer.firstName + ' ' + user.customer.lastName,
+            contact: user.customer.contact,
+            customerId: user.customer.id,
+            customerAddress: '',
+          },
+          restaurantData: {
+            restaurantName: restaurant?.restaurantName,
+            contact: restaurant?.contact,
+            restaurantId: restaurant?.id,
+          },
+          items: props?.route?.params?.products,
+          grandTotal: props?.route?.params?.totalPrice,
+          orderDate: new Date(),
+          orderType: orderType == 0 ? 'pickup' : 'dinein',
+          tableNumber: notes,
+        };
 
-      console.log('DEBUG orderObject: ', orderObject);
+        console.log('DEBUG orderObject: ', orderObject);
 
-      // postOrder(orderObject);
+        postOrder(orderObject);
+      }
     }
   };
 
   const postOrder = orderObject => {
-    let restId = props?.route?.params?.restId;
     let token = user.token;
     let config = {
       headers: {
@@ -67,18 +85,19 @@ function PaymentMethodScreen(props) {
       },
     };
 
-    console.log('restId: ', restId);
-    console.log('token: ', token);
+    // console.log('restId: ', restId);
+    // console.log('token: ', token);
 
     axios
       .post(
-        `http://192.168.18.203:3001/user/post-order/${restId}`,
+        `http://192.168.18.234:3001/user/post-order/${restId}`,
         orderObject,
         config,
       )
       .then(response => {
         console.log('DEBUG postOrder response: ', response);
         alert(response.data.message);
+        props.updateCart([]);
         navigation.navigate(routes.HOME);
       })
       .catch(error => {
@@ -95,17 +114,17 @@ function PaymentMethodScreen(props) {
       <View style={styles.contentViewContainer}>
         <View style={styles.dividerView}>
           <TouchableOpacity
-            onPress={() => setOrderType(1)}
+            onPress={() => setOrderType(0)}
             style={styles.dividerButton}>
             <Text style={styles.dividerText}>Pick Up</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => setOrderType(2)}
+            onPress={() => setOrderType(1)}
             style={styles.dividerButton}>
             <Text style={styles.dividerText}>Dine In</Text>
           </TouchableOpacity>
         </View>
-        {orderType != 1 ? (
+        {orderType == 1 ? (
           <View style={styles.upperViewContainer}>
             <AppInput
               tablenumber
@@ -117,6 +136,7 @@ function PaymentMethodScreen(props) {
       </View>
       <View style={styles.buttonContainer}>
         <Button
+          disabled={!restaurant}
           noElevation
           widthContainer={wp(100)}
           title={orderType == 1 ? 'place pick up order' : 'place dine in order'}
@@ -130,8 +150,8 @@ function PaymentMethodScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: hp(5),
   },
-
   bottomViewContainer: {
     flex: 0.1,
     position: 'absolute',
@@ -139,7 +159,6 @@ const styles = StyleSheet.create({
   },
   contentViewContainer: {
     flex: 1,
-    // top: hp(8.5),
     backgroundColor: colors.backgroundColor,
   },
   buttonContainer: {
@@ -183,6 +202,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     login: payload => dispatch(Login(payload)),
+    updateCart: payload => dispatch(UpdateCart(payload)),
   };
 }
 

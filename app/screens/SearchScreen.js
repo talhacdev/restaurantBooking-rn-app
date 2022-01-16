@@ -38,13 +38,13 @@ function SearchScreen(props) {
 
   const getRestaurants = async () => {
     axios
-      .get('http://192.168.18.203:3001/user/get-restaurants')
+      .get('http://192.168.18.234:3001/user/get-restaurants')
       .then(response => {
         console.log('DEBUG searchScreen getRestaurants: ', response.data.data);
         setRestaurants(response.data.data);
       })
       .catch(error => {
-        console.log('DEBUG getRestaurants ERROR: ', error);
+        console.log('ERROR: searchScreen getRestaurants: ', error);
       });
   };
 
@@ -56,8 +56,8 @@ function SearchScreen(props) {
     console.log(val);
 
     if (val) {
-      let searchFilterRestaurants = restaurants.filter(m =>
-        m.restaurantName.toLowerCase().includes(val.toLowerCase()),
+      let searchFilterRestaurants = restaurants?.filter(m =>
+        m?.restaurantName?.toLowerCase().includes(val?.toLowerCase()),
       );
 
       setSearchedRestaurants(searchFilterRestaurants);
@@ -172,16 +172,16 @@ function SearchScreen(props) {
                   keyExtractor={products => products.id}
                   renderItem={({item}) => (
                     <ProductCard
-                      itemName={item._data.itemName}
-                      discountedPrice={item._data.discountedPrice}
-                      rating={item._data.rating}
-                      restaurantName={item._data.restaurantName}
-                      price={item._data.price}
-                      imageUrl={item._data.imageUrl}
+                      itemName={item?._data.itemName}
+                      discountedPrice={item?._data.discountedPrice}
+                      rating={item?._data?.rating}
+                      restaurantName={item?._data?.restaurantName}
+                      price={item?._data?.price}
+                      imageUrl={item?._data?.imageUrl}
                       onPress={() =>
-                        navigation.navigate(routes.PRODUCT_DETAIL, item._data)
+                        navigation.navigate(routes.PRODUCT_DETAIL, item?._data)
                       }
-                      onBottomButtonPress={() => onAddToCart(item._data)}
+                      onBottomButtonPress={() => onAddToCart(item?._data)}
                     />
                   )}
                 />
@@ -199,6 +199,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.backgroundColor,
     marginBottom: hp(12),
+    marginTop: hp(5),
   },
   // headerViewContainer: {
   //   flex: 0.1,

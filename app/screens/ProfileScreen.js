@@ -154,6 +154,7 @@ function ProfileScreen(props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: hp(5),
   },
   // headerViewContainer: {
   //   flex: 0.1,

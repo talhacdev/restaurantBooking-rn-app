@@ -32,14 +32,14 @@ function BookingVerticalCard({
             uri: imageUrl,
           }}
         /> */}
-        {/* <Image
+        <Image
           style={{
-            width: wp(30),
+            width: wp(48),
             height: wp(30),
             padding: wp(1),
           }}
-          source={require('../assets/restaurant.jpg')}
-        /> */}
+          source={require('../assets/snapchatLogoBlackpng.png')}
+        />
       </View>
 
       <View style={styles.detailContainer}>
@@ -73,9 +73,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cardColor,
     // backgroundColor: 'purple',
     width: wp('48'),
-    height: hp('15'),
+    // height: hp('15'),
     elevation: wp(1),
-    padding: wp(1),
+    // padding: wp(1),
+    paddingHorizontal: wp(1),
+    paddingBottom: wp(1),
     borderColor: colors.primary,
     borderWidth: wp(0.05),
   },

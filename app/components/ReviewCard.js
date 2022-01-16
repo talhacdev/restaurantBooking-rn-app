@@ -6,7 +6,7 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
-function ReviewCard({user, comment, imageUrl, onPressImage, disabled}) {
+function ReviewCard({user, comment, date, rating, onPressImage, disabled}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity disabled={disabled} onPress={onPressImage}>
@@ -16,24 +16,39 @@ function ReviewCard({user, comment, imageUrl, onPressImage, disabled}) {
             height: wp(15),
             borderRadius: wp(7.5),
           }}
-          source={{
-            uri: imageUrl,
-          }}
+          // source={{
+          //   uri: imageUrl,
+          // }}
+          source={require('../assets/snapchatLogoBlackpng.png')}
         />
       </TouchableOpacity>
       <View style={styles.subContainer}>
         <View style={styles.userContainer}>
-          <View style={styles.usernameContainer}>
+          {/* <View style={styles.usernameContainer}>
             <Text numberOfLines={1} style={styles.userText}>
               {user}
             </Text>
-          </View>
+          </View> */}
         </View>
         <View style={styles.userCommentContaine}>
           <Text
             // numberOfLines={1}
             style={styles.commentText}>
-            {comment}
+            {'Comment: ' + comment}
+          </Text>
+        </View>
+        <View style={styles.userCommentContaine}>
+          <Text
+            // numberOfLines={1}
+            style={styles.commentText}>
+            {'Rating: ' + rating}
+          </Text>
+        </View>
+        <View style={styles.userCommentContaine}>
+          <Text
+            // numberOfLines={1}
+            style={styles.commentText}>
+            {'Date: ' + date}
           </Text>
         </View>
       </View>
@@ -61,9 +76,11 @@ const styles = StyleSheet.create({
   },
   userText: {
     fontSize: wp(4),
+    fontWeight: 'bold',
   },
   commentText: {
     fontSize: wp(3.5),
+    color: '#000',
   },
   usernameContainer: {
     // backgroundColor: 'pink',

@@ -4,13 +4,13 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import Button from '../components/Button';
 
 import colors from '../config/colors';
 
 function OrdersVerticalComponent({
   id,
   status,
-
   orderType,
   tableNumber,
   estimatedReadyTime,
@@ -21,6 +21,8 @@ function OrdersVerticalComponent({
   imageUrl,
   dineIn,
   takeaway,
+  past,
+  onPressShareReview,
 }) {
   return (
     <TouchableOpacity
@@ -37,32 +39,31 @@ function OrdersVerticalComponent({
             uri: imageUrl,
           }}
         /> */}
-        {/* <Image
+        <Image
           style={{
-            width: wp(30),
+            width: wp('48'),
             height: wp(30),
-            padding: wp(1),
           }}
-          source={require('../assets/restaurant.jpg')}
-        /> */}
+          source={require('../assets/snapchatLogoBlackpng.png')}
+        />
       </View>
 
       <View style={styles.detailContainer}>
         <Text numberOfLines={1} style={styles.detailMainText}>
-          {id}
+          {status}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
-          {'ID: ' + id}
+          {'ID: ' + id.slice(-5)}
         </Text>
         <Text numberOfLines={1} style={styles.detailSubText}>
           {'Type: ' + orderType}
         </Text>
-        {dineIn ? (
+        {orderType == 'dinein' ? (
           <Text numberOfLines={1} style={styles.detailSubText}>
             {'Table Number: ' + tableNumber}
           </Text>
         ) : null}
-        {takeaway ? (
+        {status == 'accepted' || status == 'ready' || status == 'completed' ? (
           <Text numberOfLines={1} style={styles.detailSubText}>
             {'Estimated Ready Time: ' + estimatedReadyTime}
           </Text>
@@ -79,6 +80,15 @@ function OrdersVerticalComponent({
         <Text numberOfLines={1} style={styles.detailSubText}>
           {'Grand Total: ' + grandTotal}
         </Text>
+        {past ? (
+          <View style={styles.buttonContainer}>
+            <Button
+              widthContainer={wp(40)}
+              title="share review"
+              onPress={onPressShareReview}
+            />
+          </View>
+        ) : null}
       </View>
     </TouchableOpacity>
   );
@@ -91,9 +101,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.cardColor,
     // backgroundColor: 'purple',
     width: wp('48'),
-
     elevation: wp(1),
-    padding: wp(1),
+    paddingHorizontal: wp(1),
+    paddingBottom: wp(1),
     borderColor: colors.primary,
     borderWidth: wp(0.05),
   },
@@ -130,6 +140,11 @@ const styles = StyleSheet.create({
     color: colors.ratingText,
     fontSize: wp(3.8),
     paddingHorizontal: wp(1),
+  },
+  buttonContainer: {
+    marginVertical: hp(1),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

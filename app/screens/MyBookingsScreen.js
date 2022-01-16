@@ -195,7 +195,7 @@ function MyBookingsScreen(props) {
     console.log('customerId: ', customerId);
     axios
       .get(
-        `http://192.168.18.203:3001/user/get-my-reservations/${customerId}`,
+        `http://192.168.18.234:3001/user/get-my-reservations/${customerId}`,
         config,
       )
       .then(response => {
@@ -340,6 +340,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
+    marginTop: hp(5),
   },
   contentViewContainer: {
     flex: 1,

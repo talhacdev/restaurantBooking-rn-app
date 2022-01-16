@@ -64,7 +64,7 @@ function HomeScreen(props) {
     // setLoading(true);
     // toggleModal();
     axios
-      .get('http://192.168.18.203:3001/user/get-restaurants')
+      .get('http://192.168.18.234:3001/user/get-restaurants')
       .then(response => {
         toggleModal();
         setLoading(false);
@@ -249,6 +249,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
+    marginTop: hp(5),
   },
   contentViewContainer: {
     flex: 1,

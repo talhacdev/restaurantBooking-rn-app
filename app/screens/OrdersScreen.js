@@ -295,6 +295,8 @@ import navigation from '../navigation/rootNavigation';
 import OrdersVerticalComponent from '../components/OrdersVerticalComponent';
 import SearchInput from '../components/SearchInput';
 import axios from 'axios';
+import AppInput from '../components/Input';
+import Button from '../components/Button';
 
 import {connect} from 'react-redux';
 import {Login} from '../redux/actions/AuthActions';
@@ -307,18 +309,19 @@ function OrdersScreen(props) {
   const [pendingOrders, setPendingOrders] = useState([]);
   const [tabView, setTabView] = useState(1);
   const [user, setUser] = useState(props.user[0]);
+  const [comment, setComment] = useState('');
+  const [item, setItem] = useState();
+  const [posted, setPosted] = useState(false);
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
   useEffect(() => {
     getOrders();
-  }, []);
+  }, [posted]);
 
   const getOrders = async () => {
-    // setLoading(true);
-    // toggleModal();
-
     let token = user.token;
     let config = {
       headers: {
@@ -332,20 +335,15 @@ function OrdersScreen(props) {
     console.log('customerId: ', customerId);
     axios
       .get(
-        `http://192.168.18.203:3001/user/get-updated-order/${customerId}`,
+        `http://192.168.18.234:3001/user/get-updated-order/${customerId}`,
         config,
       )
       .then(response => {
-        toggleModal();
-        setLoading(false);
-
         console.log('RESPONSE: getOrders: ', response);
         setOrders(response.data.updatedOrder);
         filterOrders(response.data.updatedOrder);
       })
       .catch(error => {
-        toggleModal();
-        setLoading(false);
         console.log('ERROR: getOrders: ', error);
       });
   };
@@ -358,24 +356,87 @@ function OrdersScreen(props) {
     setPendingOrders(pending);
 
     let cd = [];
-    o.filter(i => (i.status == 'cancelled' || 'delivered' ? cd.push(i) : null));
+    o.filter(i => (i.status != 'pending' ? cd.push(i) : null));
+    console.log('CD: ', cd);
     setCdOrders(cd);
+  };
+
+  const onPressPostReview = () => {
+    console.log('Comment: ', comment);
+    console.log('Post Review');
+
+    console.log('ITEM SELECTED: ', item);
+
+    if (comment !== '') {
+      let token = user.token;
+      let config = {
+        headers: {
+          authorization: token,
+        },
+      };
+      axios
+        .post(
+          `http://192.168.18.234:3001/user/post-comment`,
+          {
+            restaurantId: item?.restaurant?.restaurantId,
+            rating: 2,
+            comment: comment,
+            date: new Date(),
+            orderId: item?._id,
+          },
+          config,
+        )
+        .then(res => {
+          console.log('Review Response', res);
+          toggleModal();
+          alert('Comment succcessfully posted!');
+          setPosted(true);
+          // navigation.navigate(routes.HOME);
+        })
+        .catch(err => {
+          toggleModal();
+          console.log('Review Error', err);
+          alert('Comment posting failed!');
+        });
+    } else {
+      alert('Comment is mandatory!');
+    }
   };
 
   return (
     <View style={styles.container}>
-      {loading ? (
+      {isModalVisible ? (
         <Modal
           style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
           isVisible={isModalVisible}>
           <View
             style={{
-              position: 'absolute',
-              padding: wp(5),
-              borderRadius: wp(10),
-              backgroundColor: 'black',
+              flex: 1,
+              // position: 'absolute',
+              // padding: wp(5),
+              // borderRadius: wp(10),
+              // backgroundColor: colors.backgroundColor,
+              justifyContent: 'center',
+              alignItems: 'center',
             }}>
-            <UIActivityIndicator color="white" />
+            <AppInput
+              title={'comment'}
+              onChangeText={text => setComment(text)}
+            />
+            <View style={styles.buttonContainer}>
+              <Button
+                widthContainer={wp(40)}
+                title="share review"
+                onPress={() => onPressPostReview()}
+              />
+            </View>
+            <View style={styles.buttonContainer}>
+              <Button
+                widthContainer={wp(40)}
+                title="cancel"
+                onPress={() => toggleModal()}
+              />
+            </View>
           </View>
         </Modal>
       ) : null}
@@ -442,9 +503,15 @@ function OrdersScreen(props) {
                       imageUrl={item?.imageUrl}
                       dineIn={true}
                       takeaway={true}
-                      // onPress={() =>
-                      //   navigation.navigate(routes.RESTAURANT_DETAIL, item)
-                      // }
+                      past={
+                        item?.isReviewSubmitted == false &&
+                        item?.status !== 'pending'
+                          ? true
+                          : false
+                      }
+                      onPressShareReview={() => {
+                        toggleModal(), setItem(item);
+                      }}
                     />
                   </View>
                 )}
@@ -461,6 +528,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
+    marginTop: hp(5),
   },
   contentViewContainer: {
     flex: 1,
@@ -492,6 +560,11 @@ const styles = StyleSheet.create({
   },
   bottomViewContainer: {
     flex: 0.1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonContainer: {
+    marginVertical: hp(1),
     justifyContent: 'center',
     alignItems: 'center',
   },

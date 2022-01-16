@@ -35,7 +35,7 @@ function LoginScreen(props) {
     };
 
     await axios
-      .post('http://192.168.18.203:3001/auth/login', obj)
+      .post('http://192.168.18.234:3001/auth/login', obj)
       .then(response => {
         setLoading(false);
         toggleModal();
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.backgroundColor,
+    marginTop: hp(5),
   },
   image: {
     width: wp(50),

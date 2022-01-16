@@ -21,7 +21,7 @@ import navigation from '../navigation/rootNavigation';
 
 import colors from '../config/colors';
 import VerticalProductCard from '../components/VerticalProductCard';
-
+import ReviewCard from '../components/ReviewCard';
 import {connect} from 'react-redux';
 import {UpdateCart} from '../redux/actions/AuthActions';
 
@@ -31,6 +31,7 @@ function RestaurantDetailScreen(props) {
   const [comment, setComment] = useState();
   const [listing, setListing] = useState(props.route.params);
   const [menu, setMenu] = useState([]);
+  const [commentsData, setCommentsData] = useState();
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -38,6 +39,7 @@ function RestaurantDetailScreen(props) {
 
   useEffect(() => {
     getMenu();
+    getComments();
   }, []);
 
   const checkRestaurantId = item => {
@@ -63,13 +65,26 @@ function RestaurantDetailScreen(props) {
     console.log(props.cart);
   };
 
+  const getComments = () => {
+    let restId = listing.id;
+    axios
+      .get(`http://192.168.18.234:3001/user/get-comments/${restId}`)
+      .then(res => {
+        console.log('Comments Response', res.data.comments);
+        setCommentsData(res.data.comments);
+      })
+      .catch(err => {
+        console.log('Comments Response Error', err);
+      });
+  };
+
   const getMenu = async () => {
     // setLoading(true);
     // toggleModal();
     let restId = listing.id;
 
     axios
-      .get(`http://192.168.18.203:3001/user/get-restaurant-menu/${restId}`)
+      .get(`http://192.168.18.234:3001/user/get-restaurant-menu/${restId}`)
       .then(response => {
         toggleModal();
         setLoading(false);
@@ -179,6 +194,33 @@ function RestaurantDetailScreen(props) {
               title={'book'}
             />
           </View>
+
+          {commentsData?.length >= 1 ? (
+            <View>
+              <View style={styles.dividerView}>
+                <Text style={styles.dividerText}>comments</Text>
+              </View>
+              <FlatList
+                horizontal
+                showsVerticalScrollIndicator={false}
+                data={commentsData}
+                keyExtractor={commentsData => commentsData._id}
+                renderItem={({item}) => (
+                  <ReviewCard
+                    user={item?.customer?.name}
+                    comment={item?.comment}
+                    description={item?.description}
+                    rating={item?.rating}
+                    date={item?.date}
+                    onPress={() =>
+                      navigation.navigate(routes.PRODUCT_DETAIL, item)
+                    }
+                    onBottomButtonPress={() => onAddToCart(item)}
+                  />
+                )}
+              />
+            </View>
+          ) : null}
           {menu.length >= 1 ? (
             <View>
               <View style={styles.dividerView}>
@@ -216,6 +258,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.backgroundColor,
+    marginTop: hp(5),
   },
   // headerViewContainer: {
   //   flex: 0.1,
