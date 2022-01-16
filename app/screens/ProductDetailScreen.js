@@ -17,6 +17,7 @@ function ProductDetailScreen(props) {
     let obj = {
       ...item,
       quantity: 1,
+      total: item.price,
     };
     if (props.cart.length == 0) {
       let array = [];
@@ -45,6 +46,7 @@ function ProductDetailScreen(props) {
       let obj = {
         ...item,
         quantity: 1,
+        total: item.price,
       };
 
       if (props.cart.length != 0) {

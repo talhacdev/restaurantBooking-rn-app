@@ -47,6 +47,7 @@ function RestaurantDetailScreen(props) {
     let obj = {
       ...item,
       quantity: 1,
+      total: item.price,
     };
     if (props.cart.length == 0) {
       let array = [];
@@ -108,6 +109,7 @@ function RestaurantDetailScreen(props) {
       let obj = {
         ...item,
         quantity: 1,
+        total: item.price,
       };
 
       if (props.cart.length != 0) {

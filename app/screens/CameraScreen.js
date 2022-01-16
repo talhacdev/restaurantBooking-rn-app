@@ -51,6 +51,7 @@ function CameraScreen(props) {
     //   console.error('An error occured', err),
     // );
 
+    // getMenu(e);
     getMenu('61bee86122fa41327f905493');
   };
 
@@ -84,7 +85,9 @@ function CameraScreen(props) {
             </Text>
           }
           bottomContent={
-            <TouchableOpacity style={styles.buttonTouchable}>
+            <TouchableOpacity
+              style={styles.buttonTouchable}
+              onPress={() => getMenu('61bee86122fa41327f905493')}>
               <Text style={styles.buttonText}>OK. Got it!</Text>
             </TouchableOpacity>
           }

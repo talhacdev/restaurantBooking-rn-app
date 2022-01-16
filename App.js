@@ -11,7 +11,7 @@ import {navigationRef} from './app/navigation/rootNavigation';
 import navigationTheme from './app/navigation/navigationTheme';
 import AuthNavigator from './app/navigation/AuthNavigator';
 import AppNavigator from './app/navigation/AppNavigator';
-
+console.disableYellowBox = true;
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(null);
 
